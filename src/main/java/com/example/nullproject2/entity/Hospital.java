@@ -1,7 +1,4 @@
 package com.example.nullproject2.entity;
-
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,10 +18,6 @@ public class Hospital {
 
 
     @Id
-    @Field(name = "id")
-    private String id;
-
-    @Field(name = "hospital_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int hospital_id;
 

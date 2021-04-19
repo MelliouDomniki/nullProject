@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HospitalModel {
 
-    private String id;
+
     private int hospital_id;
     private String name;
     private String address;

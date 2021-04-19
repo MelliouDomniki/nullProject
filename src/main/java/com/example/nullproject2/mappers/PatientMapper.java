@@ -12,7 +12,6 @@ public class PatientMapper {
     public static PatientModel mapToPatientModel(Patient patient){
         if (patient == null) return null;
         PatientModel patientModel = new PatientModel();
-        patientModel.setId(patient.getId());
         patientModel.setPatient_id(patient.getPatient_id());
         patientModel.setName(patient.getName());
         patientModel.setAge(patient.getAge());

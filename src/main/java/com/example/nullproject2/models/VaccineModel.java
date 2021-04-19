@@ -16,6 +16,5 @@ public class VaccineModel {
     private String id;
     private Brand brand;
     private VaccineStatus status;
-    private int code;
     private Date date;
 }

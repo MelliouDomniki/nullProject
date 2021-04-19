@@ -19,8 +19,6 @@ public interface VaccineService {
 
     Optional<VaccineModel> getVaccineById(String id);
 
-    Optional<VaccineModel> getVaccineByCode(int code);
-
     List<VaccineModel> getVaccineByStatus(VaccineStatus vaccineStatus);
 
     List<VaccineModel> getVaccineByBrand(Brand brand);

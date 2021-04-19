@@ -31,11 +31,6 @@ public class VaccineServiceImpl implements VaccineService {
     }
 
     @Override
-    public Optional<VaccineModel> getVaccineByCode(int code) {
-        return Optional.empty();
-    }
-
-    @Override
     public List<VaccineModel> getVaccineByStatus(VaccineStatus vaccineStatus) {
         return null;
     }

@@ -20,10 +20,6 @@ import javax.persistence.GenerationType;
 public class Patient {
 
     @Id
-    @Field(name = "id")
-    private String id;
-
-    @Field(name = "patient_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int patient_id;
 

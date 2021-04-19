@@ -14,12 +14,10 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Document (collection = "Vaccines")
 public class Vaccine {
 
     @Id
-    @Field(name = "id")
     private String vaccine_id;
 
     @Field(name = "brand")
@@ -27,9 +25,6 @@ public class Vaccine {
 
     @Field(name = "status")
     private VaccineStatus status;
-
-    @Field(name = "code")
-    private int code;
 
     @Field(name = "date")
     private Date date;
@@ -42,7 +37,6 @@ public class Vaccine {
                 "vaccine_id='" + vaccine_id + '\'' +
                 ", brand=" + brand +
                 ", status=" + status +
-                ", code=" + code +
                 '}';
     }
 

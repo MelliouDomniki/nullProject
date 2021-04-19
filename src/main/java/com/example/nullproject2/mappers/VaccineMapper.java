@@ -15,7 +15,6 @@ public class VaccineMapper {
         vaccineModel.setId(vaccine.getVaccine_id());
         vaccineModel.setBrand(vaccine.getBrand());
         vaccineModel.setStatus(vaccine.getStatus());
-        vaccineModel.setCode(vaccine.getCode());
         vaccineModel.setDate(vaccine.getDate());
         return vaccineModel;
     }

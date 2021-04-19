@@ -11,7 +11,6 @@ public class HospitalFormMapper {
     public static Hospital mapToHospital(HospitalForm hospitalForm){
         if (hospitalForm == null) return null;
         Hospital hospital = new Hospital();
-        hospital.setId(hospitalForm.getId());
         hospital.setHospital_id(hospitalForm.getHospitalId());
         if (hospitalForm.getName() != null){
             if (!hospitalForm.getName().isBlank()){
@@ -53,7 +52,6 @@ public class HospitalFormMapper {
         if (hospital == null) return null;
 
         HospitalForm hospitalForm = new HospitalForm();
-        hospitalForm.setId(hospital.getId());
         hospitalForm.setHospitalId(hospital.getHospital_id());
         hospitalForm.setName(hospital.getName());
         hospitalForm.setAddress(hospital.getAddress());
