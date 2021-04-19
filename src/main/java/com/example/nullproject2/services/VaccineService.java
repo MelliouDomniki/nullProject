@@ -17,7 +17,7 @@ public interface VaccineService {
 
     Optional<VaccineModel> updateVaccine(VaccineForm toBeUpdatedVaccine);
 
-    Optional<VaccineModel> getVaccineById(String id);
+    Optional<VaccineModel> getVaccineById(String vaccine_id);
 
     List<VaccineModel> getVaccineByStatus(VaccineStatus vaccineStatus);
 

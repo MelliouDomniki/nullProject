@@ -25,7 +25,7 @@ public class PatientController {
         return patrepo.findAll();
     }
 
-    @GetMapping("/findAllPatients/{id}")
+    @GetMapping("/findPatientById/{id}")
     public Optional<Patient> getPatient(@PathVariable String id) {
         return patrepo.findById(id);
     }

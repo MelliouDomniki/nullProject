@@ -58,8 +58,8 @@ public class DbSeeder implements CommandLineRunner {
 //        }
 
         //HOSPITALS
-        Hospital h1 = new Hospital(123, "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa@" );
-        Hospital h2 = new Hospital(124, "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio@" );
+        Hospital h1 = new Hospital("123", "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa@" );
+        Hospital h2 = new Hospital("124", "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio@" );
 
         this.hospitalRepository.deleteAll();
 
@@ -69,9 +69,9 @@ public class DbSeeder implements CommandLineRunner {
 
         //PATIENS
 
-        Patient p1 = new Patient(1,"Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
-        Patient p2 = new Patient(2,"Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
-        Patient p3 = new Patient(3,"Dina", 97, "Dinas 23", PatientStatus.PENTING, "", "874756356", Sex.FEMALE);
+        Patient p1 = new Patient("1","Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
+        Patient p2 = new Patient("2","Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
+        Patient p3 = new Patient("3","Dina", 97, "Dinas 23", PatientStatus.PENTING, "", "874756356", Sex.FEMALE);
 
         this.patientRepository.deleteAll();
 

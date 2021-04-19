@@ -15,7 +15,6 @@ public interface HospitalService {
 
     Optional<HospitalModel> updateHospital(HospitalForm toBeUpdatedHospital);
 
-    boolean deleteHospitalById(String id);
+    boolean deleteHospitalById(String hospital_id);
 
-    boolean deleteHospitalByHospitalId(int id);
 }

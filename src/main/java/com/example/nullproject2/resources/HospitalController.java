@@ -25,7 +25,7 @@ public class HospitalController {
         return hosrepo.findAll();
     }
 
-    @GetMapping("/findAllHospitals/{id}")
+    @GetMapping("/findHospitalById/{id}")
     public Optional<Hospital> getHospital(@PathVariable String id) {
         return hosrepo.findById(id);
     }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class HospitalModel {
 
 
-    private int hospital_id;
+    private String hospital_id;
     private String name;
     private String address;
     private String phone_number;

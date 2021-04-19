@@ -10,8 +10,8 @@ public class VaccineForm {
     private static final int CODE_MIN_SIZE = 4;
     private static final int CODE_MAX_SIZE = 5;
 
-    @Size(min = CODE_MAX_SIZE, max = CODE_MAX_SIZE, message = "Vaccine code must be between 4 and 5 numbers")
-    private String code;
+//    @Size(min = CODE_MAX_SIZE, max = CODE_MAX_SIZE, message = "Vaccine code must be between 4 and 5 numbers")
+//    private String code;
 
     private String id;
     private VaccineStatus brand;

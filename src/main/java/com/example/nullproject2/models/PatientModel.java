@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class PatientModel {
 
 
-    private int patient_id;
+    private String patient_id;
     private String name;
     private int age;
     private String address;

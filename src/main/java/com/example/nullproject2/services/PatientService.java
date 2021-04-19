@@ -13,9 +13,7 @@ public interface PatientService {
 
     List<PatientModel> getAllPatients();
 
-    Optional<PatientModel> getPatientById(String id);
-
-    Optional<PatientModel> getPatientByPatientId(int patientId);
+    Optional<PatientModel> getPatientByPatientId(String patient_id);
 
     Optional<PatientModel> addPatient (PatientForm patient) throws Exception;
 
@@ -25,9 +23,7 @@ public interface PatientService {
 
     List<PatientModel> getPatientBySex (Sex sex);
 
-    boolean deletePatientById (String id);
-
-    boolean deletePatientByPatientId (int patientId);
+    boolean deletePatientById (String patient_id);
 
     List<PatientModel> getPatientByName (String name);
 

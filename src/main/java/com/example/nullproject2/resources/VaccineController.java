@@ -25,7 +25,7 @@ public class VaccineController {
         return vacrepo.findAll();
     }
 
-    @GetMapping("/findAllVaccines/{id}")
+    @GetMapping("/findVaccineById/{id}")
     public Optional<Vaccine> getVaccine(@PathVariable String id) {
         return vacrepo.findById(id);
     }

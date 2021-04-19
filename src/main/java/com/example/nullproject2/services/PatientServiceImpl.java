@@ -14,12 +14,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Optional<PatientModel> getPatientById(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PatientModel> getPatientByPatientId(int patientId) {
+    public Optional<PatientModel> getPatientByPatientId(String patient_id) {
         return Optional.empty();
     }
 
@@ -44,14 +39,10 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public boolean deletePatientById(String id) {
+    public boolean deletePatientById(String patient_id) {
         return false;
     }
 
-    @Override
-    public boolean deletePatientByPatientId(int patientId) {
-        return false;
-    }
 
     @Override
     public List<PatientModel> getPatientByName(String name) {

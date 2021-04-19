@@ -26,7 +26,7 @@ public class VaccineServiceImpl implements VaccineService {
     }
 
     @Override
-    public Optional<VaccineModel> getVaccineById(String id) {
+    public Optional<VaccineModel> getVaccineById(String vaccine_id) {
         return Optional.empty();
     }
 

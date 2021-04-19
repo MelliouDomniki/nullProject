@@ -29,12 +29,8 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public boolean deleteHospitalById(String id) {
+    public boolean deleteHospitalById(String hospital_id) {
         return false;
     }
 
-    @Override
-    public boolean deleteHospitalByHospitalId(int id) {
-        return false;
-    }
 }

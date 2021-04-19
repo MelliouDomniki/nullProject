@@ -2,7 +2,9 @@ package com.example.nullproject2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+@EnableMongoRepositories("com.example.nullproject2.repositories")
 @SpringBootApplication
 public class NullProject2Application {
 

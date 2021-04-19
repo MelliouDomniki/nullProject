@@ -11,15 +11,15 @@ import javax.persistence.GenerationType;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Document (collection = "Hospitals")
 public class Hospital {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int hospital_id;
+    private String hospital_id;
 
     @Field(name = "name")
     private String name;

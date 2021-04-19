@@ -31,7 +31,7 @@ public class HospitalForm {
     @Pattern(regexp = HOSPITAL_ID_PATTERN, message = "Hospital ID pattern doesn't match")
     @Size(min = HOSPITAL_ID_MIN_SIZE, max = HOSPITAL_ID_MAX_SIZE, message = "Hospital ID length must be between 1 to 4 numbers")
     @NotEmpty(message = "Hospital ID can't be empty")
-    private int hospitalId;
+    private String hospitalId;
 
     @Pattern(regexp = PHONE_NUMBER_PATTERN, message  = "Phone number pattern doesn't match")
     @Size(min = PHONE_NUMBER_MIN_SIZE, max = PHONE_NUMBER_MAX_SIZE, message = "Phone number length must be 10")
