@@ -30,5 +30,16 @@ public class HospitalController {
         return hosrepo.findById(id);
     }
 
+    @PutMapping("/updateHospital")
+    public String updateHospital (@RequestBody Hospital newHospital){
+        hosrepo.save(newHospital);
+        return "Updated hospital with id: " + newHospital.getHospital_id();
+    }
+
+    @GetMapping("/findHospitalsByName/{name}")
+    public List<Hospital> hospitalsByName (@PathVariable String name)
+    {
+        return hosrepo.findByName(name);
+    }
 
 }

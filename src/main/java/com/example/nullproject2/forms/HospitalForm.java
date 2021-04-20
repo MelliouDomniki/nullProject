@@ -1,6 +1,7 @@
 package com.example.nullproject2.forms;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -42,11 +43,13 @@ public class HospitalForm {
     @NotEmpty(message = "Password can't be empty")
     private String password;
 
+
     private String id;
     private String name;
     private String address;
     private String city;
     private String country;
     private int available_doses;
+
 
 }

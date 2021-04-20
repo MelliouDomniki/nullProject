@@ -30,14 +30,13 @@ public class Vaccine {
     private Date date;
 
 
-
-    @Override
-    public String toString() {
-        return "Vaccine{" +
-                "vaccine_id='" + vaccine_id + '\'' +
-                ", brand=" + brand +
-                ", status=" + status +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Vaccine{" +
+//                "vaccine_id='" + vaccine_id + '\'' +
+//                ", brand=" + brand +
+//                ", status=" + status +
+//                '}';
+//    }
 
 }

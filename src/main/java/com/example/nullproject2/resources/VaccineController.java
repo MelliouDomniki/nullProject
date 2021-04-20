@@ -35,4 +35,10 @@ public class VaccineController {
         vacrepo.deleteById(id);
         return "vaccine deleted with id : " + id;
     }
+
+    @PutMapping("/updateVaccine")
+    public String updateVaccine (@RequestBody Vaccine newVaccine){
+        vacrepo.save(newVaccine);
+        return "Added vaccine with id: " + newVaccine.getVaccine_id();
+    }
 }

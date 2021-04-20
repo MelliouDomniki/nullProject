@@ -45,4 +45,5 @@ public class Hospital {
     @Field(name = "password")
     private String password;
 
+
 }
