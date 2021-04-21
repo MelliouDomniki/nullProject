@@ -17,7 +17,8 @@ public class PatientController {
 
     @Autowired
     private PatientRepository patrepo;
-    private PatientService patservice;
+    @Autowired
+    private PatientServiceImpl patservice;
 
     @PostMapping("/addPatient")
     public String savePatient(@RequestBody Patient patient) {
