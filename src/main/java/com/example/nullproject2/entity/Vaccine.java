@@ -9,15 +9,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Date;
 
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document (collection = "Vaccines")
 public class Vaccine {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String vaccine_id;
 
     @Field(name = "brand")

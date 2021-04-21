@@ -14,7 +14,7 @@ public class HospitalMapper {
     public static HospitalModel mapToHospitalModel(Hospital hospital){
         if (hospital == null) return null;
         HospitalModel hospitalModel = new HospitalModel();
-        hospitalModel.setHospital_id(hospitalModel.getHospital_id());
+        hospitalModel.setHospital_id(hospital.getHospital_id());
         hospitalModel.setName(hospital.getName());
         hospitalModel.setAddress(hospital.getAddress());
         hospitalModel.setPhone_number(hospital.getPhone_number());
