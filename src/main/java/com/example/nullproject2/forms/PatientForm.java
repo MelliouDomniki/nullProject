@@ -1,5 +1,6 @@
 package com.example.nullproject2.forms;
 
+import com.example.nullproject2.enumerations.PatientStatus;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -33,6 +34,8 @@ public class PatientForm {
     private String status;
     private String symptoms;
     private String sex;
+
+
 
 
 }
