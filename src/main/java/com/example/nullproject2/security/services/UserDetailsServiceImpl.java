@@ -1,8 +1,7 @@
-package com.example.nullproject2.services;
+package com.example.nullproject2.security.services;
 
 import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.repositories.UserRepository;
-import com.example.nullproject2.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
