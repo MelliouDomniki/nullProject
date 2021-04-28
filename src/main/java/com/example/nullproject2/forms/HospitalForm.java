@@ -19,13 +19,13 @@ public class HospitalForm {
     private static final String HOSPITAL_ID_PATTERN = "^[0-9]$";
 
     private static final int EMAIL_MIN_SIZE = 3;
-    private static final int EMAIL_MAX_SIZE = 255;
+    private static final int EMAIL_MAX_SIZE = 50;
     private static final int PHONE_NUMBER_MIN_SIZE = 10;
     private static final int PHONE_NUMBER_MAX_SIZE = 10;
     private static final int HOSPITAL_ID_MIN_SIZE = 1;
     private static final int HOSPITAL_ID_MAX_SIZE = 4;
-    private static final int PASSWORD_MIN_SIZE = 4;
-    private static final int PASSWORD_MAX_SIZE = 15;
+    private static final int PASSWORD_MIN_SIZE = 6;
+    private static final int PASSWORD_MAX_SIZE = 40;
 
 
     @Pattern(regexp = EMAIL_PATTERN, message = "Email pattern doesn't match")

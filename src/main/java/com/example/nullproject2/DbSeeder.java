@@ -2,6 +2,7 @@ package com.example.nullproject2;
 
 
 import ch.qos.logback.core.CoreConstants;
+import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.Vaccine;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
 
+import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
 
@@ -50,21 +52,15 @@ public class DbSeeder implements CommandLineRunner {
         vaccineRepository.save(v2);
         vaccineRepository.save(v3);
 
- //       System.out.println("****");
-//        List<Vaccine> vaccines = vaccineRepository.findAll();
-
-//        for (Vaccine i: vaccines){
-//            System.out.println(i.toString());
-//        }
 
         //HOSPITALS
-        Hospital h1 = new Hospital("123", "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa@" );
-        Hospital h2 = new Hospital("124", "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio@" );
+        /*Hospital h1 = new Hospital( "123", "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa", "axepa@");
+        Hospital h2 = new Hospital( "124", "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio","ippokratio@" );
 
         this.hospitalRepository.deleteAll();
 
         hospitalRepository.save(h1);
-        hospitalRepository.save(h2);
+        hospitalRepository.save(h2);*/
 
 
         //PATIENS
@@ -78,6 +74,8 @@ public class DbSeeder implements CommandLineRunner {
         patientRepository.save(p1);
         patientRepository.save(p2);
         patientRepository.save(p3);
+
+
 
 
 

@@ -19,6 +19,7 @@ public class HospitalModel {
     private String country;
     private int available_doses;
     private String email;
+    private String username;
     private String password;
 
 

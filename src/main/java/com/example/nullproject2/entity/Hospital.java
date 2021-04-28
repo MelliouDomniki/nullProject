@@ -1,22 +1,23 @@
 package com.example.nullproject2.entity;
+import com.example.nullproject2.roles.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document (collection = "Hospitals")
-@Table(name = "user")
 public class Hospital {
 
 
@@ -30,7 +31,6 @@ public class Hospital {
     @Field(name = "address")
     private String address;
 
-
     @Field(name = "phone_number")
     private String phone_number;
 
@@ -43,12 +43,29 @@ public class Hospital {
     @Field(name = "available_doses")
     private int available_doses;
 
-
     @Field(name = "email")
     private String email;
+
+    @Field(name = "username")
+    private String username;
 
     @Field(name = "password")
     private String password;
 
+    @DBRef
+    private Set<Role> roles = new HashSet<>();
+
+    public Hospital(String name, String address, String phone_number, String city, String country, int available_doses, String email, String username, String password){
+
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.city = city;
+        this.country = country;
+        this.available_doses = available_doses;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
 }
