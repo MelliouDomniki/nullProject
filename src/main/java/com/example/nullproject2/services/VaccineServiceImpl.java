@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class VaccineServiceImpl implements VaccineService {
+
     @Override
     public List<VaccineModel> getAllVaccines() {
         return null;
