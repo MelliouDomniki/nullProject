@@ -6,14 +6,17 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Table;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document (collection = "Hospitals")
+@Table(name = "user")
 public class Hospital {
 
 
@@ -27,6 +30,7 @@ public class Hospital {
     @Field(name = "address")
     private String address;
 
+    @Column(unique = true)
     @Field(name = "phone_number")
     private String phone_number;
 
@@ -39,6 +43,7 @@ public class Hospital {
     @Field(name = "available_doses")
     private int available_doses;
 
+    @Column(unique = true)
     @Field(name = "email")
     private String email;
 
