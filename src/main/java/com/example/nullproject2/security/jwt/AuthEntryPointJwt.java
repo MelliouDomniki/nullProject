@@ -16,10 +16,10 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
-
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        logger.error("Unauthorized error: {}", e.getMessage());
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+                         AuthenticationException authenticationException) throws IOException, ServletException{
+        logger.error("Unauthorized error: {}", authenticationException.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
     }
 

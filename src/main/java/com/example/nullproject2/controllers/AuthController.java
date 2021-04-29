@@ -8,9 +8,12 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 
-import com.example.nullproject2.entity.Hospital;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.roles.Role;
 import com.example.nullproject2.roles.Erole;
+import com.example.nullproject2.security.jwt.JwtUtils;
+import com.example.nullproject2.security.services.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,36 +27,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.nullproject2.repositories.RoleRepository;
 import com.example.nullproject2.repositories.UserRepository;
-import com.example.nullproject2.security.jwt.JwtUtils;
-import com.example.nullproject2.security.UserDetailsImpl;
+
 import com.example.nullproject2.payload.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-
 public class AuthController {
 
-
+    @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
     UserRepository userRepository;
 
+    @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String jwt = jwtUtils.genertateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
@@ -61,48 +64,50 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getPassword(),
-                roles));
+                userDetails.getEmail(),roles));
     }
 
-
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
+        if (userRepository.existsByUsername(signupRequest.getUsername())){
+            return ResponseEntity.badRequest().body(new MessageResponse(("Error: Username is already taken!")));
+        }
+        if (userRepository.existsByEmail(signupRequest.getEmail())){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: is already is use!"));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
-        }
+        User user = new User(signupRequest.getUsername(),
+                signupRequest.getEmail(),encoder.encode(signupRequest.getPassword()));
 
-        // Create new user's account
-        Hospital user = new Hospital(signUpRequest.getName(),
-                signUpRequest.getAddress(),
-                signUpRequest.getPhone_number(),
-                signUpRequest.getCity(),
-                signUpRequest.getCountry(),
-                signUpRequest.getAvailable_doses(),
-                signUpRequest.getEmail(),
-                signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword())
-        );
-
-        Set<String> strRoles = signUpRequest.getRoles();
+        Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
-        Role userRole = roleRepository.findByName(Erole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-        roles.add(userRole);
+        if (strRoles == null){
+            Role userRole = roleRepository.findByName(Erole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "mod":
+                        Role modRole = roleRepository.findByName(Erole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                        roles.add(modRole);
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(Erole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                        roles.add(userRole);
+                }
+            });
+        }
 
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return  ResponseEntity.ok(new MessageResponse("User register successfully!"));
     }
+
 }

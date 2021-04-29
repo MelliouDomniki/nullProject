@@ -33,18 +33,6 @@ public class HospitalFormMapper {
                 hospital.setCountry(hospitalForm.getCountry());
             }
         }
-        hospital.setAvailable_doses(hospitalForm.getAvailable_doses());
-        if (hospitalForm.getEmail() != null){
-            if (!hospitalForm.getEmail().isBlank()){
-                hospital.setEmail(hospitalForm.getEmail());
-            }
-        }
-        if (hospitalForm.getPassword() != null){
-            if (!hospitalForm.getPassword().isBlank()){
-                hospital.setPassword(hospitalForm.getPassword());
-            }
-        }
-
         return hospital;
     }
 
@@ -59,9 +47,6 @@ public class HospitalFormMapper {
         hospitalForm.setCity(hospital.getCity());
         hospitalForm.setCountry(hospital.getCountry());
         hospitalForm.setAvailable_doses(hospital.getAvailable_doses());
-        hospitalForm.setEmail(hospital.getEmail());
-        hospitalForm.setPassword(hospital.getPassword());
-
         return hospitalForm;
     }
 }

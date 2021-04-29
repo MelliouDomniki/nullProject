@@ -42,30 +42,4 @@ public class Hospital {
 
     @Field(name = "available_doses")
     private int available_doses;
-
-    @Field(name = "email")
-    private String email;
-
-    @Field(name = "username")
-    private String username;
-
-    @Field(name = "password")
-    private String password;
-
-    @DBRef
-    private Set<Role> roles = new HashSet<>();
-
-    public Hospital(String name, String address, String phone_number, String city, String country, int available_doses, String email, String username, String password){
-
-        this.name = name;
-        this.address = address;
-        this.phone_number = phone_number;
-        this.city = city;
-        this.country = country;
-        this.available_doses = available_doses;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
-
 }

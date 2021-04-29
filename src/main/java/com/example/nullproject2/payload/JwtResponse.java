@@ -1,15 +1,13 @@
 package com.example.nullproject2.payload;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+
 public class JwtResponse {
 
     private String token;

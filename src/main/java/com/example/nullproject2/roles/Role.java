@@ -11,7 +11,6 @@ import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
-
 @Document(collection = "roles")
 public class Role {
 
@@ -21,4 +20,7 @@ public class Role {
     private Erole name;
 
 
+    public Role(Erole name){
+        this.name = name;
+    }
 }

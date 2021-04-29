@@ -21,8 +21,6 @@ public class HospitalMapper {
         hospitalModel.setCity(hospital.getCity());
         hospitalModel.setCountry(hospital.getCountry());
         hospitalModel.setAvailable_doses(hospital.getAvailable_doses());
-        hospitalModel.setEmail(hospital.getEmail());
-        hospitalModel.setPassword(hospital.getPassword());
         return hospitalModel;
     }
 
