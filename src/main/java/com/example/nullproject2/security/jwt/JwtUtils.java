@@ -3,7 +3,7 @@ package com.example.nullproject2.security.jwt;
 
 
 
-import com.example.nullproject2.security.services.UserDetailsImpl;
+import com.example.nullproject2.security.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

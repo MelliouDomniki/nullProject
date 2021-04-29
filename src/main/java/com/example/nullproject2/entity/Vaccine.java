@@ -33,14 +33,4 @@ public class Vaccine {
     @Field(name = "date")
     private Date date;
 
-
-//    @Override
-//    public String toString() {
-//        return "Vaccine{" +
-//                "vaccine_id='" + vaccine_id + '\'' +
-//                ", brand=" + brand +
-//                ", status=" + status +
-//                '}';
-//    }
-
 }
