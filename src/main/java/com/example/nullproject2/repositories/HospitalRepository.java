@@ -13,10 +13,5 @@ import java.util.Optional;
 public interface HospitalRepository extends MongoRepository <Hospital, String> {
 
         List<Hospital> findByName(String name);
-
-        Optional<User> findByUsername(String username);
-
-        Boolean existsByUsername(String username);
-
-        Boolean existsByEmail(String email);
+        
 }

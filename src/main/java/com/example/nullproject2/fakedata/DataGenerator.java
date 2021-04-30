@@ -35,10 +35,6 @@ public class DataGenerator {
                 hospital1.setCity(faker.address().city());
                 hospital1.setCountry(faker.country().name());
 
-                hospital1.setEmail(faker.internet().emailAddress());
-                hospital1.setUsername(faker.name().username());
-                hospital1.setPassword("123456789");
-
                 hospitalRepository.save(hospital1);
                 makePatientsForHospital(hospital1);
 //                makeVaccinrsForHospital(hospital1);

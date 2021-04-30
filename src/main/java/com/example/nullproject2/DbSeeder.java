@@ -5,6 +5,7 @@ import ch.qos.logback.core.CoreConstants;
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.PatientStatus;
@@ -12,6 +13,7 @@ import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.HospitalRepository;
 import com.example.nullproject2.repositories.PatientRepository;
+import com.example.nullproject2.repositories.UserRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
@@ -27,12 +29,14 @@ public class DbSeeder implements CommandLineRunner {
     private VaccineRepository vaccineRepository;
     private HospitalRepository hospitalRepository;
     private PatientRepository patientRepository;
+    private UserRepository userRepository;
 
-    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository,PatientRepository patientRepository)
+    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository, PatientRepository patientRepository, UserRepository userRepository)
     {
         this.vaccineRepository = vaccineRepository;
         this.hospitalRepository = hospitalRepository;
         this.patientRepository = patientRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -76,6 +80,13 @@ public class DbSeeder implements CommandLineRunner {
         patientRepository.save(p3);
 
 
+
+        //Users
+
+        User user1 = new User("test","test123@gmail.com","123456789");
+
+        this.userRepository.deleteAll();
+        userRepository.save(user1);
 
 
 

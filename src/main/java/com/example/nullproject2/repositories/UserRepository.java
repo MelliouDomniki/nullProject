@@ -1,6 +1,5 @@
 package com.example.nullproject2.repositories;
 
-import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
