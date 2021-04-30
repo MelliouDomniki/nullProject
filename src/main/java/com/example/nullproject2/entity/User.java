@@ -40,6 +40,9 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
+    @DBRef
+    private Hospital hospital;
+
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;

@@ -29,24 +29,5 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotBlank
-    private String name;
-
-    @NotBlank
-    private String address;
-
-    @NotBlank
-    @Size(min=10, max=10)
-    private String phone_number;
-
-    @NotBlank
-    private String city;
-
-    @NotBlank
-    private String country;
-
-    @NotBlank
-    private int available_doses;
-
     private Set<String> roles;
 }

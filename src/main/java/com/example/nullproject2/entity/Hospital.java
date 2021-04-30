@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -42,4 +43,10 @@ public class Hospital {
 
     @Field(name = "available_doses")
     private int available_doses;
+
+    @DBRef
+    private List<Patient> patients;
+
+    @DBRef
+    private List<Vaccine> vaccines;
 }

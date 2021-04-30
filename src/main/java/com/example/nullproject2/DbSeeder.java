@@ -70,9 +70,9 @@ public class DbSeeder implements CommandLineRunner {
 
         //PATIENS
 
-        Patient p1 = new Patient("1","Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
-        Patient p2 = new Patient("2","Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
-        Patient p3 = new Patient("3","Dina", 97, "Dinas 23", PatientStatus.PENTING, "", "874756356", Sex.FEMALE);
+        Patient p1 = new Patient("1","Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE,v1);
+        Patient p2 = new Patient("2","Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE,v2);
+        Patient p3 = new Patient("3","Dina", 97, "Dinas 23", PatientStatus.PENTING, "", "874756356", Sex.FEMALE,v3);
 
         this.patientRepository.deleteAll();
 

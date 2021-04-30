@@ -9,8 +9,13 @@ import javax.validation.Valid;
 
 
 import com.example.nullproject2.entity.User;
+import com.example.nullproject2.payload.JwtResponse;
+import com.example.nullproject2.payload.LoginRequest;
+import com.example.nullproject2.payload.MessageResponse;
+import com.example.nullproject2.payload.SignupRequest;
 import com.example.nullproject2.roles.Role;
 import com.example.nullproject2.roles.Erole;
+
 import com.example.nullproject2.security.jwt.JwtUtils;
 import com.example.nullproject2.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +33,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.nullproject2.repositories.RoleRepository;
 import com.example.nullproject2.repositories.UserRepository;
 
-import com.example.nullproject2.payload.*;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
