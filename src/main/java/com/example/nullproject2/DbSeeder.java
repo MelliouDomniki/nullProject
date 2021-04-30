@@ -11,10 +11,9 @@ import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.enumerations.VaccineStatus;
-import com.example.nullproject2.repositories.HospitalRepository;
-import com.example.nullproject2.repositories.PatientRepository;
-import com.example.nullproject2.repositories.UserRepository;
-import com.example.nullproject2.repositories.VaccineRepository;
+import com.example.nullproject2.repositories.*;
+import com.example.nullproject2.roles.Erole;
+import com.example.nullproject2.roles.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
@@ -30,13 +29,15 @@ public class DbSeeder implements CommandLineRunner {
     private HospitalRepository hospitalRepository;
     private PatientRepository patientRepository;
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
-    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository, PatientRepository patientRepository, UserRepository userRepository)
+    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository, PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository)
     {
         this.vaccineRepository = vaccineRepository;
         this.hospitalRepository = hospitalRepository;
         this.patientRepository = patientRepository;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -89,6 +90,13 @@ public class DbSeeder implements CommandLineRunner {
         userRepository.save(user1);
 
 
+        //Roles
 
+        Role role1 = new Role(Erole.ROLE_USER);
+        Role role2 = new Role(Erole.ROLE_MODERATOR);
+
+        this.roleRepository.deleteAll();
+        roleRepository.save(role1);
+        roleRepository.save(role2);
     }
 }
