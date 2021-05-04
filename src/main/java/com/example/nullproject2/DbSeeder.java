@@ -1,9 +1,6 @@
 package com.example.nullproject2;
 
 
-import ch.qos.logback.core.CoreConstants;
-import com.bigchaindb.builders.BigchainDbConfigBuilder;
-import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
@@ -14,27 +11,22 @@ import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.roles.Erole;
 import com.example.nullproject2.roles.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
 
-import java.security.KeyPair;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
 
     private VaccineRepository vaccineRepository;
-    private HospitalRepository hospitalRepository;
     private PatientRepository patientRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
-    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository, PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository)
+    public DbSeeder(VaccineRepository vaccineRepository, PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository)
     {
         this.vaccineRepository = vaccineRepository;
-        this.hospitalRepository = hospitalRepository;
         this.patientRepository = patientRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -84,7 +76,7 @@ public class DbSeeder implements CommandLineRunner {
 
         //Users
 
-        User user1 = new User("test","test123@gmail.com","123456789");
+        User user1 = new User("Agios paulos","ekei 44","2310121212","Thessaloniki","Greece",12,"test","test123@gmail.com","123456789");
 
         this.userRepository.deleteAll();
         userRepository.save(user1);

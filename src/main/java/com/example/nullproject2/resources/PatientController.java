@@ -1,10 +1,7 @@
 package com.example.nullproject2.resources;
 
-import com.example.nullproject2.entity.Hospital;
 import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.repositories.PatientRepository;
-import com.example.nullproject2.services.PatientService;
 import com.example.nullproject2.services.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
