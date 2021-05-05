@@ -38,14 +38,13 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, int available_doses, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
+    public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
         this.city = city;
         this.country = country;
-        this.available_doses = available_doses;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -64,7 +63,6 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPhone_number(),
                 user.getCity(),
                 user.getCountry(),
-                user.getAvailable_doses(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),

@@ -40,9 +40,6 @@ public class User {
     @Field(name = "country")
     private String country;
 
-    @Field(name = "available_doses")
-    private int available_doses;
-
     @Field(name = "username")
     private String username;
 
@@ -56,13 +53,12 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
-    public User(String name, String address, String phone_number, String city, String country, int available_doses, String username, String email, String password) {
+    public User(String name, String address, String phone_number, String city, String country, String username, String email, String password) {
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
         this.city = city;
         this.country = country;
-        this.available_doses = available_doses ;
         this.username = username;
         this.email = email;
         this.password = password;

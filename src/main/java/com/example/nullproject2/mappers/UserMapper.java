@@ -18,7 +18,6 @@ public class UserMapper {
         userModel.setPhone_number(user.getPhone_number());
         userModel.setCity(user.getCity());
         userModel.setCountry(user.getCountry());
-        userModel.setAvailable_doses(user.getAvailable_doses());
         userModel.setUsername(user.getUsername());
         userModel.setEmail(user.getEmail());
         userModel.setPassword(user.getPassword());
