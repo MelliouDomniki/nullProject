@@ -18,6 +18,6 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    @GetMapping("/findHospitalById/{id}")
+    @GetMapping("/getHospitalById/{id}")
     public Optional<User> getHospital(@PathVariable String id) {return userRepository.getHospital(id); }
 }
