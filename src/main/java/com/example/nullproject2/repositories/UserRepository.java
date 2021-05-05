@@ -16,5 +16,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     List<User> findByName(String name);
 
+    Optional<User> getHospital(String id);
+
 
 }
