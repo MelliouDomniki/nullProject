@@ -15,12 +15,9 @@ import java.util.Set;
 public class SignupRequest {
 
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{1,63}$";
-    private static final String PHONE_NUMBER_PATTERN = "^[0-9]$";
 
     private static final int EMAIL_MIN_SIZE = 3;
     private static final int EMAIL_MAX_SIZE = 50;
-    private static final int PHONE_NUMBER_MIN_SIZE = 10;
-    private static final int PHONE_NUMBER_MAX_SIZE = 10;
     private static final int PASSWORD_MIN_SIZE = 6;
     private static final int PASSWORD_MAX_SIZE = 40;
     private static final int USERNAME_MIN_SIZE = 6;
@@ -33,10 +30,8 @@ public class SignupRequest {
     @NotEmpty(message = "Address can't be empty")
     private String address;
 
-    @Pattern(regexp = PHONE_NUMBER_PATTERN, message  = "Phone number pattern doesn't match")
-    @Size(min = PHONE_NUMBER_MIN_SIZE, max = PHONE_NUMBER_MAX_SIZE, message = "Phone number length must be 10")
     @NotEmpty(message = "Phone Number can't be empty")
-    private String phoneNumber;
+    private String phone_number;
 
     @NotEmpty(message = "City can't be empty")
     private String city;

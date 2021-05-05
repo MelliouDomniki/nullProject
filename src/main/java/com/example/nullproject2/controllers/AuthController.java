@@ -82,7 +82,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: is already is use!"));
         }
 
-        User user = new User(signupRequest.getName(),signupRequest.getAddress(),signupRequest.getPhoneNumber(),
+        User user = new User(signupRequest.getName(),signupRequest.getAddress(),signupRequest.getPhone_number(),
                 signupRequest.getCity(),signupRequest.getCountry(),signupRequest.getAvailable_doses(),
                 signupRequest.getUsername(),signupRequest.getEmail(),encoder.encode(signupRequest.getPassword()));
 
