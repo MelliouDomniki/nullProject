@@ -11,7 +11,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private UserRepository hospitalRepository;
+    private UserRepository userRepository;
 
     @Override
     public List<UserModel> getAllUsers() {

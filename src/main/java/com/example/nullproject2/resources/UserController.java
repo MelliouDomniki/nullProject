@@ -2,6 +2,9 @@ package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.repositories.UserRepository;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +21,8 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    @GetMapping("/getHospitalById/{id}")
-    public Optional<User> getHospital(@PathVariable String id) {return userRepository.getHospital(id); }
+    @GetMapping("/getHospitalAttributesById/{id}")
+    public Optional<User> getHospital(@PathVariable String id) {
+        return userRepository.getHospital(id);
+    }
 }
