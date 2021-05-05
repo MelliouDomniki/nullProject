@@ -21,8 +21,8 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    @GetMapping("/getHospitalAttributesById/{id}")
-    public Optional<User> getHospital(@PathVariable String id) {
-        return userRepository.getHospital(id);
+    @GetMapping("/getHospitalAttributesById/{username}")
+    public Optional<User> getHospital(@PathVariable String username) {
+        return userRepository.getHospital(username);
     }
 }
