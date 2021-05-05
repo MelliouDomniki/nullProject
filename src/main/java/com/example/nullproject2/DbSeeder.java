@@ -98,5 +98,7 @@ public class DbSeeder implements CommandLineRunner {
         this.roleRepository.deleteAll();
         roleRepository.save(role1);
         roleRepository.save(role2);
+
+        BigchainDBJavaDriverUsageExample examples = new BigchainDBJavaDriverUsageExample();
     }
 }

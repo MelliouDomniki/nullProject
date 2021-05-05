@@ -13,7 +13,8 @@ import java.security.KeyPair;
 @SpringBootApplication
 public class NullProject2Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+
         SpringApplication.run(NullProject2Application.class, args);
     }
 
