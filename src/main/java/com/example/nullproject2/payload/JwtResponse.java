@@ -3,11 +3,11 @@ package com.example.nullproject2.payload;
 
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class JwtResponse {
 
     private String token;
