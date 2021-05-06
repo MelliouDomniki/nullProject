@@ -37,7 +37,7 @@ public class VaccineController {
         return "vaccine deleted with id : " + id;
     }
 
-    @PutMapping("/updateVaccine")
+    @PostMapping ("/updateVaccine")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
         return "Added vaccine with id: " + newVaccine.getVaccine_id();
