@@ -15,6 +15,7 @@ public class UserModel {
     private String phone_number;
     private String city;
     private String country;
+    private int availableDoses;
     private String username;
     private String email;
     private String password;

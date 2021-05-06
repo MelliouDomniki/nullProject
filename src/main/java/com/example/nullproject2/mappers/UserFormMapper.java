@@ -15,6 +15,7 @@ public class UserFormMapper {
         user.setPhone_number(userForm.getPhoneNumber());
         user.setCity(userForm.getCity());
         user.setCountry(userForm.getCountry());
+        user.setAvailableDoses(userForm.getAvailableDoses());
         user.setUsername(userForm.getUsername());
         user.setEmail(userForm.getEmail());
         user.setPassword(userForm.getPassword());

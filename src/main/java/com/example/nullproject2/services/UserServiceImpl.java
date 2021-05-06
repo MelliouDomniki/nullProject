@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<UserModel> updateUser(UserForm toBeUpdatedUser) {
-        return Optional.empty();
+    public Optional<UserModel> updateUser(UserForm toBeUpdatedUser) {return Optional.empty();
     }
 
     @Override

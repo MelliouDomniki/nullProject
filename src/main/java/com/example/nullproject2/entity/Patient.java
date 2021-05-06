@@ -26,7 +26,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String patient_id;
+    private String id;
 
     @Field(name = "name")
     private String name;

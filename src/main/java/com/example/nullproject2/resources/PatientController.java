@@ -1,9 +1,12 @@
 package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.forms.PatientForm;
+import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.services.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +24,7 @@ public class PatientController {
     @PostMapping("/addPatient")
     public String savePatient(@RequestBody Patient patient) {
         patrepo.save(patient);
-        return "Added pattient with id: " + patient.getPatient_id();
+        return "Added patient with id: " + patient.getId();
     }
 
     @GetMapping("/findAllPatients")
@@ -40,10 +43,11 @@ public class PatientController {
         return "patient deleted with id : " + id;
     }
 
-    @PutMapping("/updatePatient")
-    public String updatePatient(@RequestBody Patient newPatient) {
-        patrepo.save(newPatient);
-        return "Updated pattient with id: " + newPatient.getPatient_id();
+
+    @PostMapping("/updatePatientById/{id}")
+    public String updatePatient(@RequestBody Patient patient) {
+        patrepo.save(patient);
+        return "Patient successfully updated with id: " + patient.getId();
     }
 
     @GetMapping("/patientsByName/{name}")

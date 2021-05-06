@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public enum PatientStatus {
 
     AVAILABLE("AVAILABLE"),
-    PENTING("PENTING"),
+    PENDING("PENDING"),
     COMPLETED("COMPLETED"),
     CANCELED("CANCELED");
 
