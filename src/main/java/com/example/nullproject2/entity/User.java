@@ -13,7 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -51,6 +53,12 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    @DBRef
+    private List<Patient> patients = new ArrayList<>();
+
+    @DBRef
+    private List<Vaccine> vaccines = new ArrayList<>();
 
 
     public User(String name, String address, String phone_number, String city, String country, String username, String email, String password) {

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Data
@@ -48,6 +50,6 @@ public class Patient {
     private Sex sex;
 
     @DBRef
-    private Vaccine vaccine;
+    private List<Vaccine> vaccines = new ArrayList<>();
 
 }
