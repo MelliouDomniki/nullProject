@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.util.Map;
 import java.util.TreeMap;
-
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
@@ -13,24 +12,28 @@ import com.bigchaindb.model.GenericCallback;
 import com.bigchaindb.model.MetaData;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.util.Base58;
-
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import okhttp3.Response;
 
 
-public class BigchainDBJavaDriverUsageExample {
+public class BigchainCall {
 
     //public   BigchainDBJavaDriverUsageExample(String args[]) throws Exception {
-    public   BigchainDBJavaDriverUsageExample() throws Exception {
+    public   BigchainCall() throws Exception {
 
       // BigchainDBJavaDriverUsageExample examples = new BigchainDBJavaDriverUsageExample();
 
-        //set configuration
-        BigchainDBJavaDriverUsageExample.setConfig();
+        //configuration
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/")
+                .addToken("header1", "")
+	            .addToken("header2", "").setup();
+
 
         //generate Keys gia kathe nosokomeio
-        KeyPair keys = BigchainDBJavaDriverUsageExample.getKeys();
+        KeyPair keys = BigchainCall.getKeys();
 
         System.out.println(Base58.encode(keys.getPublic().getEncoded()));
         System.out.println(Base58.encode(keys.getPrivate().getEncoded()));
@@ -38,23 +41,27 @@ public class BigchainDBJavaDriverUsageExample {
         // create New asset
         Map<String, String> assetData = new TreeMap<String, String>() {{
             //stoixeia vaccination
-            put("name", "");
-            put("address", "");
-            put("phone_numb", "");
+            put("patient-id", "324543");
         }};
         System.out.println("(*) Assets Prepared..");
 
         // create metadata
         MetaData metaData = new MetaData();
-        metaData.setMetaData("where is he now?", "Thailand");
-        System.out.println("(*) Metadata Prepared..");
+        metaData.setMetaData("date", "12/01/21");
+        metaData.setMetaData("vaccine-id", "12");
+        metaData.setMetaData("vaccination-status", "PENDING");
+        System.out.println("(*) Metadata Prepared.." );
 
         //execute CREATE transaction
+        //txId = to id tou asset
         String txId = this.doCreate(assetData, metaData, keys);
+
+        KeyPair targetKeys = BigchainCall.getKeys();
 
         //create transfer metadata
         MetaData transferMetadata = new MetaData();
-        transferMetadata.setMetaData("where is he now?", "Japan");
+        //prepei na vazo kai ayta pou den allazoun an metatrepo kapoia mono
+        transferMetadata.setMetaData("vaccination-status", "COMPLETED");
         System.out.println("(*) Transfer Metadata Prepared..");
 
         //let the transaction commit in block
@@ -62,7 +69,7 @@ public class BigchainDBJavaDriverUsageExample {
 
         //execute TRANSFER transaction on the CREATED asset
         //keys= new hospital
-        this.doTransfer(txId, transferMetadata, keys);
+        this.doTransfer(txId, transferMetadata, keys, targetKeys);
 
     }
 
@@ -104,16 +111,6 @@ public class BigchainDBJavaDriverUsageExample {
 
 
     /**
-     * configures connection url and credentials
-     */
-    public static void setConfig() {
-        BigchainDbConfigBuilder
-                .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
-                .addToken("app_id", "")
-                .addToken("app_key", "").setup();
-
-    }
-    /**
      * generates EdDSA keypair to sign and verify transactions
      * @return KeyPair
      */
@@ -149,6 +146,7 @@ public class BigchainDBJavaDriverUsageExample {
                     .sendTransaction(handleServerResponse());
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());
+            System.out.println(transaction.getAsset().getData());
             return transaction.getId();
 
         } catch (IOException e) {
@@ -165,7 +163,7 @@ public class BigchainDBJavaDriverUsageExample {
      * @param metaData data to append for this transaction
      * @param keys keys to sign and verify transactions
      */
-    public void doTransfer(String txId, MetaData metaData, KeyPair keys) throws Exception {
+    public void doTransfer(String txId, MetaData metaData, KeyPair keys, KeyPair targetKeys) throws Exception {
 
         Map<String, String> assetData = new TreeMap<String, String>();
         assetData.put("id", txId);
@@ -175,18 +173,21 @@ public class BigchainDBJavaDriverUsageExample {
 
             //which transaction you want to fulfill?
             FulFill fulfill = new FulFill();
-            fulfill.setOutputIndex("0");
+            fulfill.setOutputIndex(0);
             fulfill.setTransactionId(txId);
 
 
             //build and send TRANSFER transaction
             Transaction transaction = BigchainDbTransactionBuilder
                     .init()
+                    //keys apo idi owner
                     .addInput(null, fulfill, (EdDSAPublicKey) keys.getPublic())
-                    .addOutput("1", (EdDSAPublicKey) keys.getPublic())
+                    //keys apo neo owner
+                    .addOutput("1", (EdDSAPublicKey) targetKeys.getPublic())
                     .addAssets(txId, String.class)
                     .addMetaData(metaData)
                     .operation(Operations.TRANSFER)
+                    //keys apo palio owner
                     .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())
                     .sendTransaction(handleServerResponse());
 
