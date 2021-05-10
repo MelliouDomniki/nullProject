@@ -17,6 +17,18 @@ public class UserDetailsImpl implements UserDetails {
 
     private String id;
 
+    private String name;
+
+    private String address;
+
+    private String phone_number;
+
+    private String city;
+
+    private String country;
+
+    private int available_doses;
+
     private String username;
 
     private String email;
@@ -26,8 +38,13 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl (String id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
+    public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
         this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.city = city;
+        this.country = country;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -40,7 +57,12 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(
-                user.getId(),
+                user.getUser_id(),
+                user.getName(),
+                user.getAddress(),
+                user.getPhone_number(),
+                user.getCity(),
+                user.getCountry(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
@@ -71,5 +93,4 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-}
+    }

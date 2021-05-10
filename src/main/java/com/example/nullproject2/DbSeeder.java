@@ -26,15 +26,13 @@ import java.util.List;
 public class DbSeeder implements CommandLineRunner {
 
     private VaccineRepository vaccineRepository;
-    private HospitalRepository hospitalRepository;
     private PatientRepository patientRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
-    public DbSeeder(VaccineRepository vaccineRepository, HospitalRepository hospitalRepository, PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository)
+    public DbSeeder(VaccineRepository vaccineRepository, PatientRepository patientRepository, UserRepository userRepository, RoleRepository roleRepository)
     {
         this.vaccineRepository = vaccineRepository;
-        this.hospitalRepository = hospitalRepository;
         this.patientRepository = patientRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;

@@ -16,7 +16,7 @@ public class PatientFormMapper {
 
         Patient patient = new Patient();
 
-        patient.setPatient_id(patientForm.getPatient_id());
+        patient.setId(patientForm.getId());
 
         if(patientForm.getName() != null){
             if(patientForm.getName().isBlank()){
@@ -24,7 +24,7 @@ public class PatientFormMapper {
             }
         }
 
-        patient.setAge(Integer.parseInt(patientForm.getAge()));
+        patient.setAge(patientForm.getAge());
 
 
         if(patientForm.getAddress() != null){
@@ -68,9 +68,9 @@ public class PatientFormMapper {
 
         PatientForm patientForm = new PatientForm();
 
-        patientForm.setPatient_id(patient.getPatient_id());
+        patientForm.setId(patient.getId());
         patientForm.setName(patient.getName());
-        patientForm.setAge(String.valueOf(patient.getAge()));
+        patientForm.setAge(patient.getAge());
         patientForm.setAddress(patient.getAddress());
         patientForm.setStatus(String.valueOf(patient.getStatus()));
         patientForm.setSymptoms(patient.getSymptoms());

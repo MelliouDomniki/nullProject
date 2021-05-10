@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class VaccineController {
 
@@ -36,7 +37,7 @@ public class VaccineController {
         return "vaccine deleted with id : " + id;
     }
 
-    @PutMapping("/updateVaccine")
+    @PostMapping ("/updateVaccine")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
         return "Added vaccine with id: " + newVaccine.getVaccine_id();

@@ -68,9 +68,9 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail(),roles));
+                                                userDetails.getId(),
+                                                userDetails.getUsername(),
+                                                userDetails.getPassword(),roles));
     }
 
     @PostMapping("/signup")
@@ -82,8 +82,9 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: is already is use!"));
         }
 
-        User user = new User(signupRequest.getUsername(),
-                signupRequest.getEmail(),encoder.encode(signupRequest.getPassword()));
+        User user = new User(signupRequest.getName(),signupRequest.getAddress(),signupRequest.getPhone_number(),
+                signupRequest.getCity(),signupRequest.getCountry(), signupRequest.getAvailableDoses(),
+                signupRequest.getUsername(),signupRequest.getEmail(),encoder.encode(signupRequest.getPassword()));
 
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
