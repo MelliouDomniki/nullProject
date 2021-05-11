@@ -2,8 +2,10 @@ package com.example.nullproject2;
 
 import java.io.IOException;
 import java.security.KeyPair;
+import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
+
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
@@ -12,6 +14,8 @@ import com.bigchaindb.model.GenericCallback;
 import com.bigchaindb.model.MetaData;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.util.Base58;
+import com.example.nullproject2.enumerations.PatientStatus;
+import com.example.nullproject2.enumerations.VaccineStatus;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
@@ -25,84 +29,76 @@ public class BigchainCall {
 
       // BigchainDBJavaDriverUsageExample examples = new BigchainDBJavaDriverUsageExample();
 
+
         //configuration
-        BigchainDbConfigBuilder
-                .baseUrl("http://localhost:9984/")
-                .addToken("header1", "")
-	            .addToken("header2", "").setup();
+//        BigchainDbConfigBuilder
+//                .baseUrl("http://localhost:9984/")
+//                .addToken("header1", "")
+//	            .addToken("header2", "").setup();
 
 
         //generate Keys gia kathe nosokomeio
-        KeyPair keys = BigchainCall.getKeys();
+        //KeyPair keys = BigchainCall.getKeys();
 
-        System.out.println(Base58.encode(keys.getPublic().getEncoded()));
-        System.out.println(Base58.encode(keys.getPrivate().getEncoded()));
+//        System.out.println(Base58.encode(keys.getPublic().getEncoded()));
+//        System.out.println(Base58.encode(keys.getPrivate().getEncoded()));
 
         // create New asset
-        Map<String, String> assetData = new TreeMap<String, String>() {{
-            //stoixeia vaccination
-            put("patient-id", "324543");
-        }};
-        System.out.println("(*) Assets Prepared..");
-
-        // create metadata
-        MetaData metaData = new MetaData();
-        metaData.setMetaData("date", "12/01/21");
-        metaData.setMetaData("vaccine-id", "12");
-        metaData.setMetaData("vaccination-status", "PENDING");
-        System.out.println("(*) Metadata Prepared.." );
+//        Map<String, String> assetData = new TreeMap<String, String>() {{
+//            //stoixeia vaccination
+//            put("patient-id", "324543");
+//        }};
+//        System.out.println("(*) Assets Prepared..");
+//
+//        // create metadata
+//        MetaData metaData = new MetaData();
+//        metaData.setMetaData("date", "12/01/21");
+//        metaData.setMetaData("vaccine-id", "12");
+//        metaData.setMetaData("vaccination-status", "PENDING");
+//        System.out.println("(*) Metadata Prepared.." );
 
         //execute CREATE transaction
         //txId = to id tou asset
-        String txId = this.doCreate(assetData, metaData, keys);
+        //String txId = this.doCreate(assetData, metaData, keys);
 
-        KeyPair targetKeys = BigchainCall.getKeys();
+        //KeyPair targetKeys = BigchainCall.getKeys();
 
         //create transfer metadata
-        MetaData transferMetadata = new MetaData();
+        //MetaData transferMetadata = new MetaData();
         //prepei na vazo kai ayta pou den allazoun an metatrepo kapoia mono
-        transferMetadata.setMetaData("vaccination-status", "COMPLETED");
-        System.out.println("(*) Transfer Metadata Prepared..");
+        //transferMetadata.setMetaData("vaccination-status", "COMPLETED");
+        //System.out.println("(*) Transfer Metadata Prepared..");
 
         //let the transaction commit in block
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
 
         //execute TRANSFER transaction on the CREATED asset
         //keys= new hospital
-        this.doTransfer(txId, transferMetadata, keys, targetKeys);
+        //this.doTransfer(txId, transferMetadata, keys, targetKeys);
 
     }
 
-    private void onSuccess(Response response) {
-        //TODO : Add your logic here with response from server
-        System.out.println("Transaction posted successfully");
-    }
 
-    private void onFailure() {
-        //TODO : Add your logic here
-        System.out.println("Transaction failed");
-    }
-
-    private GenericCallback handleServerResponse() {
+    private static GenericCallback handleServerResponse() {
         //define callback methods to verify response from BigchainDBServer
         GenericCallback callback = new GenericCallback() {
 
             @Override
             public void transactionMalformed(Response response) {
                 System.out.println("malformed " + response.message());
-                onFailure();
+                System.out.println("Transaction failed");
             }
 
             @Override
             public void pushedSuccessfully(Response response) {
                 System.out.println("pushedSuccessfully");
-                onSuccess(response);
+                System.out.println("Transaction posted successfully");
             }
 
             @Override
             public void otherError(Response response) {
                 System.out.println("otherError" + response.message());
-                onFailure();
+                System.out.println("Transaction failed");
             }
         };
 
@@ -131,7 +127,27 @@ public class BigchainCall {
      * @param keys keys to sign and verify transaction
      * @return id of CREATED asset
      */
-    public String doCreate(Map<String, String> assetData, MetaData metaData, KeyPair keys) throws Exception {
+    public static String doCreate(KeyPair ownerKeys, String pid, Date date, String vid, PatientStatus status) throws Exception {
+
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/")
+                .addToken("header1", "")
+                .addToken("header2", "").setup();
+
+        KeyPair keys = ownerKeys;
+
+        Map<String, String> assetData = new TreeMap<String, String>() {{
+            //stoixeia vaccination
+            put("patient-id", pid);
+        }};
+        System.out.println("(*) Assets Prepared..");
+
+        // create metadata
+        MetaData metaData = new MetaData();
+        metaData.setMetaData("date", date.toString());
+        metaData.setMetaData("vaccine-id", vid);
+        metaData.setMetaData("vaccination-status", status.toString());
+        System.out.println("(*) Metadata Prepared.." );
 
         try {
             //build and send CREATE transaction
@@ -163,7 +179,7 @@ public class BigchainCall {
      * @param metaData data to append for this transaction
      * @param keys keys to sign and verify transactions
      */
-    public void doTransfer(String txId, MetaData metaData, KeyPair keys, KeyPair targetKeys) throws Exception {
+    public static void doTransfer(String txId, MetaData metaData, KeyPair keys, KeyPair targetKeys) throws Exception {
 
         Map<String, String> assetData = new TreeMap<String, String>();
         assetData.put("id", txId);

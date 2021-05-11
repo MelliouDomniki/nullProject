@@ -1,5 +1,6 @@
 package com.example.nullproject2.entity;
 
+import com.example.nullproject2.BigchainCall;
 import com.example.nullproject2.roles.Role;
 import lombok.Data;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,6 +55,9 @@ public class User {
     @Field(name = "password")
     private String password;
 
+    @Field
+    private KeyPair keys;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
@@ -73,6 +78,8 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+
+        this.keys = BigchainCall.getKeys();
     }
 
 }

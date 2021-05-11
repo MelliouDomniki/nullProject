@@ -52,4 +52,15 @@ public class Patient {
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
 
+    public Patient(String name,int age, String address, PatientStatus status, String symptoms, String amka, Sex sex)
+    {
+        this.name =name;
+        this.age=age;
+        this.address=address;
+        this.status=status;
+        this.symptoms = symptoms;
+        this.amka = amka;
+        this.sex = sex;
+    }
+
 }

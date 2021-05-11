@@ -35,4 +35,9 @@ public class Vaccine {
     @Field(name = "date")
     private Date date;
 
+    public Vaccine(Brand b, VaccineStatus s, Date d) {
+        this.brand=b;
+        this.status=s;
+        this.date=d;
+    }
 }
