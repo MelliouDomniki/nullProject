@@ -3,22 +3,25 @@ package com.example.nullproject2.payload;
 
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Data
 public class JwtResponse {
 
     private String token;
     private String type = "Bearer";
     private String username;
     private String password;
+    private String id;
     private List<String> roles;
 
 
-    public JwtResponse(String accessToken, String username, String password, List<String> roles) {
+    public JwtResponse(String accessToken,String id, String username, String password, List<String> roles) {
         this.token = accessToken;
+        this.id = id;
         this.username = username;
         this.password = password;
         this.roles = roles;

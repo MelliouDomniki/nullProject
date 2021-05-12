@@ -28,7 +28,7 @@ public abstract class RandomnessProvider {
         if (value <= 24){
             return AVAILABLE;
         }else if (value <= 49){
-            return PENTING;
+            return PENDING;
         }else if (value <= 74){
             return COMPLETED;
         }else{

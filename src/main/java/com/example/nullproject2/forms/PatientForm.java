@@ -14,22 +14,16 @@ public class PatientForm {
 
     private static final int AMKA_MIN_SIZE = 11;
     private static final int AMKA_MAX_SIZE = 11;
-    private static final int PATIENT_ID_MIN_SIZE = 1;
-    private static final int PATIENT_ID_MAX_SIZE = 6;
 
     @Pattern(regexp = AMKA_PATTERN, message = "Please use only numbers")
     @Size(min = AMKA_MIN_SIZE, max = AMKA_MAX_SIZE, message = "AMKA must be 11 characters")
     @NotEmpty
     private String amka;
 
-    @Size(min = PATIENT_ID_MIN_SIZE, max = PATIENT_ID_MAX_SIZE)
-    @NotEmpty
-    private String patient_id;
-
-
     private String id;
+
     private String name;
-    private String age;
+    private int age;
     private String address;
     private String status;
     private String symptoms;

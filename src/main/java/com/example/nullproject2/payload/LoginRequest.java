@@ -5,16 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class LoginRequest {
 
-    @NotBlank
+
+    @NotEmpty
     private String username;
 
-    @NotBlank
+    @NotEmpty
     private String password;
 
 }
