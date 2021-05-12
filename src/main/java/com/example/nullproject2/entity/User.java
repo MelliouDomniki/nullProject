@@ -1,6 +1,10 @@
 package com.example.nullproject2.entity;
 
 import com.example.nullproject2.roles.Role;
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.OneToMany;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,11 +60,13 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    @DBRef
-    private List<Patient> patients = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinProperty(name = "Patients")
+    private List<Patient> patients;
 
-    @DBRef
-    private List<Vaccine> vaccines = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinProperty(name = "vaccines")
+    private List<Vaccine> vaccines;
 
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {

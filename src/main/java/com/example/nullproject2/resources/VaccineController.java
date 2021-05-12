@@ -1,7 +1,12 @@
 package com.example.nullproject2.resources;
 
+import ch.qos.logback.core.status.Status;
 import com.example.nullproject2.entity.Vaccine;
+
+import com.example.nullproject2.enumerations.Brand;
+import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.VaccineRepository;
+import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,9 +42,19 @@ public class VaccineController {
         return "vaccine deleted with id : " + id;
     }
 
-    @PutMapping("/updateVaccine")
+    @PostMapping ("/updateVaccine")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
         return "Added vaccine with id: " + newVaccine.getVaccine_id();
+    }
+
+    @GetMapping("/findAllVaccinesByBrand/{brand}")
+    public List<Vaccine> getVaccinesByBrand(@PathVariable Brand brand) {
+        return vacrepo.findByBrand(brand);
+    }
+
+    @GetMapping("/findAllVaccinesByStatus/{vaccineStatus}")
+    public List<Vaccine> getVaccinesByStatus(@PathVariable VaccineStatus vaccineStatus) {
+        return vacrepo.findByStatus(vaccineStatus);
     }
 }
