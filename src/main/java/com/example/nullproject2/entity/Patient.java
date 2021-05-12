@@ -3,6 +3,7 @@ package com.example.nullproject2.entity;
 
 import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
+import io.github.kaiso.relmongo.annotation.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,7 +50,10 @@ public class Patient {
     @Field(name = "sex")
     private Sex sex;
 
+    @ManyToOne(mappedBy = "patients")
+    private User user;
+
     @DBRef
-    private List<Vaccine> vaccines = new ArrayList<>();
+    private List<Vaccine> vaccines;
 
 }
