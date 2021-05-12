@@ -9,11 +9,10 @@ import java.util.TreeMap;
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
 import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.FulFill;
-import com.bigchaindb.model.GenericCallback;
-import com.bigchaindb.model.MetaData;
-import com.bigchaindb.model.Transaction;
+import com.bigchaindb.model.*;
 import com.bigchaindb.util.Base58;
+import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
@@ -120,33 +119,38 @@ public class BigchainCall {
 
     }
 
-    /**
+    /*
      * performs CREATE transactions on BigchainDB network
      * @param assetData data to store as asset
      * @param metaData data to store as metadata
      * @param keys keys to sign and verify transaction
      * @return id of CREATED asset
      */
-    public static String doCreate(KeyPair ownerKeys, String pid, Date date, String vid, PatientStatus status) throws Exception {
+    public static String doCreate(User h, Patient pat, Date date, String vid) throws Exception {
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("header1", "")
                 .addToken("header2", "").setup();
 
-        KeyPair keys = ownerKeys;
+       // KeyPair keys = h.getKeypair();
+        KeyPair keys = BigchainCall.getKeys();
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
             //stoixeia vaccination
-            put("patient-id", pid);
+            put("patient-id",pat.getId());
+            put("patient-age", String.valueOf(pat.getAge()));
         }};
         System.out.println("(*) Assets Prepared..");
 
         // create metadata
         MetaData metaData = new MetaData();
         metaData.setMetaData("date", date.toString());
+        metaData.setMetaData("hospital-name", h.getName());
+        metaData.setMetaData("hospital-city", h.getCity());
+        metaData.setMetaData("hospital-country", h.getCountry());
         metaData.setMetaData("vaccine-id", vid);
-        metaData.setMetaData("vaccination-status", status.toString());
+        metaData.setMetaData("vaccination-status", pat.getStatus().toString());
         System.out.println("(*) Metadata Prepared.." );
 
         try {

@@ -55,8 +55,8 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    @Field
-    private KeyPair keys;
+//    @DBRef
+//    public KeyPair keypair;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
@@ -78,8 +78,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-
-        this.keys = BigchainCall.getKeys();
+//        this.keypair = BigchainCall.getKeys();
     }
 
 }

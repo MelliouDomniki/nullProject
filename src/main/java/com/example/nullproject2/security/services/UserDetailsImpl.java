@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.KeyPair;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
+    //private KeyPair keys;
+
     @JsonIgnore
     private String password;
 
@@ -48,6 +51,7 @@ public class UserDetailsImpl implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
+       // this.keys= keys;
         this.authorities = authorities;
     }
 
@@ -57,6 +61,7 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(
+                //user.getKeys(),
                 user.getUser_id(),
                 user.getName(),
                 user.getAddress(),
