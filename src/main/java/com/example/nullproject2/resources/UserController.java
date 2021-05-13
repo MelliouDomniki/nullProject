@@ -26,25 +26,6 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    MongoTemplate mongoTemplate;
-
-    @Autowired
-    private PatientRepository patientRepository;
-
-    @PostMapping("/addPatient/{username}")
-    public String addPatient(@PathVariable String username, @RequestBody Patient patients){
-        User user;
-        user = mongoTemplate.findOne(
-                Query.query(Criteria.where("username").is(username)),User.class);
-        if (user != null) {
-            user.setPatients(Collections.singleton(patients));
-            userRepository.save(user);
-        }
-        patientRepository.save(patients);
-        return "all done";
-    }
-
     @GetMapping("/getHospitalAttributesById/{username}")
     public Optional<User> getHospital(@PathVariable String username) {
         return userRepository.getHospital(username);

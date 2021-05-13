@@ -15,7 +15,7 @@ public class VaccineFormMapper {
 
         Vaccine vaccine = new Vaccine();
 
-        vaccine.setVaccine_id(vaccineForm.getId());
+        vaccine.setId(vaccineForm.getId());
 
         if (vaccineForm.getBrand() != null) {
             if (vaccineForm.getBrand().isBlank()){
@@ -42,7 +42,7 @@ public class VaccineFormMapper {
 
         VaccineForm vaccineForm = new VaccineForm();
 
-        vaccineForm.setId(vaccine.getVaccine_id());
+        vaccineForm.setId(vaccine.getId());
         vaccineForm.setBrand(String.valueOf(vaccine.getBrand()));
         vaccineForm.setStatus(String.valueOf(vaccine.getStatus()));
         vaccineForm.setDate(vaccine.getDate());

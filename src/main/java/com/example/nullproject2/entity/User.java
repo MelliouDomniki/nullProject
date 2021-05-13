@@ -61,10 +61,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @DBRef
-    private Set<Patient> patients = new HashSet<>();
-
-    @DBRef
-    private List<Vaccine> vaccines;
+    private List<Vaccine> vaccines = new ArrayList<>();
 
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {

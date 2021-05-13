@@ -1,16 +1,24 @@
 package com.example.nullproject2.resources;
 
 import ch.qos.logback.core.status.Status;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
+import com.example.nullproject2.fakedata.RandomnessProvider;
+import com.example.nullproject2.repositories.UserRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
 import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,18 +28,31 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class VaccineController {
 
+    private Query query;
     @Autowired
     private VaccineRepository vacrepo;
 
-    @PostMapping("/addVaccine")
-    public String saveVaccine (@RequestBody Vaccine vaccine){
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    @PostMapping("{username}/addVaccine")
+    public String saveVaccine (@PathVariable String username,@RequestBody Vaccine vaccine){
+        Update update = new Update();
+        update.addToSet("vaccines", vaccine);
+        Criteria criteria = Criteria.where("username").is(username);
+        mongoTemplate.updateFirst(Query.query(criteria), update, "users");
         vacrepo.save(vaccine);
-        return "Added vaccine with id: " + vaccine.getVaccine_id();
+        return "Added vaccine with id: " + vaccine.getId();
     }
 
-    @GetMapping("/findAllVaccines")
-    public List<Vaccine> getVaccines() {
-        return vacrepo.findAll();
+    @GetMapping("{username}/findAllVaccines")
+    public List<User> getVaccines(@PathVariable String username) {
+        query.addCriteria(Criteria.where("username").is(username));
+        query.fields().include("vaccines");
+        return mongoTemplate.find(query, User.class, "users");
     }
 
     @GetMapping("/findVaccineById/{id}")
@@ -48,12 +69,12 @@ public class VaccineController {
     @PostMapping ("/updateVaccine")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
-        return "Added vaccine with id: " + newVaccine.getVaccine_id();
+        return "Added vaccine with id: " + newVaccine.getId();
     }
 
-    @GetMapping("/findAllVaccinesByBrand/{brand}")
-    public List<Vaccine> getVaccinesByBrand(@PathVariable Brand brand) {
-        return vacrepo.findByBrand(brand);
+    @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
+    public List<Vaccine> getVaccinesByBrand(@PathVariable String username,@PathVariable Brand brand) {
+       vacrepo.findByBrand(brand);
     }
 
     @GetMapping("/findAllVaccinesByStatus/{vaccineStatus}")
@@ -62,7 +83,7 @@ public class VaccineController {
     }
 
     @PostMapping("addVaccines/{number}")
-    public String addVaccines (@PathVariable int number,@RequestBody Vaccine vaccine){
+    public String addVaccines (@PathVariable int number){
         LocalDate start =LocalDate.of(2022, 6, 8);
 
         //random date
@@ -78,16 +99,7 @@ public class VaccineController {
 
             long randomEpochDay = ThreadLocalRandom.current().nextLong(startdate, enddate);
             Date d = new Date(randomEpochDay);
-            if (i==0 || i==3 || i==8)
-                b = Brand.ASTRAZENECA;
-            else if (i==1 || i==7)
-                b = Brand.JOHNSON;
-            else if (i==2 || i==5 || i==9)
-                b = Brand.MODERNA;
-            else if (i==4)
-                b = Brand.PFIZER;
-            else
-                b = Brand.NOVAVAX;
+            b = RandomnessProvider.getBrand();
 
             Vaccine v = new Vaccine(b,s,d);
             vacrepo.save(v);

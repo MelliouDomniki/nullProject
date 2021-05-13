@@ -43,7 +43,6 @@ public class SignupRequest {
     private int availableDoses;
 
     @Size(min = USERNAME_MIN_SIZE, max = USERNAME_MAX_SIZE, message = "username must be between 6 and 25 characters")
-    @NotEmpty
     @NotEmpty(message = "Username can't be empty")
     private String username;
 

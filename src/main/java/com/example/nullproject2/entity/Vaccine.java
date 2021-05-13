@@ -3,16 +3,12 @@ package com.example.nullproject2.entity;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.kaiso.relmongo.annotation.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import java.util.Date;
 
 
@@ -23,8 +19,7 @@ import java.util.Date;
 public class Vaccine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String vaccine_id;
+    private String id;
 
     @Field(name = "brand")
     private Brand brand;
