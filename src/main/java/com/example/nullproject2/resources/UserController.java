@@ -1,16 +1,22 @@
 package com.example.nullproject2.resources;
 
+import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
+import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.UserRepository;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Collation;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -20,6 +26,24 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @PostMapping("/addPatient/{username}")
+    public String addPatient(@PathVariable String username, @RequestBody Patient patients){
+        User user;
+        user = mongoTemplate.findOne(
+                Query.query(Criteria.where("username").is(username)),User.class);
+        if (user != null) {
+            user.setPatients(Collections.singleton(patients));
+            userRepository.save(user);
+        }
+        patientRepository.save(patients);
+        return "all done";
+    }
 
     @GetMapping("/getHospitalAttributesById/{username}")
     public Optional<User> getHospital(@PathVariable String username) {

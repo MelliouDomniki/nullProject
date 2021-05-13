@@ -3,6 +3,7 @@ package com.example.nullproject2.entity;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.kaiso.relmongo.annotation.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,4 @@ public class Vaccine {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Field(name = "date")
     private Date date;
-
 }

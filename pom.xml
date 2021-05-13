@@ -132,6 +132,13 @@
             <artifactId>bigchaindb-driver</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.kaiso.relmongo</groupId>
+            <artifactId>relmongo</artifactId>
+            <version>3.5.0-RC4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

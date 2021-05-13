@@ -1,6 +1,10 @@
 package com.example.nullproject2.entity;
 
 import com.example.nullproject2.roles.Role;
+import io.github.kaiso.relmongo.annotation.CascadeType;
+import io.github.kaiso.relmongo.annotation.FetchType;
+import io.github.kaiso.relmongo.annotation.JoinProperty;
+import io.github.kaiso.relmongo.annotation.OneToMany;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +29,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String user_id;
+    private String id;
 
     @Field(name = "name")
     private String name;
@@ -57,10 +61,10 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @DBRef
-    private List<Patient> patients = new ArrayList<>();
+    private Set<Patient> patients = new HashSet<>();
 
     @DBRef
-    private List<Vaccine> vaccines = new ArrayList<>();
+    private List<Vaccine> vaccines;
 
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
