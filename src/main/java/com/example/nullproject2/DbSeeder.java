@@ -17,6 +17,8 @@ import com.example.nullproject2.roles.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
+
+import java.security.KeyPair;
 import java.util.Date;
 import java.util.List;
 
@@ -76,9 +78,6 @@ public class DbSeeder implements CommandLineRunner {
         patientRepository.save(p1);
         patientRepository.save(p2);
         patientRepository.save(p3);
-
-
-
         //Roles
 
         Role role1 = new Role(Erole.ROLE_USER);
@@ -91,9 +90,18 @@ public class DbSeeder implements CommandLineRunner {
         Date date1 = new Date(2021, 07, 21);
 
         //String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1.getVaccine_id());
-        String id = BigchainCall.doCreate(h1,p1,date1, v1.getVaccine_id());
-        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
-        System.out.println(t.getTransactions().size());
+        KeyPair keys = BigchainCall.getKeys();
+        System.out.println(keys.getPublic());
+        KeyPair keys2 = BigchainCall.getKeys();
+        System.out.println(keys2.getPublic());
+        KeyPair keys3 = BigchainCall.getKeys();
+        System.out.println(keys3.getPublic());
+        String id = BigchainCall.doCreate(h1,p2,date1, v1.getVaccine_id(), keys);
+        BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys, keys2);
+        BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys2, keys3);
+//        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
+//        for (Transaction tr: t.getTransactions())
+//            System.out.println(t.getTransactions().toString());
 
 
 

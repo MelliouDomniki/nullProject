@@ -15,6 +15,7 @@ import com.bigchaindb.model.*;
 import com.bigchaindb.util.Base58;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
+import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
@@ -80,26 +81,26 @@ public class BigchainCall {
     }
 
 
-    private static GenericCallback handleServerResponse() {
+    private static GenericCallback handleServerResponse(String type) {
         //define callback methods to verify response from BigchainDBServer
         GenericCallback callback = new GenericCallback() {
 
             @Override
             public void transactionMalformed(Response response) {
                 System.out.println("malformed " + response.message());
-                System.out.println("Transaction failed");
+                System.out.println("Transaction failed" + type);
             }
 
             @Override
             public void pushedSuccessfully(Response response) {
                 System.out.println("pushedSuccessfully");
-                System.out.println("Transaction posted successfully");
+                System.out.println("Transaction posted successfully" + type);
             }
 
             @Override
             public void otherError(Response response) {
                 System.out.println("otherError" + response.message());
-                System.out.println("Transaction failed");
+                System.out.println("Transaction failed" + type);
             }
         };
 
@@ -128,16 +129,16 @@ public class BigchainCall {
      * @param keys keys to sign and verify transaction
      * @return id of CREATED asset
      */
-    public static String doCreate(User h, Patient pat, Date date, String vid) throws Exception {
+    public static String doCreate(User h, Patient pat, Date date, String vid, KeyPair keys) throws Exception {
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("header1", "")
                 .addToken("header2", "").setup();
 
-       // KeyPair keys = h.getKeypair();
-        PublicKey pubkey = h.getPublickey();
-        PrivateKey prikey = h.getPrivatekey();
+          //KeyPair keys = getKeys();
+//        PublicKey pubkey = h.getPublickey();
+//        PrivateKey prikey = h.getPrivatekey();
 
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
@@ -166,8 +167,8 @@ public class BigchainCall {
                     .addAssets(assetData, TreeMap.class)
                     .addMetaData(metaData)
                     .operation(Operations.CREATE)
-                    .buildAndSign((EdDSAPublicKey) pubkey, (EdDSAPrivateKey) prikey)
-                    .sendTransaction(handleServerResponse());
+                    .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())
+                    .sendTransaction(handleServerResponse("c"));
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());
             System.out.println(transaction.getAsset().getData());
@@ -187,10 +188,19 @@ public class BigchainCall {
      * @param metaData data to append for this transaction
      * @param keys keys to sign and verify transactions
      */
-    public static void doTransfer(String txId, MetaData metaData, KeyPair keys, KeyPair targetKeys) throws Exception {
+    public static void doTransfer(String txId, Date date,User h, String vid, PatientStatus patStatus, KeyPair previous, KeyPair next) throws Exception {
 
         Map<String, String> assetData = new TreeMap<String, String>();
         assetData.put("id", txId);
+        MetaData trmetadata = new MetaData();
+        trmetadata.setMetaData("date", date.toString());
+        trmetadata.setMetaData("hospital-name", h.getName());
+        trmetadata.setMetaData("hospital-city", h.getCity());
+        trmetadata.setMetaData("hospital-country", h.getCountry());
+        trmetadata.setMetaData("vaccine-id", vid);
+        trmetadata.setMetaData("vaccination-status", patStatus.toString());
+
+        //KeyPair targetKeys = getKeys();
 
         try {
 
@@ -205,15 +215,15 @@ public class BigchainCall {
             Transaction transaction = BigchainDbTransactionBuilder
                     .init()
                     //keys apo idi owner
-                    .addInput(null, fulfill, (EdDSAPublicKey) keys.getPublic())
+                    .addInput(null, fulfill, (EdDSAPublicKey) previous.getPublic())
                     //keys apo neo owner
-                    .addOutput("1", (EdDSAPublicKey) targetKeys.getPublic())
+                    .addOutput("1", (EdDSAPublicKey) next.getPublic())
                     .addAssets(txId, String.class)
-                    .addMetaData(metaData)
+                    .addMetaData(trmetadata)
                     .operation(Operations.TRANSFER)
                     //keys apo palio owner
-                    .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())
-                    .sendTransaction(handleServerResponse());
+                    .buildAndSign((EdDSAPublicKey) previous.getPublic(), (EdDSAPrivateKey) previous.getPrivate())
+                    .sendTransaction(handleServerResponse("t"));
 
             System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
 

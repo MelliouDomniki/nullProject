@@ -57,7 +57,7 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    private PublicKey publickey;
+    //private PublicKey publickey;
     //private PrivateKey privatekey;
 
     @DBRef
@@ -80,9 +80,9 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        KeyPair k = BigchainCall.getKeys();
-        this.publickey = k.getPublic();
-       // this.privatekey = k.getPrivate();
+        //KeyPair k = BigchainCall.getKeys();
+        //this.publickey = k.getPublic();
+        // this.privatekey = k.getPrivate();
     }
 
 }
