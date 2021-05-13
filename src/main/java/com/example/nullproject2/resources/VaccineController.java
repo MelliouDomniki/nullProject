@@ -32,9 +32,6 @@ public class VaccineController {
     private VaccineRepository vacrepo;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private MongoTemplate mongoTemplate;
 
     @PostMapping("{username}/addVaccine")
@@ -73,12 +70,16 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
-    public List<Vaccine> getVaccinesByBrand(@PathVariable Brand brand) {
+    public List<Vaccine> getVaccinesByBrand(@PathVariable String username,@PathVariable Brand brand) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("brand").is(brand)));
        return vacrepo.findByBrand(brand);
     }
 
-    @GetMapping("/findAllVaccinesByStatus/{vaccineStatus}")
-    public List<Vaccine> getVaccinesByStatus(@PathVariable VaccineStatus vaccineStatus) {
+    @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
+    public List<Vaccine> getVaccinesByStatus(@PathVariable String username,@PathVariable VaccineStatus vaccineStatus) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(vaccineStatus)));
         return vacrepo.findByStatus(vaccineStatus);
     }
 

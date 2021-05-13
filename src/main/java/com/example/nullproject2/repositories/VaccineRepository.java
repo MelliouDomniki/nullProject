@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
-    @Query("{ 'brand' : { $regex: ?0} }")
+    @Query("{'brand' : { $regex: ?0} }")
     List<Vaccine> findByBrand(Brand brand);
 
     @Query("{ 'status' : { $regex: ?0} }")
