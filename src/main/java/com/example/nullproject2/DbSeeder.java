@@ -93,8 +93,7 @@ public class DbSeeder implements CommandLineRunner {
         //String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1.getVaccine_id());
         String id = BigchainCall.doCreate(h1,p1,date1, v1.getVaccine_id());
         Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
-        for (Transaction tr : t.getTransactions())
-        System.out.println(tr.getMetaData().toString());
+        System.out.println(t.getTransactions().size());
 
 
 

@@ -2,6 +2,8 @@ package com.example.nullproject2;
 
 import java.io.IOException;
 import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -134,7 +136,9 @@ public class BigchainCall {
                 .addToken("header2", "").setup();
 
        // KeyPair keys = h.getKeypair();
-        KeyPair keys = BigchainCall.getKeys();
+        PublicKey pubkey = h.getPublickey();
+        PrivateKey prikey = h.getPrivatekey();
+
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
             //stoixeia vaccination
@@ -162,7 +166,7 @@ public class BigchainCall {
                     .addAssets(assetData, TreeMap.class)
                     .addMetaData(metaData)
                     .operation(Operations.CREATE)
-                    .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())
+                    .buildAndSign((EdDSAPublicKey) pubkey, (EdDSAPrivateKey) prikey)
                     .sendTransaction(handleServerResponse());
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());

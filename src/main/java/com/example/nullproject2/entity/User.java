@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -55,8 +57,8 @@ public class User {
     @Field(name = "password")
     private String password;
 
-//    @DBRef
-//    public KeyPair keypair;
+    private PublicKey publickey;
+    //private PrivateKey privatekey;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
@@ -78,7 +80,9 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-//        this.keypair = BigchainCall.getKeys();
+        KeyPair k = BigchainCall.getKeys();
+        this.publickey = k.getPublic();
+       // this.privatekey = k.getPrivate();
     }
 
 }
