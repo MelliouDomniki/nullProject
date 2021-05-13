@@ -21,7 +21,7 @@ public class PatientController {
     @PostMapping("/addPatient")
     public String savePatient(@RequestBody Patient patient) {
         patrepo.save(patient);
-        return "Added pattient with id: " + patient.getId();
+        return "Added patient with id: " + patient.getId();
     }
 
     @GetMapping("/findAllPatients")

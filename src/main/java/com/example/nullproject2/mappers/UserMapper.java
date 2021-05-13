@@ -12,7 +12,7 @@ public class UserMapper {
     public static UserModel mapToUserModel(User user){
         if (user == null) return null;
         UserModel userModel = new UserModel();
-        userModel.setUser_id(user.getUser_id());
+        userModel.setUser_id(user.getId());
         userModel.setName(user.getName());
         userModel.setAddress(user.getAddress());
         userModel.setPhone_number(user.getPhone_number());

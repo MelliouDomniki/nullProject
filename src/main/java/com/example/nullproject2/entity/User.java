@@ -29,7 +29,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String user_id;
+    private String id;
 
     @Field(name = "name")
     private String name;
@@ -60,12 +60,10 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinProperty(name = "Patients")
-    private List<Patient> patients;
+    @DBRef
+    private Set<Patient> patients = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinProperty(name = "vaccines")
+    @DBRef
     private List<Vaccine> vaccines;
 
 

@@ -21,7 +21,7 @@ public class UserFormMapper {
         user.setPassword(userForm.getPassword());
 
         if(!userForm.getUser_id().isEmpty()){
-            user.setUser_id(userForm.getUser_id());
+            user.setId(userForm.getUser_id());
         }
         return user;
 
@@ -31,7 +31,7 @@ public class UserFormMapper {
         if (user == null) return null;
 
         UserForm userForm = new UserForm();
-        userForm.setUser_id(user.getUser_id());
+        userForm.setUser_id(user.getId());
         userForm.setName(user.getName());
         userForm.setAddress(user.getAddress());
         userForm.setPhoneNumber(user.getPhone_number());

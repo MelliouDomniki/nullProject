@@ -57,4 +57,12 @@ public class VaccineController {
     public List<Vaccine> getVaccinesByStatus(@PathVariable VaccineStatus vaccineStatus) {
         return vacrepo.findByStatus(vaccineStatus);
     }
+
+    @PostMapping("addVaccines/{number}")
+    public String addVaccines (@PathVariable int number,@RequestBody Vaccine vaccine){
+        for (int i = 0 ; i < number ; i++){
+            vacrepo.save(vaccine);
+        }
+        return "all good";
+    }
 }

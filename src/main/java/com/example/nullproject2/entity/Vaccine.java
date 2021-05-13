@@ -35,8 +35,4 @@ public class Vaccine {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Field(name = "date")
     private Date date;
-
-    @ManyToOne(mappedBy = "vaccines")
-    private User user;
-
 }

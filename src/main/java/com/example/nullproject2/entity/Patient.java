@@ -20,13 +20,11 @@ import java.util.List;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Document (collection = "Patients")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Field(name = "name")
@@ -50,10 +48,17 @@ public class Patient {
     @Field(name = "sex")
     private Sex sex;
 
-    @ManyToOne(mappedBy = "patients")
-    private User user;
-
     @DBRef
     private List<Vaccine> vaccines;
+
+    public Patient (String name, int age, String address, PatientStatus status, String symptoms, String amka, Sex sex){
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.status = status;
+        this.symptoms = symptoms;
+        this.amka = amka;
+        this.sex = sex;
+    }
 
 }
