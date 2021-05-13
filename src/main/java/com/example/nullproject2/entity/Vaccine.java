@@ -35,4 +35,10 @@ public class Vaccine {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Field(name = "date")
     private Date date;
+
+    public Vaccine(Brand brand, VaccineStatus status, Date date) {
+        this.brand = brand;
+        this.status = status;
+        this.date = date;
+    }
 }
