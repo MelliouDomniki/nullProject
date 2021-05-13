@@ -28,7 +28,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 public class VaccineController {
 
-    private Query query;
     @Autowired
     private VaccineRepository vacrepo;
 
@@ -50,6 +49,7 @@ public class VaccineController {
 
     @GetMapping("{username}/findAllVaccines")
     public List<User> getVaccines(@PathVariable String username) {
+        Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
         query.fields().include("vaccines");
         return mongoTemplate.find(query, User.class, "users");
@@ -73,8 +73,8 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
-    public List<Vaccine> getVaccinesByBrand(@PathVariable String username,@PathVariable Brand brand) {
-       vacrepo.findByBrand(brand);
+    public List<Vaccine> getVaccinesByBrand(@PathVariable Brand brand) {
+       return vacrepo.findByBrand(brand);
     }
 
     @GetMapping("/findAllVaccinesByStatus/{vaccineStatus}")
@@ -82,8 +82,10 @@ public class VaccineController {
         return vacrepo.findByStatus(vaccineStatus);
     }
 
-    @PostMapping("addVaccines/{number}")
-    public String addVaccines (@PathVariable int number){
+    @PostMapping("{username}/addVaccines/{number}")
+    public String addVaccines (@PathVariable String username,@PathVariable int number){
+
+        Update update = new Update();
         LocalDate start =LocalDate.of(2022, 6, 8);
 
         //random date
@@ -103,6 +105,10 @@ public class VaccineController {
 
             Vaccine v = new Vaccine(b,s,d);
             vacrepo.save(v);
+            update.addToSet("vaccines", v);
+            Criteria criteria = Criteria.where("username").is(username);
+            mongoTemplate.updateFirst(Query.query(criteria), update, "users");
+
         }
         return "all good";
     }
