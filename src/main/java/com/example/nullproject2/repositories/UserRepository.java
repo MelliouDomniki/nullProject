@@ -1,7 +1,6 @@
 package com.example.nullproject2.repositories;
 
 import com.example.nullproject2.entity.User;
-import com.example.nullproject2.entity.Vaccine;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
