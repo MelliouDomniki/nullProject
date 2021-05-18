@@ -1,24 +1,18 @@
 package com.example.nullproject2.resources;
 
-import ch.qos.logback.core.status.Status;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
-
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.fakedata.RandomnessProvider;
-import com.example.nullproject2.repositories.UserRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
-import jdk.jshell.Snippet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
