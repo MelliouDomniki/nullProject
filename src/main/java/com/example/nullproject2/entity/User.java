@@ -1,5 +1,6 @@
 package com.example.nullproject2.entity;
 
+import com.example.nullproject2.BigchainCall;
 import com.example.nullproject2.roles.Role;
 import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
@@ -17,6 +18,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +61,9 @@ public class User {
     @Field(name = "password")
     private String password;
 
+    //private PublicKey publickey;
+    //private PrivateKey privatekey;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
@@ -74,6 +81,9 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        //KeyPair k = BigchainCall.getKeys();
+        //this.publickey = k.getPublic();
+        // this.privatekey = k.getPrivate();
     }
 
 }

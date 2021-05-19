@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.Date;
 
 
@@ -19,7 +22,8 @@ import java.util.Date;
 public class Vaccine {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String vaccine_id;
 
     @Field(name = "brand")
     private Brand brand;
@@ -31,9 +35,9 @@ public class Vaccine {
     @Field(name = "date")
     private Date date;
 
-    public Vaccine(Brand brand, VaccineStatus status, Date date) {
-        this.brand = brand;
-        this.status = status;
-        this.date = date;
+    public Vaccine(Brand b, VaccineStatus s, Date d) {
+        this.brand=b;
+        this.status=s;
+        this.date=d;
     }
 }
