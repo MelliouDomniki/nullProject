@@ -2,6 +2,7 @@ package com.example.nullproject2;
 
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.constants.Operations;
+import com.bigchaindb.model.MetaData;
 import com.bigchaindb.model.Transaction;
 import com.bigchaindb.model.Transactions;
 import com.example.nullproject2.entity.Patient;
@@ -89,16 +90,21 @@ public class DbSeeder implements CommandLineRunner {
 
         Date date1 = new Date(2021, 07, 21);
 
+        new BigchainCall();
+
         //String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1.getVaccine_id());
-        KeyPair keys = BigchainCall.getKeys();
-        System.out.println(keys.getPublic());
+       KeyPair keys = BigchainCall.getKeys();
+//        System.out.println(keys.getPublic());
         KeyPair keys2 = BigchainCall.getKeys();
-        System.out.println(keys2.getPublic());
-        KeyPair keys3 = BigchainCall.getKeys();
-        System.out.println(keys3.getPublic());
-        String id = BigchainCall.doCreate(h1,p2,date1, v1.getVaccine_id(), keys);
-        BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys, keys2);
-        BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys2, keys3);
+//        System.out.println(keys2.getPublic());
+//        KeyPair keys3 = BigchainCall.getKeys();
+//        System.out.println(keys3.getPublic());
+       String id = BigchainCall.doCreate(keys);
+//        MetaData trmetadata = new MetaData();
+//        trmetadata.setMetaData("date", date1.toString());
+        BigchainCall.doTransfer(id,keys, keys2);
+        //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED);
+        //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys2);
 //        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
 //        for (Transaction tr: t.getTransactions())
 //            System.out.println(t.getTransactions().toString());
