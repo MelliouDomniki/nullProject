@@ -1,26 +1,21 @@
 package com.example.nullproject2.entity;
 
+import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
 import com.example.nullproject2.roles.Role;
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToMany;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +27,6 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Field(name = "name")
@@ -52,6 +46,7 @@ public class User {
 
     @Field(name = "available_Doses")
     private int availableDoses;
+
     @Field(name = "username")
     private String username;
 
@@ -61,8 +56,11 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    @Field(name = "keypair")
-    private List<String> keys;
+    @Field(name = "private")
+    private String privateKey;
+
+    @Field(name = "public")
+    private String publicKey;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
@@ -71,7 +69,7 @@ public class User {
     private List<Vaccine> vaccines = new ArrayList<>();
 
 
-    public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
+    public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
@@ -81,9 +79,29 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        //KeyPair k = BigchainCall.getKeys();
-        //this.publickey = k.getPublic();
-        // this.privatekey = k.getPrivate();
+        KeyPair keys = BigchainCall.getKeys();
+        EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
+        this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();
+        this.privateKey = keyPair();
     }
 
+
+    private String keyPair() throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, SignatureException {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+
+        keyGen.initialize(256, random);
+
+        KeyPair pair = keyGen.generateKeyPair();
+        PrivateKey priv = pair.getPrivate();
+        Signature dsa = Signature.getInstance("SHA1withECDSA");
+
+        dsa.initSign(priv);
+
+        String str = "This is string to sign";
+        byte[] strByte = str.getBytes("UTF-8");
+        dsa.update(strByte);
+        byte[] realSig = dsa.sign();
+        return "" + new BigInteger(1, realSig).toString(16);
+    }
 }

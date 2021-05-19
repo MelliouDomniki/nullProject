@@ -1,13 +1,14 @@
 package com.example.nullproject2.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 
+import com.example.nullproject2.BigchainCall;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.payload.JwtResponse;
 import com.example.nullproject2.payload.LoginRequest;
@@ -74,7 +75,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         if (userRepository.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse(("Error: Username is already taken!")));
         }
@@ -88,6 +89,7 @@ public class AuthController {
 
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
+
 
         if (strRoles == null){
             Role userRole = roleRepository.findByName(Erole.ROLE_USER)
@@ -108,7 +110,6 @@ public class AuthController {
                 }
             });
         }
-
         user.setRoles(roles);
         userRepository.save(user);
 

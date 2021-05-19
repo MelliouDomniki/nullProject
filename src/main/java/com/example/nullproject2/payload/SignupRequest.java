@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -56,4 +57,6 @@ public class SignupRequest {
     private String password;
 
     private Set<String> roles;
+
+    private List<String> keys;
 }
