@@ -333,6 +333,7 @@ public class BigchainCall {
 //        System.out.println(Base58.encode(keys.getPublic().getEncoded()));
 //        System.out.println(Base58.encode(keys.getPrivate().getEncoded()));
 
+
     // create New asset
 //        Map<String, String> assetData = new TreeMap<String, String>() {{
 //            //stoixeia vaccination
