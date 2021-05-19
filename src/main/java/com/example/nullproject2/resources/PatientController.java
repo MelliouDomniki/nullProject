@@ -21,7 +21,7 @@ public class PatientController {
     @PostMapping("/addPatient")
     public String savePatient(@RequestBody Patient patient) {
         patrepo.save(patient);
-        return "Added pattient with id: " + patient.getId();
+        return "Added patient with id: " + patient.getId();
     }
 
     @GetMapping("/findAllPatients")
@@ -40,10 +40,10 @@ public class PatientController {
         return "patient deleted with id : " + id;
     }
 
-    @PutMapping("/updatePatient")
+    @PostMapping("/updatePatient")
     public String updatePatient(@RequestBody Patient newPatient) {
         patrepo.save(newPatient);
-        return "Updated pattient with id: " + newPatient.getId();
+        return "Updated patient with id: " + newPatient.getId();
     }
 
     @GetMapping("/patientsByName/{name}")

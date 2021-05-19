@@ -3,7 +3,6 @@ package com.example.nullproject2.repositories;
 
 import com.example.nullproject2.entity.Patient;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

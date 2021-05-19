@@ -29,7 +29,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String user_id;
+    private String id;
 
     @Field(name = "name")
     private String name;
@@ -60,13 +60,8 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinProperty(name = "Patients")
-    private List<Patient> patients;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinProperty(name = "vaccines")
-    private List<Vaccine> vaccines;
+    @DBRef
+    private List<Vaccine> vaccines = new ArrayList<>();
 
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {

@@ -3,30 +3,21 @@ package com.example.nullproject2.entity;
 
 import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
-import io.github.kaiso.relmongo.annotation.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Document (collection = "Patients")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Field(name = "name")
@@ -50,10 +41,17 @@ public class Patient {
     @Field(name = "sex")
     private Sex sex;
 
-    @ManyToOne(mappedBy = "patients")
-    private User user;
-
     @DBRef
     private List<Vaccine> vaccines;
+
+    public Patient (String name, int age, String address, PatientStatus status, String symptoms, String amka, Sex sex){
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.status = status;
+        this.symptoms = symptoms;
+        this.amka = amka;
+        this.sex = sex;
+    }
 
 }
