@@ -61,8 +61,8 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    //private PublicKey publickey;
-    //private PrivateKey privatekey;
+    @Field(name = "keypair")
+    private List<String> keys;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();

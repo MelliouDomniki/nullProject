@@ -156,8 +156,7 @@ public class BigchainCall {
 
         return callback;
     }
-//
-//
+
 //    /**
 //     * generates EdDSA keypair to sign and verify transactions
 //     * @return KeyPair
