@@ -64,17 +64,17 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
-    public List<Vaccine> getVaccinesByBrand(@PathVariable String username,@PathVariable Brand brand) {
+    public List<User> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("brand").is(brand)));
-       return vacrepo.findByBrand(brand);
+        return mongoTemplate.find(query, User.class, "users");
     }
 
     @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
-    public List<Vaccine> getVaccinesByStatus(@PathVariable String username,@PathVariable VaccineStatus vaccineStatus) {
+    public List<User> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(vaccineStatus)));
-        return vacrepo.findByStatus(vaccineStatus);
+        return mongoTemplate.find(query, User.class, "users");
     }
 
     @PostMapping("{username}/addVaccines/{number}")
