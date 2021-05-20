@@ -76,6 +76,13 @@ public class VaccineController {
         query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(vaccineStatus)));
         return vacrepo.findByStatus(vaccineStatus);
     }
+    @GetMapping("{username}/findAvailableVaccine/{brand}")
+    public List<User> getAvailableVaccine(@PathVariable String username,@PathVariable Brand br) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(VaccineStatus.AVAILABLE)).andOperator(Criteria.where("brand").is(br)));
+        return mongoTemplate.find(query, User.class, "users");
+
+    }
 
     @PostMapping("{username}/addVaccines/{number}")
     public String addVaccines (@PathVariable String username,@PathVariable int number){

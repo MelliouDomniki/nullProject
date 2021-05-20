@@ -65,7 +65,7 @@ public class DbSeeder implements CommandLineRunner {
         User h1 = new User( "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa", "axepa@");
         User h2 = new User( "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio","ippokratio@" );
 
-        this.userRepository.deleteAll();
+       // this.userRepository.deleteAll();
         userRepository.save(h1);
         userRepository.save(h2);
 
@@ -90,11 +90,10 @@ public class DbSeeder implements CommandLineRunner {
         roleRepository.save(role1);
         roleRepository.save(role2);
 
+
         Date date1 = new Date(2021, 07, 21);
 
-        //new BigchainCall();
-
-        String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1);
+        //String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1);
 
 //        KeyPair keys2 = BigchainCall.getKeys();
 //        System.out.println(keys2.getPublic());

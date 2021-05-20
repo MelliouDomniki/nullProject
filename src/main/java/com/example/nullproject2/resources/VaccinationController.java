@@ -5,7 +5,9 @@ import com.example.nullproject2.entity.BigChain;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
+import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -15,10 +17,18 @@ import java.util.Optional;
 @RestController
 public class VaccinationController {
 
+    @Autowired
+    private VaccineController vac;
+
+
+
+
   @PostMapping("/vaccination")
   public String createVaccination(@RequestBody BigChain input) throws Exception {
 
-      return BigchainCall.doCreate(input.getHospital(), input.getPatient(), input.getDate(), input.getVaccine());
+
+      //BigchainCall.doCreate(input.getHospital(), input.getPatient(), input.getDate(), input.getVaccine());
+      return null;
     }
 
 }

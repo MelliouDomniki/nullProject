@@ -18,9 +18,9 @@ public class BigChain {
     @Id
     private String id;
 
-    private User hospital;
-    private Patient patient;
-    private Vaccine vaccine;
+    private String hospital_id;
+    private Patient patient_AMKA;
+    private Vaccine vaccine_brand;
     private Date date;
 
 }

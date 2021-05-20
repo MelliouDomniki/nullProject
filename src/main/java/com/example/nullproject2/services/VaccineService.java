@@ -25,4 +25,5 @@ public interface VaccineService {
 
     List<VaccineModel> getVaccineByDate(Date date);
 
+
 }

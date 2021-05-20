@@ -40,4 +40,5 @@ public class Vaccine {
         this.status=s;
         this.date=d;
     }
+
 }
