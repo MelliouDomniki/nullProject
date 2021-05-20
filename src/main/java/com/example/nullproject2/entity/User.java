@@ -21,6 +21,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.api.client.util.Preconditions.checkNotNull;
+
 @Data
 @NoArgsConstructor
 @Document(collection = "users")
@@ -69,7 +71,7 @@ public class User {
     private List<Vaccine> vaccines = new ArrayList<>();
 
 
-    public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
@@ -79,29 +81,5 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        KeyPair keys = BigchainCall.getKeys();
-        EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
-        this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();
-        this.privateKey = keyPair();
-    }
-
-
-    private String keyPair() throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, SignatureException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
-        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-
-        keyGen.initialize(256, random);
-
-        KeyPair pair = keyGen.generateKeyPair();
-        PrivateKey priv = pair.getPrivate();
-        Signature dsa = Signature.getInstance("SHA1withECDSA");
-
-        dsa.initSign(priv);
-
-        String str = "This is string to sign";
-        byte[] strByte = str.getBytes("UTF-8");
-        dsa.update(strByte);
-        byte[] realSig = dsa.sign();
-        return "" + new BigInteger(1, realSig).toString(16);
     }
 }
