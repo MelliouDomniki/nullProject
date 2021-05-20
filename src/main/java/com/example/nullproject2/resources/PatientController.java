@@ -23,7 +23,7 @@ public class PatientController {
     @PostMapping("/addPatient")
     public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
         if (patrepo.existsByAmka(patient.getAmka())){
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: is already is use!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already is use!"));
         }
         patrepo.save(patient);
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
