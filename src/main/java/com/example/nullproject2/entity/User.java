@@ -1,5 +1,8 @@
 package com.example.nullproject2.entity;
 
+import com.bigchaindb.builders.BigchainDbTransactionBuilder;
+import com.bigchaindb.util.Base58;
+import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
 import com.example.nullproject2.roles.Role;
 import io.github.kaiso.relmongo.annotation.CascadeType;
@@ -10,6 +13,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -18,13 +22,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.*;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -61,8 +62,11 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    @Field(name = "keypair")
-    private List<String> keys;
+    @Field(name = "keys")
+    private String keys;
+
+    @Field(name = "publicKey")
+    private String publicKey;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
@@ -81,9 +85,15 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        //KeyPair k = BigchainCall.getKeys();
-        //this.publickey = k.getPublic();
-        // this.privatekey = k.getPrivate();
+        KeyPair keys = BigchainCall.getKeys();
+        EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
+        this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
+        this.keys = KeyPairUtils.encodePrivateKeyBase64(keys);
+
     }
 
+    public KeyPair getKeys()
+    {
+        return KeyPairUtils.decodeKeyPair(this.keys);
+    }
 }

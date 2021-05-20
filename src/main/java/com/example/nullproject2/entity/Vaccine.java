@@ -23,7 +23,7 @@ public class Vaccine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String vaccine_id;
+    private String id;
 
     @Field(name = "brand")
     private Brand brand;

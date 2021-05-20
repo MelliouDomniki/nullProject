@@ -77,6 +77,7 @@ public class BigchainCall {
                     .sendTransaction(handleServerResponse("c"));
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());
+
             return transaction.getId();
 
         } catch (IOException e) {
@@ -87,7 +88,7 @@ public class BigchainCall {
         return null;
     }
 
-    public static void doTransfer(String txId, KeyPair keys,KeyPair keys2) throws Exception {
+    public static String doTransfer(String txId, KeyPair keys,KeyPair keys2) throws Exception {
 
 
         BigchainDbConfigBuilder
@@ -122,15 +123,58 @@ public class BigchainCall {
                     .sendTransaction(handleServerResponse("t"));
 
             System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
-
+            return transaction.getId();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        return null;
     }
 
+    public static String doTransfer2(String txId, KeyPair keys,KeyPair keys2) throws Exception {
+
+
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
+                .addToken("app_id", "")
+                .addToken("app_key", "").setup();
+
+        MetaData transferMetadata = new MetaData();
+        transferMetadata.setMetaData("where is he now?", "Japan");
+        System.out.println("(*) Transfer Metadata Prepared..");
+        Thread.sleep(5000);
+
+        Map<String, String> assetData = new TreeMap<String, String>();
+        assetData.put("id", "c5cc6f6b245220a1f1ca27b5bbd9c505d75b0eaa088f8c62cf8dfcf7b50737ee");
+
+        try {
+            //which transaction you want to fulfill?
+            FulFill fulfill = new FulFill();
+            fulfill.setOutputIndex(0);
+            fulfill.setTransactionId(txId);
+
+
+            //build and send TRANSFER transaction
+            Transaction transaction = BigchainDbTransactionBuilder
+                    .init()
+                    .addInput(null, fulfill, (EdDSAPublicKey) keys.getPublic())
+                    .addOutput("1", (EdDSAPublicKey) keys2.getPublic())
+                    .addAssets(txId, String.class)
+                    .addMetaData(transferMetadata)
+                    .operation(Operations.TRANSFER)
+                    .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())
+                    .sendTransaction(handleServerResponse("t"));
+
+            System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
+            return transaction.getId();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
     private static GenericCallback handleServerResponse(String type) {
         //define callback methods to verify response from BigchainDBServer
         GenericCallback callback = new GenericCallback() {
@@ -270,7 +314,7 @@ public class BigchainCall {
 //
 //    }
 
-//    public static void doTransfer(String txId, Date date,User h, String vid, PatientStatus patStatus) throws Exception {
+//    public static  doTransfer(String txId, Date date,User h, String vid, PatientStatus patStatus) throws Exception {
 //
 //        Map<String, String> assetData = new TreeMap<String, String>();
 //        assetData.put("id", txId);

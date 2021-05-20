@@ -2,9 +2,10 @@ package com.example.nullproject2;
 
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.MetaData;
-import com.bigchaindb.model.Transaction;
-import com.bigchaindb.model.Transactions;
+import com.bigchaindb.cryptoconditions.types.Ed25519Sha256Condition;
+import com.bigchaindb.model.*;
+import com.bigchaindb.util.Base58;
+import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
@@ -15,6 +16,8 @@ import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.roles.Erole;
 import com.example.nullproject2.roles.Role;
+import net.i2p.crypto.eddsa.EdDSAPublicKey;
+import org.apache.http.util.EncodingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
@@ -58,14 +61,13 @@ public class DbSeeder implements CommandLineRunner {
         vaccineRepository.save(v3);
 
 
-        //HOSPITALS
-        User h1 = new User( "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa", "axepa@");
-        User h2 = new User( "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio","ippokratio@" );
-
-        this.userRepository.deleteAll();
-
-        userRepository.save(h1);
-        userRepository.save(h2);
+//        //HOSPITALS
+//        User h1 = new User( "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa", "axepa@");
+//        User h2 = new User( "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio","ippokratio@" );
+//
+//        //this.userRepository.deleteAll();
+//        userRepository.save(h1);
+//        userRepository.save(h2);
 
 
 //        //PATIENS
@@ -90,19 +92,19 @@ public class DbSeeder implements CommandLineRunner {
 
         Date date1 = new Date(2021, 07, 21);
 
-        new BigchainCall();
+        //new BigchainCall();
 
         //String appoin1 = BigchainCall.doCreate(h1, p1, date1, v1.getVaccine_id());
-        KeyPair keys = BigchainCall.getKeys();
-//        System.out.println(keys.getPublic());
-        KeyPair keys2 = BigchainCall.getKeys();
+
+//        KeyPair keys2 = BigchainCall.getKeys();
 //        System.out.println(keys2.getPublic());
 //        KeyPair keys3 = BigchainCall.getKeys();
 //        System.out.println(keys3.getPublic());
-        String id = BigchainCall.doCreate(keys);
+       // String id = BigchainCall.doCreate(h1.getKeys());
 //        MetaData trmetadata = new MetaData();
 //        trmetadata.setMetaData("date", date1.toString());
-        BigchainCall.doTransfer(id,keys, keys2);
+      //  String id2 = BigchainCall.doTransfer(id,h1.getKeys(), h1.getKeys());
+        BigchainCall.doTransfer2( "c123429183d70bee8974c7c7914bc92dfb656c8e384f5391632fca5712b4159e",userRepository.getHospital("axepa").get().getKeys(), userRepository.getHospital("axepa").get().getKeys());
         //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED);
         //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys2);
 //        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);

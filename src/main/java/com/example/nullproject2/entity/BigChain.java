@@ -13,37 +13,14 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@Document(collection = "Bigchain")
 public class BigChain {
 
     @Id
     private String id;
 
-    @Field(name = "hospital")
-    private String hospital;
-
-    @Field(name = "patient")
-    private String patient;
-
-    @Field(name = "amka")
-    private String amka;
-
-    @Field(name = "age")
-    private int age;
-
-    @Field(name = "brand")
-    private Brand brand;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Field(name = "date")
+    private User hospital;
+    private Patient patient;
+    private Vaccine vaccine;
     private Date date;
 
-    @Field(name = "status")
-    private PatientStatus patientStatus;
-
-    @Field(name = "city")
-    private String city;
-
-    @Field(name = "country")
-    private String country;
 }
