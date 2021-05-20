@@ -3,7 +3,6 @@ package com.example.nullproject2.repositories;
 
 import com.example.nullproject2.entity.Patient;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +16,7 @@ public interface PatientRepository extends MongoRepository <Patient, String> {
     List<Patient> findByNameOrAge(String name, int age);
     List<Patient> findByNameIsLike (String name);
     List<Patient> findByNameStartsWith (String name);
+    Boolean existsByAmka(String amka);
 
 //    @Query()
 //    List<Patient> findAllPatientsByUsername(String username);

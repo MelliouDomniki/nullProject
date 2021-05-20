@@ -6,7 +6,7 @@ import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
 import com.example.nullproject2.models.PatientModel;
-import org.springframework.stereotype.Component;
+
 
 import java.util.List;
 import java.util.Optional;

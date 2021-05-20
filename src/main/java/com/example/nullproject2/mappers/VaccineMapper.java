@@ -12,7 +12,7 @@ public class VaccineMapper {
     public static VaccineModel mapToVaccineModel(Vaccine vaccine){
         if (vaccine == null) return null;
         VaccineModel vaccineModel = new VaccineModel();
-        vaccineModel.setId(vaccine.getVaccine_id());
+        vaccineModel.setId(vaccine.getId());
         vaccineModel.setBrand(vaccine.getBrand());
         vaccineModel.setStatus(vaccine.getStatus());
         vaccineModel.setDate(vaccine.getDate());

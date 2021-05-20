@@ -1,6 +1,5 @@
 package com.example.nullproject2.forms;
 
-import com.example.nullproject2.enumerations.PatientStatus;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

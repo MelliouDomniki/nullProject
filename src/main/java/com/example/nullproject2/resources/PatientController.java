@@ -1,12 +1,11 @@
 package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.forms.PatientForm;
-import com.example.nullproject2.models.PatientModel;
+import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.services.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +21,12 @@ public class PatientController {
     private PatientServiceImpl patservice;
 
     @PostMapping("/addPatient")
-    public String savePatient(@RequestBody Patient patient) {
+    public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
+        if (patrepo.existsByAmka(patient.getAmka())){
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already is use!"));
+        }
         patrepo.save(patient);
-        return "Added patient with id: " + patient.getId();
+        return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
     }
 
     @GetMapping("/findAllPatients")
@@ -43,11 +45,10 @@ public class PatientController {
         return "patient deleted with id : " + id;
     }
 
-
-    @PostMapping("/updatePatientById/{id}")
-    public String updatePatient(@RequestBody Patient patient) {
-        patrepo.save(patient);
-        return "Patient successfully updated with id: " + patient.getId();
+    @PostMapping("/updatePatient")
+    public String updatePatient(@RequestBody Patient newPatient) {
+        patrepo.save(newPatient);
+        return "Updated patient with id: " + newPatient.getId();
     }
 
     @GetMapping("/patientsByName/{name}")

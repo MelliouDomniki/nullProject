@@ -1,5 +1,6 @@
 package com.example.nullproject2.repositories;
 
+import com.example.nullproject2.entity.Appointment;
 import com.example.nullproject2.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -19,6 +20,4 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{ 'username' : ?0 }")
     Optional<User> getHospital(String username);
-
-
 }

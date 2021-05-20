@@ -1,15 +1,11 @@
 package com.example.nullproject2.resources;
 
+
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.repositories.UserRepository;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Optional;
 
@@ -20,9 +16,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-
     @GetMapping("/getHospitalAttributesById/{username}")
     public Optional<User> getHospital(@PathVariable String username) {
         return userRepository.getHospital(username);
+    }
+
+
+    @PostMapping ("/updateUser")
+    public String updateUser (@RequestBody User newUser){
+        userRepository.save(newUser);
+        return "Added user with id: " + newUser.getId();
     }
 }
