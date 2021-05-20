@@ -92,7 +92,7 @@ public class User {
 
     }
 
-    public KeyPair getKeys()
+    public KeyPair getKeyPairs()
     {
         return KeyPairUtils.decodeKeyPair(this.keys);
     }

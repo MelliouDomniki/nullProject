@@ -13,6 +13,7 @@ import com.bigchaindb.model.*;
 import com.bigchaindb.util.Base58;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
+import com.example.nullproject2.entity.Vaccine;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
@@ -46,22 +47,27 @@ public class BigchainCall {
 
     }
 
-    public static String doCreate( KeyPair keys) throws Exception {
+    public static String doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
 
+        KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
-            put("name", "James Bond");
-            put("age", "doesn't matter");
-            put("purpose", "saving the world");
+            put("AMKA", p.getAmka());
+            put("age", String.valueOf(p.getAge()));
         }};
         System.out.println("(*) Assets Prepared..");
 
         MetaData metaData = new MetaData();
-        metaData.setMetaData("where is he now?", "Thailand");
+        metaData.setMetaData("date", d.toString());
+        metaData.setMetaData("hospital-name", h.getName());
+        metaData.setMetaData("hospital-city", h.getCity());
+        metaData.setMetaData("hospital-country", h.getCountry());
+        metaData.setMetaData("vaccine-id", v.getId());
+        metaData.setMetaData("vaccination-status", p.getStatus().toString());
         System.out.println("(*) Metadata Prepared..");
 
         try {
@@ -160,7 +166,7 @@ public class BigchainCall {
                     .init()
                     .addInput(null, fulfill, (EdDSAPublicKey) keys.getPublic())
                     .addOutput("1", (EdDSAPublicKey) keys2.getPublic())
-                    .addAssets(txId, String.class)
+                    .addAssets("c5cc6f6b245220a1f1ca27b5bbd9c505d75b0eaa088f8c62cf8dfcf7b50737ee", String.class)
                     .addMetaData(transferMetadata)
                     .operation(Operations.TRANSFER)
                     .buildAndSign((EdDSAPublicKey) keys.getPublic(), (EdDSAPrivateKey) keys.getPrivate())

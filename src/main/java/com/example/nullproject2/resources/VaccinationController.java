@@ -15,11 +15,10 @@ import java.util.Optional;
 @RestController
 public class VaccinationController {
 
-//    @PostMapping("/vaccination")
-//    public String createVaccination(@RequestBody BigChain input) {
-//
-//
-//        return BigchainCall.doCreate(input.getHospital(), input.getPatient(), input.getDate(), input.getVaccine().getId());
-//    }
+  @PostMapping("/vaccination")
+  public String createVaccination(@RequestBody BigChain input) throws Exception {
+
+      return BigchainCall.doCreate(input.getHospital(), input.getPatient(), input.getDate(), input.getVaccine());
+    }
 
 }
