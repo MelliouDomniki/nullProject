@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 
-import com.example.nullproject2.BigchainCall;
+
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.payload.JwtResponse;
 import com.example.nullproject2.payload.LoginRequest;
@@ -97,13 +97,12 @@ public class AuthController {
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                switch (role) {
-                    case "mod":
-                        Role modRole = roleRepository.findByName(Erole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(modRole);
-                        break;
-                    default:
+                if (role.equals("mod") ) {
+                    Role modRole = roleRepository.findByName(Erole.ROLE_MODERATOR)
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                    roles.add(modRole);
+                }
+                else{
                         Role userRole = roleRepository.findByName(Erole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(userRole);

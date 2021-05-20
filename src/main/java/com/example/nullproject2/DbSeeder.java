@@ -1,27 +1,12 @@
 package com.example.nullproject2;
 
-import com.bigchaindb.api.TransactionsApi;
-import com.bigchaindb.constants.Operations;
-import com.bigchaindb.model.MetaData;
-import com.bigchaindb.model.Transaction;
-import com.bigchaindb.model.Transactions;
-import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.entity.User;
-import com.example.nullproject2.entity.Vaccine;
-import com.example.nullproject2.enumerations.Brand;
-import com.example.nullproject2.enumerations.PatientStatus;
-import com.example.nullproject2.enumerations.Sex;
-import com.example.nullproject2.enumerations.VaccineStatus;
+
 import com.example.nullproject2.repositories.*;
-import com.example.nullproject2.roles.Erole;
-import com.example.nullproject2.roles.Role;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
 
 import java.security.KeyPair;
-import java.util.Date;
-import java.util.List;
+
 
 @Component
 public class DbSeeder implements CommandLineRunner {

@@ -1,27 +1,21 @@
 package com.example.nullproject2.entity;
 
-import com.bigchaindb.util.KeyPairUtils;
-import com.example.nullproject2.BigchainCall;
+
 import com.example.nullproject2.roles.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.i2p.crypto.eddsa.EdDSAPrivateKey;
-import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
 import javax.persistence.Id;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.api.client.util.Preconditions.checkNotNull;
+
 
 @Data
 @NoArgsConstructor
