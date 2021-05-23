@@ -36,10 +36,20 @@ public class Vaccine {
     @Field(name = "hospital")
     private String hospitalName;
 
+    public Vaccine(Brand b, VaccineStatus s, Date d, String hospital) {
+        this.brand=b;
+        this.status=s;
+        this.date=d;
+        this.hospitalName = hospital;
+
+    }
+
     public Vaccine(Brand b, VaccineStatus s, Date d) {
         this.brand=b;
         this.status=s;
         this.date=d;
+
     }
+
 
 }

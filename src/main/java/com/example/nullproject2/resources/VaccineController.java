@@ -99,7 +99,7 @@ public class VaccineController {
             Date d = new Date(randomEpochDay);
             b = RandomnessProvider.getBrand();
 
-            Vaccine v = new Vaccine(b,s,d);
+            Vaccine v = new Vaccine(b,s,d,username);
             vacrepo.save(v);
             update.addToSet("vaccines", v);
             Criteria criteria = Criteria.where("username").is(username);

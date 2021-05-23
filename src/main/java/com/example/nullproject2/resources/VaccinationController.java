@@ -20,9 +20,6 @@ public class VaccinationController {
     @Autowired
     private VaccineController vac;
 
-
-
-
   @PostMapping("{username/vaccination")
   public String createVaccination(@RequestBody BigChain input) throws Exception {
 
