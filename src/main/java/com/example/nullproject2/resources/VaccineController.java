@@ -70,6 +70,7 @@ public class VaccineController {
         return mongoTemplate.find(query, User.class, "users");
     }
 
+    //to allaxa
     @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
     public List<User> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
         Query query = new Query();

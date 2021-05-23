@@ -18,4 +18,7 @@ public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
     @Query("{ 'status' : { $regex: ?0} }")
     List<Vaccine> findByStatus(VaccineStatus vaccineStatus);
+
+ //  @Query("{'status' : "AVAILABLE", 'brand' : { $regex: ?0} , 'username}")
+
 }

@@ -4,6 +4,8 @@ import com.bigchaindb.builders.BigchainDbTransactionBuilder;
 import com.bigchaindb.util.Base58;
 import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
+import com.example.nullproject2.repositories.VaccineRepository;
+import com.example.nullproject2.resources.VaccineController;
 import com.example.nullproject2.roles.Role;
 import io.github.kaiso.relmongo.annotation.CascadeType;
 import io.github.kaiso.relmongo.annotation.FetchType;
@@ -14,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -73,8 +76,14 @@ public class User {
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
 
+    @Autowired
+    private VaccineRepository vacrepo;
+    @Autowired
+    private VaccineController vac ;
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
+
+
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
@@ -88,6 +97,8 @@ public class User {
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
         this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
         this.keys = KeyPairUtils.encodePrivateKeyBase64(keys);
+
+        //vac.addVaccines(this.username, this.availableDoses);
 
     }
 
