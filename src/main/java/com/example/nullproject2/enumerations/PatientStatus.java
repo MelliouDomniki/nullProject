@@ -1,6 +1,6 @@
 package com.example.nullproject2.enumerations;
 
-import org.springframework.stereotype.Component;
+
 
 
 public enum PatientStatus {

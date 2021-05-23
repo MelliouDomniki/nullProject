@@ -131,6 +131,7 @@ public class BigchainCall {
             System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
             return transaction.getId();
 
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -10,8 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import java.util.Date;
 
 
@@ -22,7 +21,6 @@ import java.util.Date;
 public class Vaccine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Field(name = "brand")
@@ -34,6 +32,9 @@ public class Vaccine {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Field(name = "date")
     private Date date;
+
+    @Field(name = "hospital")
+    private String hospitalName;
 
     public Vaccine(Brand b, VaccineStatus s, Date d) {
         this.brand=b;

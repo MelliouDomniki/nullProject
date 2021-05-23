@@ -1,11 +1,12 @@
 package com.example.nullproject2.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+
 
 
 import com.example.nullproject2.entity.User;
@@ -74,7 +75,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         if (userRepository.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse(("Error: Username is already taken!")));
         }
@@ -89,26 +90,25 @@ public class AuthController {
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
+
         if (strRoles == null){
             Role userRole = roleRepository.findByName(Erole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                switch (role) {
-                    case "mod":
-                        Role modRole = roleRepository.findByName(Erole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
-                        roles.add(modRole);
-                        break;
-                    default:
+                if (role.equals("mod") ) {
+                    Role modRole = roleRepository.findByName(Erole.ROLE_MODERATOR)
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
+                    roles.add(modRole);
+                }
+                else{
                         Role userRole = roleRepository.findByName(Erole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(userRole);
                 }
             });
         }
-
         user.setRoles(roles);
         userRepository.save(user);
 

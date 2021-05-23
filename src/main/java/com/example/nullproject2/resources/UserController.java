@@ -25,6 +25,6 @@ public class UserController {
     @PostMapping ("/updateUser")
     public String updateUser (@RequestBody User newUser){
         userRepository.save(newUser);
-        return "Added vaccine with id: " + newUser.getId();
+        return "Added user with id: " + newUser.getId();
     }
 }

@@ -16,6 +16,7 @@ public class VaccineMapper {
         vaccineModel.setBrand(vaccine.getBrand());
         vaccineModel.setStatus(vaccine.getStatus());
         vaccineModel.setDate(vaccine.getDate());
+        vaccineModel.setHospitalName(vaccine.getHospitalName());
         return vaccineModel;
     }
 

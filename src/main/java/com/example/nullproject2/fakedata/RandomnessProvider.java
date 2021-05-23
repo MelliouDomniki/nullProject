@@ -1,18 +1,9 @@
 package com.example.nullproject2.fakedata;
 
 import com.example.nullproject2.enumerations.Brand;
-import com.example.nullproject2.enumerations.PatientStatus;
-import com.example.nullproject2.enumerations.Sex;
-import com.example.nullproject2.enumerations.VaccineStatus;
-import lombok.NoArgsConstructor;
-
 import java.util.Random;
-
 import static com.example.nullproject2.enumerations.Brand.*;
-import static com.example.nullproject2.enumerations.PatientStatus.*;
-import static com.example.nullproject2.enumerations.Sex.FEMALE;
-import static com.example.nullproject2.enumerations.Sex.MALE;
-import static com.example.nullproject2.enumerations.VaccineStatus.UNAVAILABLE;
+
 
 public abstract class RandomnessProvider {
 
@@ -37,5 +28,4 @@ public abstract class RandomnessProvider {
             return JOHNSON;
         }
     }
-
 }

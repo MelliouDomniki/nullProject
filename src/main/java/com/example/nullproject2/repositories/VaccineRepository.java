@@ -1,8 +1,6 @@
 package com.example.nullproject2.repositories;
 
 
-import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;

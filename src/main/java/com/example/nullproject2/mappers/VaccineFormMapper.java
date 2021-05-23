@@ -31,7 +31,11 @@ public class VaccineFormMapper {
 
         vaccineForm.setDate(vaccineForm.getDate());
 
-
+        if (vaccineForm.getHospitalName() != null) {
+            if (vaccineForm.getHospitalName().isBlank()){
+                vaccineForm.setStatus(vaccineForm.getHospitalName());
+            }
+        }
 
         return vaccine;
     }
@@ -46,6 +50,7 @@ public class VaccineFormMapper {
         vaccineForm.setBrand(String.valueOf(vaccine.getBrand()));
         vaccineForm.setStatus(String.valueOf(vaccine.getStatus()));
         vaccineForm.setDate(vaccine.getDate());
+        vaccineForm.setHospitalName(vaccine.getHospitalName());
 
         return vaccineForm;
 
