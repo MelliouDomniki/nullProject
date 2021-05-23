@@ -18,6 +18,7 @@ public class VaccineForm {
     private String brand;
     private String status;
     private Date date;
+    private String hospitalName;
 
 
 }

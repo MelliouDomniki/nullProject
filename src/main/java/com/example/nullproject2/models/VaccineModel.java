@@ -17,4 +17,5 @@ public class VaccineModel {
     private Brand brand;
     private VaccineStatus status;
     private Date date;
+    private String hospitalName;
 }
