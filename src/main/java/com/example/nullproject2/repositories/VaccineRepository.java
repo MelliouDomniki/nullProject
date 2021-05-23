@@ -9,16 +9,19 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
-    @Query("{'brand' : { $regex: ?0} }")
-    List<Vaccine> findByBrand(Brand brand);
 
-    @Query("{ 'status' : { $regex: ?0} }")
-    List<Vaccine> findByStatus(VaccineStatus vaccineStatus);
+    List<Vaccine> findByHospitalNameAndBrand(String username ,Brand brand);
 
- //  @Query("{'status' : "AVAILABLE", 'brand' : { $regex: ?0} , 'username}")
+    List<Vaccine> findByHospitalNameAndStatus(String username,VaccineStatus vaccineStatus);
 
+    List<Vaccine> findByHospitalName(String string);
+
+    List<Vaccine> findByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
+
+    Optional<Vaccine> findFirstByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
 }

@@ -55,6 +55,7 @@ public class User {
 
     @Field(name = "available_Doses")
     private int availableDoses;
+
     @Field(name = "username")
     private String username;
 
@@ -75,11 +76,6 @@ public class User {
 
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
-
-    @Autowired
-    private VaccineRepository vacrepo;
-    @Autowired
-    private VaccineController vac ;
 
     public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
 

@@ -2,6 +2,7 @@ package com.example.nullproject2.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.*;
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import com.example.nullproject2.payload.JwtResponse;
 import com.example.nullproject2.payload.LoginRequest;
 import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.payload.SignupRequest;
+import com.example.nullproject2.resources.VaccineController;
 import com.example.nullproject2.roles.Role;
 import com.example.nullproject2.roles.Erole;
 
@@ -43,6 +45,9 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    VaccineController vaccineController;
 
     @Autowired
     UserRepository userRepository;
@@ -75,7 +80,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) throws ParseException {
         if (userRepository.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.badRequest().body(new MessageResponse(("Error: Username is already taken!")));
         }
@@ -109,8 +114,12 @@ public class AuthController {
                 }
             });
         }
+        if (signupRequest.getAvailableDoses() == 0){
+            user.setAvailableDoses(50);
+        }
         user.setRoles(roles);
         userRepository.save(user);
+        vaccineController.addVaccines(user.getUsername(), user.getAvailableDoses());
 
         return  ResponseEntity.ok(new MessageResponse("User register successfully!"));
     }

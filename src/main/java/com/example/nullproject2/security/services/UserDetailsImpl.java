@@ -27,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private String country;
 
-    private int available_doses;
+    private int availableDoses;
 
     private String username;
 
@@ -38,13 +38,14 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
+    public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, int availableDoses, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
         this.city = city;
         this.country = country;
+        this.availableDoses = availableDoses;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -63,6 +64,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getPhone_number(),
                 user.getCity(),
                 user.getCountry(),
+                user.getAvailableDoses(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),

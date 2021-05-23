@@ -47,16 +47,16 @@ public class DbSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //VACCINES
-        Date d1 = new Date( 2021, 06, 21);
+//        Date d1 = new Date( 2021, 06, 21);
 
-        Vaccine v1 = new Vaccine(Brand.ASTRAZENECA, VaccineStatus.AVAILABLE, d1);
+//        Vaccine v1 = new Vaccine(Brand.ASTRAZENECA, VaccineStatus.AVAILABLE, d1);
 //        Vaccine v2 = new Vaccine( Brand.PFIZER, VaccineStatus.AVAILABLE, d1);
 //        Vaccine v3 = new Vaccine( Brand.PFIZER, VaccineStatus.AVAILABLE,  d1);
 //
 //
-        this.vaccineRepository.deleteAll();
+//        this.vaccineRepository.deleteAll();
 //
-        vaccineRepository.save(v1);
+//        vaccineRepository.save(v1);
 //        vaccineRepository.save(v2);
 //        vaccineRepository.save(v3);
 

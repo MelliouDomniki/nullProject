@@ -1,6 +1,11 @@
 package com.example.nullproject2.fakedata;
 
 import com.example.nullproject2.enumerations.Brand;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import static com.example.nullproject2.enumerations.Brand.*;
 
@@ -27,5 +32,14 @@ public abstract class RandomnessProvider {
         }else{
             return JOHNSON;
         }
+    }
+
+    public static Date getDateWithoutTimeUsingFormat() throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 1);
+        Date nextYear = calendar.getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat(
+                "dd/MM/yyyy");
+        return formatter.parse(formatter.format(nextYear));
     }
 }

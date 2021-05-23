@@ -12,11 +12,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
+import static com.example.nullproject2.fakedata.RandomnessProvider.getDateWithoutTimeUsingFormat;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -39,11 +38,8 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findAllVaccines")
-    public List<User> getVaccines(@PathVariable String username) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username));
-        query.fields().include("vaccines");
-        return mongoTemplate.find(query, User.class, "users");
+    public List<Vaccine> getVaccines(@PathVariable String username) {
+        return vacrepo.findByHospitalName(username);
     }
 
     @GetMapping("/findVaccineById/{id}")
@@ -64,42 +60,40 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
-    public List<User> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("brand").is(brand)));
-        return mongoTemplate.find(query, User.class, "users");
+    public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
+        return vacrepo.findByHospitalNameAndBrand(username, brand);
     }
 
     //to allaxa
     @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
-    public List<User> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(vaccineStatus)));
-        return mongoTemplate.find(query, User.class, "users");
+    public List<Vaccine> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
+        return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
+    }
+
+    @GetMapping("{username}/findAllVaccinesByBrandAndStatus/{brand}+{status}")
+    public List<Vaccine> getVaccinesByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
+        return vacrepo.findByHospitalNameAndBrandAndStatus(username,brand,status);
+    }
+
+    @GetMapping("{username}/findOneVaccineByBrandAndStatus/{brand}+{status}")
+    public Optional<Vaccine> getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
+        return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
     @PostMapping("{username}/addVaccines/{number}")
-    public String addVaccines (@PathVariable String username,@PathVariable int number){
+    public String addVaccines (@PathVariable String username,@PathVariable int number) throws ParseException {
 
         Update update = new Update();
-        LocalDate start =LocalDate.of(2022, 6, 8);
 
-        //random date
-        long startdate = start.toEpochDay();
-        //System.out.println(startdate);
-        LocalDate end = LocalDate.of(2023, 6, 8);
-        long enddate = end.toEpochDay();
-        //System.out.println(enddate);
         VaccineStatus s = VaccineStatus.AVAILABLE;
         Brand b;
 
         for (int i = 0 ; i < number ; i++){
 
-            long randomEpochDay = ThreadLocalRandom.current().nextLong(startdate, enddate);
-            Date d = new Date(randomEpochDay);
+
             b = RandomnessProvider.getBrand();
 
-            Vaccine v = new Vaccine(b,s,d,username);
+            Vaccine v = new Vaccine(b,s,getDateWithoutTimeUsingFormat(),username);
             vacrepo.save(v);
             update.addToSet("vaccines", v);
             Criteria criteria = Criteria.where("username").is(username);
