@@ -70,16 +70,21 @@ public class VaccineController {
        return vacrepo.findByBrand(brand);
     }
 
+    //to allaxa
     @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
-    public List<Vaccine> getVaccinesByStatus(@PathVariable String username,@PathVariable VaccineStatus vaccineStatus) {
+    public List<User> getVaccinesByStatus(@PathVariable String username,@PathVariable VaccineStatus vaccineStatus) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(vaccineStatus)));
-        return vacrepo.findByStatus(vaccineStatus);
+        return mongoTemplate.find(query, User.class, "users");
+
     }
     @GetMapping("{username}/findAvailableVaccine/{brand}")
-    public List<User> getAvailableVaccine(@PathVariable String username,@PathVariable Brand br) {
+    public List<User> getAvailableVaccine(@PathVariable String username,@PathVariable Brand brand) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(VaccineStatus.AVAILABLE)).andOperator(Criteria.where("brand").is(br)));
+        Criteria crit = new Criteria();
+        crit = crit.and("username").is(username);
+
+        query.addCriteria(Criteria.where("username").is(username).andOperator(Criteria.where("status").is(VaccineStatus.AVAILABLE)).andOperator(Criteria.where("brand").is(brand)));
         return mongoTemplate.find(query, User.class, "users");
 
     }

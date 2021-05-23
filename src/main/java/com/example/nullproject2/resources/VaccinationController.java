@@ -23,12 +23,16 @@ public class VaccinationController {
 
 
 
-  @PostMapping("/vaccination")
+  @PostMapping("{username/vaccination")
   public String createVaccination(@RequestBody BigChain input) throws Exception {
 
+      //vrisko poio hospital einai apo to id
+      //vrisko poios asthenis einai apo to AMKA
+      //vrisko available dose apo brand
 
-      //BigchainCall.doCreate(input.getHospital(), input.getPatient(), input.getDate(), input.getVaccine());
-      return null;
+
+      //BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+      return "Vaccination created";
     }
 
 }
