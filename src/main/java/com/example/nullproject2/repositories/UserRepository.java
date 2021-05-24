@@ -19,5 +19,5 @@ public interface UserRepository extends MongoRepository<User, String> {
     List<User> findByName(String name);
 
     @Query("{ 'username' : ?0 }")
-    Optional<User> getHospital(String username);
+    User getHospital(String username);
 }

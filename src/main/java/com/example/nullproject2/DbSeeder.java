@@ -14,6 +14,8 @@ import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
+import com.example.nullproject2.resources.UserController;
+import com.example.nullproject2.resources.VaccineController;
 import com.example.nullproject2.roles.Erole;
 import com.example.nullproject2.roles.Role;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
@@ -29,6 +31,8 @@ import java.util.List;
 @Component
 public class DbSeeder implements CommandLineRunner {
 
+    @Autowired
+    private VaccineController vac;
 
     private VaccineRepository vaccineRepository;
     private PatientRepository patientRepository;
@@ -72,23 +76,23 @@ public class DbSeeder implements CommandLineRunner {
 
 //        //PATIENS
 //
-//        Patient p1 = new Patient("Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
-//        Patient p2 = new Patient("Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
-//        Patient p3 = new Patient("Dina", 97, "Dinas 23", PatientStatus.PENDING, "", "874756356", Sex.FEMALE);
-//
-//        this.patientRepository.deleteAll();
-//
-//        patientRepository.save(p1);
-//        patientRepository.save(p2);
-//        patientRepository.save(p3);
-//        //Roles
-//
-//        Role role1 = new Role(Erole.ROLE_USER);
-//        Role role2 = new Role(Erole.ROLE_MODERATOR);
-//
-//        this.roleRepository.deleteAll();
-//        roleRepository.save(role1);
-//        roleRepository.save(role2);
+        Patient p1 = new Patient("Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
+        Patient p2 = new Patient("Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
+        Patient p3 = new Patient("Dina", 97, "Dinas 23", PatientStatus.PENDING, "", "874756356", Sex.FEMALE);
+
+        this.patientRepository.deleteAll();
+
+        patientRepository.save(p1);
+        patientRepository.save(p2);
+        patientRepository.save(p3);
+        //Roles
+
+        Role role1 = new Role(Erole.ROLE_USER);
+        Role role2 = new Role(Erole.ROLE_MODERATOR);
+
+        this.roleRepository.deleteAll();
+        roleRepository.save(role1);
+        roleRepository.save(role2);
 
 
         //Date date1 = new Date(2021, 07, 21);
