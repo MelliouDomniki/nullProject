@@ -19,8 +19,8 @@ public class BigChain {
     private String id;
 
     private String hospital_id;
-    private Patient patient_AMKA;
-    private Vaccine vaccine_brand;
+    private String patient_AMKA;
+    private String vaccine_brand;
     private Date date;
 
 }

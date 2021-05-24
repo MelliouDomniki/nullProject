@@ -76,7 +76,7 @@ public class VaccineController {
     }
 
     @GetMapping("{username}/findOneVaccineByBrandAndStatus/{brand}+{status}")
-    public Optional<Vaccine> getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
+    public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
@@ -87,6 +87,8 @@ public class VaccineController {
 
         VaccineStatus s = VaccineStatus.AVAILABLE;
         Brand b;
+        User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(username)), User.class);
+        int c = user.getAvailableDoses()+1;
 
         for (int i = 0 ; i < number ; i++){
 
@@ -96,6 +98,7 @@ public class VaccineController {
             Vaccine v = new Vaccine(b,s,getDateWithoutTimeUsingFormat(),username);
             vacrepo.save(v);
             update.addToSet("vaccines", v);
+            update.set("available_Doses", c++);
             Criteria criteria = Criteria.where("username").is(username);
             mongoTemplate.updateFirst(Query.query(criteria), update, "users");
 

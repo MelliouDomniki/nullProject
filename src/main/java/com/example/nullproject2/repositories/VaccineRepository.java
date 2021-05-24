@@ -23,5 +23,5 @@ public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
     List<Vaccine> findByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
 
-    Optional<Vaccine> findFirstByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
+    Vaccine findFirstByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
 }

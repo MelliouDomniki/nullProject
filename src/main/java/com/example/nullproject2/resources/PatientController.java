@@ -51,6 +51,12 @@ public class PatientController {
         return "Updated patient with id: " + newPatient.getId();
     }
 
+    @GetMapping("/patientsByAMKA/{AMKA}")
+    public Patient patientsByAMKA (@PathVariable String AMKA)
+    {
+        return patrepo.findByAmka(AMKA);
+    }
+
     @GetMapping("/patientsByName/{name}")
     public List<Patient> patientsByName (@PathVariable String name)
     {
