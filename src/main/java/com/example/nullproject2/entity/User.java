@@ -77,7 +77,7 @@ public class User {
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
 
-    public User(String name, String address, String phone_number, String city, String country, int availableDoses,String username, String email, String password) {
+    public User(String name, String address, String phone_number, String city, String country,String username, String email, String password) {
 
 
         this.name = name;
@@ -85,7 +85,6 @@ public class User {
         this.phone_number = phone_number;
         this.city = city;
         this.country = country;
-        this.availableDoses = availableDoses;
         this.username = username;
         this.email = email;
         this.password = password;

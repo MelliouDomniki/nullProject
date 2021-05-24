@@ -40,9 +40,6 @@ public class SignupRequest {
     @NotEmpty(message = "Country can't be empty")
     private String country;
 
-    @NotEmpty
-    private int availableDoses;
-
     @Size(min = USERNAME_MIN_SIZE, max = USERNAME_MAX_SIZE, message = "username must be between 6 and 25 characters")
     @NotEmpty(message = "Username can't be empty")
     private String username;
