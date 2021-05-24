@@ -1,32 +1,16 @@
 package com.example.nullproject2.entity;
 
-import com.bigchaindb.builders.BigchainDbTransactionBuilder;
-import com.bigchaindb.util.Base58;
 import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
-import com.example.nullproject2.repositories.VaccineRepository;
-import com.example.nullproject2.resources.VaccineController;
 import com.example.nullproject2.roles.Role;
-import io.github.kaiso.relmongo.annotation.CascadeType;
-import io.github.kaiso.relmongo.annotation.FetchType;
-import io.github.kaiso.relmongo.annotation.JoinProperty;
-import io.github.kaiso.relmongo.annotation.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.*;
 import java.util.*;
 
@@ -97,6 +81,7 @@ public class User {
 
     }
 
+    @JsonIgnore
     public KeyPair getKeyPairs()
     {
         return KeyPairUtils.decodeKeyPair(this.keys);
