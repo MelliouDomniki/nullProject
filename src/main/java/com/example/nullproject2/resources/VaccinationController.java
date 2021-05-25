@@ -36,13 +36,13 @@ public class VaccinationController {
     @Autowired
     private UserController us;
 
-  @PostMapping("{username}/vaccination/{amka}")
-  public String createVaccination(@PathVariable String username,@PathVariable String amka,@RequestBody BigChain input) throws Exception {
+  @PostMapping("{username}/vaccination/")
+  public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
       User hospital = us.getHospital(username);
-      Optional<Patient> patient = pat.findFirstById(input.getId());
+      Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-     // BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+      BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
       return "Vaccination created";
     }
 

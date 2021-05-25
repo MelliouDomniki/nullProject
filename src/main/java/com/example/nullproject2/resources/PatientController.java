@@ -36,8 +36,8 @@ public class PatientController {
     }
 
     @GetMapping("findId/{id}")
-    public Optional<Patient> getPatient(@PathVariable String id) {
-        return patrepo.findById(id);
+    public Patient getPatient(@PathVariable String id) {
+        return patrepo.findFirstById(id);
     }
 
     @DeleteMapping("delete/{id}")

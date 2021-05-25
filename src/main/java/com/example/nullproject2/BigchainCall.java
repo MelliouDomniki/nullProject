@@ -28,7 +28,7 @@ public class BigchainCall {
 
     }
 
-    public static void doCreate(User h, Optional<Patient> p, Date d, Vaccine v) throws Exception {
+    public static void doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
