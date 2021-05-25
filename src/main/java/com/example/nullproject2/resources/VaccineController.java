@@ -76,12 +76,12 @@ public class VaccineController {
         return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
     }
 
-    @GetMapping("findAllByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findAllByBrandAndStatus/{brand}/{status}")
     public List<Vaccine> getVaccinesByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @GetMapping("findOneByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findOneByBrandAndStatus/{brand}/{status}")
     public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
