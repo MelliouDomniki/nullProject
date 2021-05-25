@@ -38,6 +38,12 @@ public class BigChainFormMapper {
             }
         }
 
+        if(bigChainForm.getStatus() != null){
+            if(bigChainForm.getStatus().isBlank()){
+                bigchain.setStatus(bigChainForm.getStatus());
+            }
+        }
+
         bigchain.setDate(bigChainForm.getDate());
 
 
@@ -55,6 +61,7 @@ public class BigChainFormMapper {
         bigChainForm.setHosp(bigchain.getHosp());
         bigChainForm.setAMKA(bigchain.getAMKA());
         bigChainForm.setBrand(bigchain.getBrand());
+        bigChainForm.setStatus(bigchain.getStatus());
         bigChainForm.setDate(bigchain.getDate());
 
         return bigChainForm;

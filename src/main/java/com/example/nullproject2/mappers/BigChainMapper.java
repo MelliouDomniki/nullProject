@@ -17,6 +17,7 @@ public class BigChainMapper {
         patientModel.setHosp(bigchain.getHosp());
         patientModel.setAMKA(bigchain.getAMKA());
         patientModel.setBrand(bigchain.getBrand());
+        patientModel.setStatus(bigchain.getStatus());
         patientModel.setDate(bigchain.getDate());
         return patientModel;
     }

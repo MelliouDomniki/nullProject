@@ -13,6 +13,7 @@ import com.bigchaindb.model.*;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
+import com.example.nullproject2.enumerations.VaccinationStatus;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
@@ -47,7 +48,7 @@ public class BigchainCall {
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
         metaData.setMetaData("vaccine-id", v.getId());
-        metaData.setMetaData("vaccination-status", p.getStatus().toString());
+        metaData.setMetaData("vaccination-status", VaccinationStatus.PENDING.toString());
         System.out.println("(*) Metadata Prepared..");
 
         try {

@@ -15,5 +15,6 @@ public class BigChainModel {
     private String hosp;
     private String AMKA;
     private String brand;
+    private String status;
     private Date date;
 }

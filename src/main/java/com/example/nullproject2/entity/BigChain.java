@@ -20,16 +20,19 @@ public class BigChain {
     @Id
     private String id;
 
-    @Field
+
     private String hosp;
 
-    @Field
+
     private String AMKA;
 
-    @Field
+
     private String brand;
 
-    @Field
+
+    private String status;
+
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
 
