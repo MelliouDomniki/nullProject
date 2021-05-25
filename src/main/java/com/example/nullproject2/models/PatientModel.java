@@ -17,7 +17,7 @@ public class PatientModel {
     private String name;
     private int age;
     private String address;
-    private PatientStatus status;
+    private String status;
     private String symptoms;
     private String amka;
     private Sex sex;

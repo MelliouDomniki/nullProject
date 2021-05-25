@@ -56,6 +56,9 @@ public class VaccineController {
     @PostMapping ("/updateVaccine")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
+//        if (newVaccine.getStatus().){
+
+//        }
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
