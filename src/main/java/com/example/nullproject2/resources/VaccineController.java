@@ -59,6 +59,11 @@ public class VaccineController {
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
+    @GetMapping("{username}/countVaccinesByBrand/{brand}")
+    public int countVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
+        return (vacrepo.findByHospitalNameAndBrand(username, brand)).size();
+    }
+
     @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
     public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
         return vacrepo.findByHospitalNameAndBrand(username, brand);
