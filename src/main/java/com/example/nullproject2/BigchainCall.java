@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
@@ -27,7 +28,7 @@ public class BigchainCall {
 
     }
 
-    public static void doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
+    public static void doCreate(User h, Optional<Patient> p, Date d, Vaccine v) throws Exception {
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder

@@ -40,9 +40,9 @@ public class VaccinationController {
   public String createVaccination(@PathVariable String username,@PathVariable String amka,@RequestBody BigChain input) throws Exception {
 
       User hospital = us.getHospital(username);
-      Patient patient = pat.findFirstByAmka(amka);
+      Optional<Patient> patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-      BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+     // BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
       return "Vaccination created";
     }
 

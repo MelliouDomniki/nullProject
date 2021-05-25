@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface PatientRepository extends MongoRepository <Patient, String> {
 
     Patient findByName(String name);
+    Optional<Patient> findFirstById (String id);
     Patient findFirstByAmka(String AMKA);
     List<Patient> findByNameAndAge(String name, int age);
     List<Patient> findByNameOrAge(String name, int age);
