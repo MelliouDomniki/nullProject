@@ -76,18 +76,18 @@ public class VaccineController {
         return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
     }
 
-    @GetMapping("findAllByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findAllByBrandAndStatus/{brand}/{status}")
     public List<Vaccine> getVaccinesByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @GetMapping("findOneByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findOneByBrandAndStatus/{brand}/{status}")
     public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @PostMapping("add/{number}")
-    public String addVaccines (@PathVariable String username,@PathVariable int number) throws ParseException {
+    @PostMapping("add/{brand}/{number}")
+    public String addVaccinesByBrand (@PathVariable String username,@PathVariable String brand,@PathVariable int number) throws ParseException {
 
         Update update = new Update();
 
@@ -99,7 +99,7 @@ public class VaccineController {
         for (int i = 0 ; i < number ; i++){
 
 
-            b = RandomnessProvider.getBrand();
+            b = Brand.valueOf(brand);
 
             Vaccine v = new Vaccine(b,s,getDateWithoutTimeUsingFormat(),username);
             vacrepo.save(v);
