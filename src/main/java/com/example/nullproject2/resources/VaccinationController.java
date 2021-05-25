@@ -7,6 +7,7 @@ import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
+import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,19 +26,18 @@ public class VaccinationController {
     private VaccineController vac;
 
     @Autowired
-    private PatientController pat;
+    private PatientRepository pat;
 
     @Autowired
     private UserController us;
 
-  @PostMapping("{username/vaccination")
-  public String createVaccination(@RequestBody BigChain input) throws Exception {
+  @PostMapping("{username}/vaccination/{amka}")
+  public String createVaccination(@PathVariable String username,@PathVariable String amka,@RequestBody BigChain input) throws Exception {
 
-      User hospital = us.getHospital(input.getHosp());
-      Patient patient = pat.patientsByAMKA(input.getAMKA());
+      User hospital = us.getHospital(username);
+      Patient patient = pat.findFirstByAmka(amka);
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-      Date d = new SimpleDateFormat("dd/MM/yyyy").parse(input.getDate());
-      BigchainCall.doCreate(hospital, patient, d, vaccine);
+      BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
       return "Vaccination created";
     }
 

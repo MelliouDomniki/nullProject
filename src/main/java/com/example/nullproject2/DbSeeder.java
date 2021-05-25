@@ -96,13 +96,13 @@ public class DbSeeder implements CommandLineRunner {
 //        roleRepository.save(role1);
 //        roleRepository.save(role2);
 
-        Date date1 = new Date(2021, 07, 21);
-
-        User hospital = us.getHospital("testing");
-        Patient patient = pat.patientsByAMKA("42565767");
-        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf("PFIZER"), VaccineStatus.AVAILABLE);
-
-        BigchainCall.doCreate(hospital, patient, date1, vaccine);
+//        Date date1 = new Date(2021, 07, 21);
+//
+//        User hospital = us.getHospital("dead");
+//        Patient patient = pat.patientsByAMKA("123456789123");
+//        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf("PFIZER"), VaccineStatus.AVAILABLE);
+//
+//        BigchainCall.doCreate(hospital, patient, date1, vaccine);
 
 //        KeyPair keys2 = BigchainCall.getKeys();
 //        System.out.println(keys2.getPublic());

@@ -11,5 +11,5 @@ public class BigChainForm {
     private String hosp;
     private String AMKA;
     private String brand;
-    private String date;
+    private Date date;
 }

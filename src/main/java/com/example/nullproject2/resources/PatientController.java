@@ -54,11 +54,11 @@ public class PatientController {
     @GetMapping("/patientsByAMKA/{AMKA}")
     public Patient patientsByAMKA (@PathVariable String AMKA)
     {
-        return patrepo.findByAmka(AMKA);
+        return patrepo.findFirstByAmka(AMKA);
     }
 
     @GetMapping("/patientsByName/{name}")
-    public List<Patient> patientsByName (@PathVariable String name)
+    public Patient patientsByName (@PathVariable String name)
     {
         return patrepo.findByName(name);
     }

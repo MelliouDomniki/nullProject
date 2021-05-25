@@ -15,7 +15,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document (collection = "data")
 public class BigChain {
 
     @Id
@@ -31,6 +30,7 @@ public class BigChain {
     private String brand;
 
     @Field
-    private String date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
 
 }

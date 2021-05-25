@@ -51,7 +51,7 @@ public class BigchainCall {
 
         try {
             //build and send CREATE transaction
-            Transaction transaction = null;
+            Transaction transaction;
 
             transaction = BigchainDbTransactionBuilder
                     .init()
