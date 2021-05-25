@@ -35,7 +35,7 @@ public class PatientFormMapper {
 
         if(patientForm.getStatus() != null){
             if(patientForm.getStatus().isBlank()){
-                patient.setStatus(PatientStatus.valueOf(patientForm.getStatus()));
+                patient.setStatus(patientForm.getStatus());
             }
         }
 
@@ -72,7 +72,7 @@ public class PatientFormMapper {
         patientForm.setName(patient.getName());
         patientForm.setAge(patient.getAge());
         patientForm.setAddress(patient.getAddress());
-        patientForm.setStatus(String.valueOf(patient.getStatus()));
+        patientForm.setStatus(patient.getStatus());
         patientForm.setSymptoms(patient.getSymptoms());
         patientForm.setAmka(patient.getAmka());
         patientForm.setSex(String.valueOf(patient.getSex()));

@@ -114,12 +114,8 @@ public class AuthController {
                 }
             });
         }
-        if (user.getAvailableDoses() == 0){
-            user.setAvailableDoses(50);
-        }
         user.setRoles(roles);
         userRepository.save(user);
-        vaccineController.addVaccines(user.getUsername(), user.getAvailableDoses());
 
         return  ResponseEntity.ok(new MessageResponse("User register successfully!"));
     }
