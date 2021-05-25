@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/patient/")
 public class PatientController {
 
     @Autowired
@@ -20,7 +21,7 @@ public class PatientController {
     @Autowired
     private PatientServiceImpl patservice;
 
-    @PostMapping("/addPatient")
+    @PostMapping("addPatient")
     public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
         if (patrepo.existsByAmka(patient.getAmka())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already is use!"));
@@ -29,74 +30,74 @@ public class PatientController {
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
     }
 
-    @GetMapping("/findAllPatients")
+    @GetMapping("findAll")
     public List<Patient> getPatients() {
         return patrepo.findAll();
     }
 
-    @GetMapping("/findPatientById/{id}")
+    @GetMapping("findId/{id}")
     public Optional<Patient> getPatient(@PathVariable String id) {
         return patrepo.findById(id);
     }
 
-    @DeleteMapping("/deletePatient/{id}")
+    @DeleteMapping("delete/{id}")
     public String deletePatient(@PathVariable String id) {
         patrepo.deleteById(id);
         return "patient deleted with id : " + id;
     }
 
-    @PostMapping("/updatePatient")
+    @PostMapping("update")
     public String updatePatient(@RequestBody Patient newPatient) {
         patrepo.save(newPatient);
         return "Updated patient with id: " + newPatient.getId();
     }
 
-    @GetMapping("/patientsByAMKA/{AMKA}")
+    @GetMapping("findByAMKA/{AMKA}")
     public Patient patientsByAMKA (@PathVariable String AMKA)
     {
         return patrepo.findFirstByAmka(AMKA);
     }
 
-    @GetMapping("/patientsByName/{name}")
+    @GetMapping("findByName/{name}")
     public Patient patientsByName (@PathVariable String name)
     {
         return patrepo.findByName(name);
     }
 
     //AND QUERY
-    @GetMapping("/patientsByNameAndAge/{name, age}")
+    @GetMapping("findByNameAndAge/{name, age}")
     public List<Patient> patientsByNameAndAge (@PathVariable String name, int age)
     {
         return patrepo.findByNameAndAge(name, age);
     }
 
     //OR QUERY
-    @GetMapping("/patientsByNameOrAge/{name, age}")
+    @GetMapping("findByNameOrAge/{name, age}")
     public List<Patient> patientsByNameOrAge (@PathVariable String name, int age)
     {
         return patrepo.findByNameOrAge(name, age);
     }
 
     //PAGINATION
-    @GetMapping("/patientsWithPagination")
+    @GetMapping("patientsWithPagination")
     public List<Patient> getAllPatientsWithPagination(@RequestParam int pages, @RequestParam int size) {
         return patservice.getAllPatientsWithPagination(pages, size);
     }
 
     //SORTING
-    @GetMapping("/patientsWithSortingByName")
+    @GetMapping("patientsWithSortingByName")
     public List<Patient> getAllPatientsWithSortingByName() {
         return patservice.getAllPatientsWithSortingByName();
     }
 
     //LIKE QUERY
-    @GetMapping("/patientsWithNameLike/{name}")
+    @GetMapping("like/{name}")
     public List<Patient> getAllPatientsWithNameLike (@PathVariable String name){
         return patrepo.findByNameIsLike(name);
     }
 
     //STARTS WITH QUERY
-    @GetMapping("/patientsWithNameStarting/{name}")
+    @GetMapping("nameStarting/{name}")
     public List<Patient> getAllPatientsWithNameStarting (@PathVariable String name){
         return patrepo.findByNameStartsWith(name);
     }

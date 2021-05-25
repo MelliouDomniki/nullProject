@@ -11,18 +11,19 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/{username}/")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/getHospitalAttributesById/{username}")
+    @GetMapping("getHospital")
     public User getHospital(@PathVariable String username) {
         return userRepository.getHospital(username);
     }
 
 
-    @PostMapping ("/updateUser")
+    @PostMapping ("updateUser")
     public String updateUser (@RequestBody User newUser){
         userRepository.save(newUser);
         return "Added user with id: " + newUser.getId();

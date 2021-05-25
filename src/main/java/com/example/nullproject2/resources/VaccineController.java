@@ -19,6 +19,7 @@ import static com.example.nullproject2.fakedata.RandomnessProvider.getDateWithou
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/{username}/vaccine/")
 public class VaccineController {
 
     @Autowired
@@ -27,7 +28,7 @@ public class VaccineController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @PostMapping("{username}/addVaccine")
+    @PostMapping("add")
     public String saveVaccine (@PathVariable String username,@RequestBody Vaccine vaccine){
         Update update = new Update();
         update.addToSet("vaccines", vaccine);
@@ -37,58 +38,55 @@ public class VaccineController {
         return "Added vaccine with id: " + vaccine.getId();
     }
 
-    @GetMapping("{username}/findAllVaccines")
+    @GetMapping("findAll")
     public List<Vaccine> getVaccines(@PathVariable String username) {
         return vacrepo.findByHospitalName(username);
     }
 
-    @GetMapping("/findVaccineById/{id}")
+    @GetMapping("findId/{id}")
     public Optional<Vaccine> getVaccine(@PathVariable String id) {
         return vacrepo.findById(id);
     }
 
-    @DeleteMapping("/deleteVaccine/{id}")
+    @DeleteMapping("delete/{id}")
     public String deleteVaccine(@PathVariable String id) {
         vacrepo.deleteById(id);
         return "vaccine deleted with id : " + id;
     }
 
-    @PostMapping ("/updateVaccine")
+    @PostMapping ("update")
     public String updateVaccine (@RequestBody Vaccine newVaccine){
         vacrepo.save(newVaccine);
-//        if (newVaccine.getStatus().){
-
-//        }
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
-    @GetMapping("{username}/countVaccinesByBrand/{brand}")
+    @GetMapping("countByBrand/{brand}")
     public int countVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
         return (vacrepo.findByHospitalNameAndBrand(username, brand)).size();
     }
 
-    @GetMapping("{username}/findAllVaccinesByBrand/{brand}")
+    @GetMapping("findAllByBrand/{brand}")
     public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
         return vacrepo.findByHospitalNameAndBrand(username, brand);
     }
 
     //to allaxa
-    @GetMapping("{username}/findAllVaccinesByStatus/{vaccineStatus}")
+    @GetMapping("findAllByStatus/{vaccineStatus}")
     public List<Vaccine> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
         return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
     }
 
-    @GetMapping("{username}/findAllVaccinesByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findAllByBrandAndStatus/{brand}+{status}")
     public List<Vaccine> getVaccinesByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @GetMapping("{username}/findOneVaccineByBrandAndStatus/{brand}+{status}")
+    @GetMapping("findOneByBrandAndStatus/{brand}+{status}")
     public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @PostMapping("{username}/addVaccines/{number}")
+    @PostMapping("add/{number}")
     public String addVaccines (@PathVariable String username,@PathVariable int number) throws ParseException {
 
         Update update = new Update();
