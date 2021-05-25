@@ -97,11 +97,11 @@ public class DbSeeder implements CommandLineRunner {
 //        roleRepository.save(role2);
 
 //        Date date1 = new Date(2021, 07, 21);
-//
-//        User hospital = us.getHospital("dead");
-//        Patient patient = pat.patientsByAMKA("123456789123");
+////
+//        User hospital = us.getHospital("te");
+//        Patient patient = pat.patientsByAMKA("874756356");
 //        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf("PFIZER"), VaccineStatus.AVAILABLE);
-//
+////
 //        BigchainCall.doCreate(hospital, patient, date1, vaccine);
 
 //        KeyPair keys2 = BigchainCall.getKeys();
@@ -119,9 +119,6 @@ public class DbSeeder implements CommandLineRunner {
 //        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
 //        for (Transaction tr: t.getTransactions())
 //            System.out.println(t.getTransactions().toString());
-
-
-
 
 
 

@@ -36,12 +36,13 @@ public class BigchainCall {
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
             put("AMKA", p.getAmka());
-            put("age", String.valueOf(p.getAge()));
+            //put("age", String.valueOf(p.getAge()));
         }};
         System.out.println("(*) Assets Prepared..");
 
         MetaData metaData = new MetaData();
         metaData.setMetaData("date", d.toString());
+        metaData.setMetaData("age",  String.valueOf(p.getAge()) );
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
