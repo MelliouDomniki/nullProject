@@ -15,6 +15,8 @@ import java.util.Optional;
 public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
 
+    Vaccine findFirstById(String id);
+
     List<Vaccine> findByHospitalNameAndBrand(String username ,Brand brand);
 
     List<Vaccine> findByHospitalNameAndStatus(String username,VaccineStatus vaccineStatus);
