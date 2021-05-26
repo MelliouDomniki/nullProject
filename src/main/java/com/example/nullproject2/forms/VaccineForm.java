@@ -15,9 +15,17 @@ public class VaccineForm {
 
     @NotEmpty
     private String id;
+
+    @NotEmpty
     private String brand;
+
+    @NotEmpty
     private String status;
+
+    @NotEmpty
     private Date date;
+
+    @NotEmpty
     private String hospitalName;
 
 
