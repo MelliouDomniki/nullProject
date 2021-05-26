@@ -76,6 +76,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.transactionStatus = UserStatus.UNAVAILABLE;
         KeyPair keys = BigchainCall.getKeys();
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
         this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
