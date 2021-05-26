@@ -21,11 +21,22 @@ public class PatientForm {
 
     private String id;
 
+    @NotEmpty
     private String name;
+
+    @NotEmpty
     private int age;
+
+    @NotEmpty
     private String address;
+
+    @NotEmpty
     private String status;
+
+    @NotEmpty
     private String symptoms;
+
+    @NotEmpty
     private String sex;
 
 

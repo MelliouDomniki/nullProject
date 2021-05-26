@@ -21,7 +21,7 @@ public class UserForm {
     private static final int USERNAME_MIN_SIZE = 6;
     private static final int USERNAME_MAX_SIZE = 25;
 
-    private String user_id;
+    private String id;
 
     @NotEmpty(message = "Name can't be empty")
     private String name;
