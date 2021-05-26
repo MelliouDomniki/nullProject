@@ -1,10 +1,12 @@
 package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.services.PatientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -80,13 +82,13 @@ public class PatientController {
 
     //PAGINATION
     @GetMapping("patientsWithPagination")
-    public List<Patient> getAllPatientsWithPagination(@RequestParam int pages, @RequestParam int size) {
+    public Page<PatientModel> getAllPatientsWithPagination(@RequestParam int pages, @RequestParam int size) {
         return patservice.getAllPatientsWithPagination(pages, size);
     }
 
     //SORTING
     @GetMapping("patientsWithSortingByName")
-    public List<Patient> getAllPatientsWithSortingByName() {
+    public List<PatientModel> getAllPatientsWithSortingByName() {
         return patservice.getAllPatientsWithSortingByName();
     }
 

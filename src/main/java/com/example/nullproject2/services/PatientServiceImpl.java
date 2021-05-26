@@ -4,12 +4,12 @@ import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.enumerations.UserStatus;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
+import com.example.nullproject2.mappers.PatientMapper;
 import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,56 +21,74 @@ public class PatientServiceImpl implements PatientService{
     @Autowired
     private PatientRepository patrepo;
 
+
     @Override
-    public List<Patient> getAllPatientsWithPagination(int pages, int size)
-    {
-        Pageable pageable = PageRequest.of(pages-1, size);
-        return patrepo.findAll(pageable).getContent();
+    public Optional<PatientModel> findByName(String name) {
+        return PatientMapper.mapToPatientModelOptional(patrepo.findByName(name));
     }
+
     @Override
-    public List<Patient> getAllPatientsWithSortingByName()
-    {
+    public Optional<PatientModel> findFirstById(String id) {
+        return PatientMapper.mapToPatientModelOptional(patrepo.findFirstById(id));
+    }
+
+    @Override
+    public Optional<PatientModel> findFirstByAmka(String amka) {
+        return PatientMapper.mapToPatientModelOptional(patrepo.findFirstByAmka(amka));
+    }
+
+    @Override
+    public List<PatientModel> findAll() {
+        return PatientMapper.mapToPatientModelList(patrepo.findAll());
+    }
+
+    @Override
+    public List<PatientModel> findByNameAndAge(String name, int age) {
+        return PatientMapper.mapToPatientModelList(patrepo.findByNameAndAge(name, age));
+    }
+
+    @Override
+    public List<PatientModel> findByNameIsLike(String name) {
+        return PatientMapper.mapToPatientModelList(patrepo.findByNameIsLike(name));
+    }
+
+    @Override
+    public List<PatientModel> findByNameStartsWith(String name) {
+        return PatientMapper.mapToPatientModelList(patrepo.findByNameStartsWith(name));
+    }
+
+    @Override
+    public boolean existsByAmka(String amka) {
+        if (amka == null || findFirstByAmka(amka).isEmpty()){
+            System.out.println("Patient not found");
+            return false;
+        }
+        patrepo.existsByAmka(amka);
+        return true;
+    }
+
+    @Override
+    public boolean deleteByAmka(String amka) {
+        if (amka == null || findFirstByAmka(amka).isEmpty()){
+            System.out.println("Patient not found");
+            return false;
+        }
+        patrepo.deleteByAmka(amka);
+        return true;
+    }
+
+    @Override
+    public Page<PatientModel> getAllPatientsWithPagination(int pages, int size) {
+        Page<Patient> patientAsPage = patrepo.findAll(PageRequest.of(pages,size));
+        if (patientAsPage.isEmpty()) return Page.empty();
+
+        List<PatientModel> patientModels = PatientMapper.mapToPatientModelList(patientAsPage.getContent());
+        return new PageImpl(patientModels, patientAsPage.getPageable(), patientAsPage.getTotalElements());
+    }
+
+    @Override
+    public List<PatientModel> getAllPatientsWithSortingByName() {
         Sort sort = Sort.by(Sort.Direction.ASC, "name");
-        return patrepo.findAll(sort);
-    }
-
-    @Override
-    public Optional<Patient> findByName(String name) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Patient> findFirstById(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Patient> findFirstByAmka(String AMKA) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Patient> findByNameAndAge(String name, int age) {
-        return null;
-    }
-
-    @Override
-    public List<Patient> findByNameOrAge(String name, int age) {
-        return null;
-    }
-
-    @Override
-    public List<Patient> findByNameIsLike(String name) {
-        return null;
-    }
-
-    @Override
-    public List<Patient> findByNameStartsWith(String name) {
-        return null;
-    }
-
-    @Override
-    public Boolean existsByAmka(String amka) {
-        return null;
+        return PatientMapper.mapToPatientModelList(patrepo.findAll(sort));
     }
 }
