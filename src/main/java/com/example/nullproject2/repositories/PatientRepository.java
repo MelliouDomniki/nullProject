@@ -18,6 +18,7 @@ public interface PatientRepository extends MongoRepository <Patient, String> {
     List<Patient> findByNameOrAge(String name, int age);
     List<Patient> findByNameIsLike (String name);
     List<Patient> findByNameStartsWith (String name);
-    Boolean existsByAmka(String amka);
+    boolean existsByAmka(String amka);
+    boolean deleteByAmka(String amka);
 
 }
