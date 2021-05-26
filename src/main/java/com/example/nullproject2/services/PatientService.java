@@ -14,25 +14,19 @@ import java.util.Optional;
 
 public interface PatientService {
 
-    List<PatientModel> getAllPatients();
+    Optional<Patient> findByName(String name);
 
-    Optional<PatientModel> getPatientByPatientId(String patient_id);
+    Optional<Patient> findFirstById (String id);
 
-    Optional<PatientModel> addPatient (PatientForm patient) throws Exception;
+    Optional<Patient> findFirstByAmka(String AMKA);
 
-    Optional<PatientModel> updatePatient (PatientForm toBeUpdatedPatient);
+    List<Patient> findByNameAndAge(String name, int age);
 
-    List<PatientModel> getPatientByStatus (PatientStatus patientStatus);
+    List<Patient> findByNameOrAge(String name, int age);
 
-    List<PatientModel> getPatientBySex (Sex sex);
+    List<Patient> findByNameIsLike (String name);
 
-    boolean deletePatientById (String patient_id);
+    List<Patient> findByNameStartsWith (String name);
 
-    List<PatientModel> getPatientByName (String name);
-
-    List<PatientModel> getPatientByAmka (long amka);
-
-    List<Patient> getAllPatientsWithPagination(int pages, int size);
-
-    List<Patient> getAllPatientsWithSortingByName();
+    Boolean existsByAmka(String amka);
 }

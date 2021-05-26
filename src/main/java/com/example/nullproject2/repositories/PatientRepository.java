@@ -20,6 +20,4 @@ public interface PatientRepository extends MongoRepository <Patient, String> {
     List<Patient> findByNameStartsWith (String name);
     Boolean existsByAmka(String amka);
 
-//    @Query()
-//    List<Patient> findAllPatientsByUsername(String username);
 }
