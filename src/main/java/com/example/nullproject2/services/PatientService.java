@@ -22,7 +22,7 @@ public interface PatientService {
 
     Optional<PatientModel> findFirstByAmka(String amka);
 
-    Optional<PatientModel> updateVaccine(PatientForm toBeUpdatedPatient);
+    Optional<PatientModel> updatePatient(PatientForm toBeUpdatedPatient);
 
     List<PatientModel> findAll();
 

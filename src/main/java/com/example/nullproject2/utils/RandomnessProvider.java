@@ -1,4 +1,4 @@
-package com.example.nullproject2.fakedata;
+package com.example.nullproject2.utils;
 
 import com.example.nullproject2.enumerations.Brand;
 

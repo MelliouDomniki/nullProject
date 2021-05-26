@@ -36,7 +36,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Optional<PatientModel> updateVaccine(PatientForm toBeUpdatedPatient) {
+    public Optional<PatientModel> updatePatient(PatientForm toBeUpdatedPatient) {
         Patient patient = PatientFormMapper.mapToPatient(toBeUpdatedPatient);
         Patient originalPatient = patrepo.findFirstByAmka(toBeUpdatedPatient.getAmka());
 

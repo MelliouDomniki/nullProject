@@ -14,48 +14,15 @@ public class PatientFormMapper {
             return null;
 
         Patient patient = new Patient();
-
         patient.setId(patientForm.getId());
-
-        if(patientForm.getName() != null){
-            if(patientForm.getName().isBlank()){
-                patient.setName(patientForm.getName());
-            }
-        }
-
+        patient.setName(patientForm.getName());
         patient.setAge(patientForm.getAge());
+        patient.setAddress(patientForm.getAddress());
+        patient.setStatus(patientForm.getStatus());
+        patient.setSymptoms(patientForm.getSymptoms());
+        patient.setAmka(patientForm.getAmka());
+        patient.setSex(Sex.valueOf(patientForm.getSex()));
 
-
-        if(patientForm.getAddress() != null){
-            if(patientForm.getAddress().isBlank()){
-                patient.setAddress(patientForm.getAddress());
-            }
-        }
-
-        if(patientForm.getStatus() != null){
-            if(patientForm.getStatus().isBlank()){
-                patient.setStatus(patientForm.getStatus());
-            }
-        }
-
-
-        if(patientForm.getSymptoms() != null){
-            if(patientForm.getSymptoms().isBlank()){
-                patient.setSymptoms(patientForm.getSymptoms());
-            }
-        }
-
-        if(patientForm.getAmka() != null){
-            if(patientForm.getAmka().isBlank()){
-                patient.setAmka(patientForm.getAmka());
-            }
-        }
-
-        if(patientForm.getSex() != null){
-            if(patientForm.getSex().isBlank()){
-                patient.setSex(Sex.valueOf(patientForm.getSex()));
-            }
-        }
 
 
         return patient;

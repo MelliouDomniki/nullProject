@@ -4,7 +4,6 @@ import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
-import com.example.nullproject2.fakedata.RandomnessProvider;
 import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
-import static com.example.nullproject2.fakedata.RandomnessProvider.getDateWithoutTimeUsingFormat;
+import static com.example.nullproject2.utils.RandomnessProvider.getDateWithoutTimeUsingFormat;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

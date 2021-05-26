@@ -11,6 +11,7 @@ public class UserForm {
 
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{1,63}$";
     private static final String PHONE_NUMBER_PATTERN = "^[0-9]$";
+    private static final String DOSES_PATTERN = "^[0-9]$";
 
     private static final int EMAIL_MIN_SIZE = 3;
     private static final int EMAIL_MAX_SIZE = 50;
@@ -40,6 +41,7 @@ public class UserForm {
     @NotEmpty(message = "Country can't be empty")
     private String country;
 
+    @Pattern(regexp = PHONE_NUMBER_PATTERN, message  = "Available doses pattern doesn't match")
     @NotEmpty(message = "Available doses can't be empty")
     private int availableDoses;
 
@@ -57,5 +59,6 @@ public class UserForm {
     @NotEmpty(message = "Password can't be empty")
     private String password;
 
+    @NotEmpty(message = "Password can't be empty")
     private String transactionStatus;
 }

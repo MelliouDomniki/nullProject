@@ -23,7 +23,7 @@ public class UserMapper {
         userModel.setUsername(user.getUsername());
         userModel.setEmail(user.getEmail());
         userModel.setPassword(user.getPassword());
-        userModel.setTransactionStatus(user.getTransactionStatus());
+        userModel.setStatus(user.getTransactionStatus());
         return userModel;
     }
 

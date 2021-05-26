@@ -26,6 +26,6 @@ public class UserController {
     @PostMapping ("updateUser")
     public String updateUser (@RequestBody User newUser){
         userRepository.save(newUser);
-        return "Added user with id: " + newUser.getId();
+        return "Updated user with id: " + newUser.getId();
     }
 }

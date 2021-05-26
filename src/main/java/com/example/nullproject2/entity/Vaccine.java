@@ -43,13 +43,4 @@ public class Vaccine {
         this.hospitalName = hospital;
 
     }
-
-    public Vaccine(Brand b, VaccineStatus s, Date d) {
-        this.brand=b;
-        this.status=s;
-        this.date=d;
-
-    }
-
-
 }
