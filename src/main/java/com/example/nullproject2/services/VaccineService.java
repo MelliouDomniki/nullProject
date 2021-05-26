@@ -13,17 +13,15 @@ public interface VaccineService {
 
     List<VaccineModel> getAllVaccines();
 
-    Optional<VaccineModel> addVaccine(VaccineForm vaccine) throws Exception;
+//    Optional<VaccineModel> addVaccine(VaccineForm vaccine) throws Exception;
 
     Optional<VaccineModel> updateVaccine(VaccineForm toBeUpdatedVaccine);
 
     Optional<VaccineModel> getVaccineById(String vaccine_id);
 
-    List<VaccineModel> getVaccineByStatus(VaccineStatus vaccineStatus);
+    List<VaccineModel> getVaccineByStatus(String username, VaccineStatus vaccineStatus);
 
-    List<VaccineModel> getVaccineByBrand(Brand brand);
+    List<VaccineModel> getVaccineByBrand(String username, Brand brand);
 
-    List<VaccineModel> getVaccineByDate(Date date);
-
-
+    boolean deleteVaccineById(String id);
 }
