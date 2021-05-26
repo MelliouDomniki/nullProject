@@ -22,52 +22,6 @@ public class PatientServiceImpl implements PatientService{
     private PatientRepository patrepo;
 
     @Override
-    public List<PatientModel> getAllPatients() {
-        return null;
-    }
-
-    @Override
-    public Optional<PatientModel> getPatientByPatientId(String patient_id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PatientModel> addPatient(PatientForm patient) throws Exception {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<PatientModel> updatePatient(PatientForm toBeUpdatedPatient) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<PatientModel> getPatientByStatus(UserStatus patientStatus) {
-        return null;
-    }
-
-    @Override
-    public List<PatientModel> getPatientBySex(Sex sex) {
-        return null;
-    }
-
-    @Override
-    public boolean deletePatientById(String patient_id) {
-        return false;
-    }
-
-
-    @Override
-    public List<PatientModel> getPatientByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<PatientModel> getPatientByAmka(long amka) {
-        return null;
-    }
-
-    @Override
     public List<Patient> getAllPatientsWithPagination(int pages, int size)
     {
         Pageable pageable = PageRequest.of(pages-1, size);
@@ -78,5 +32,45 @@ public class PatientServiceImpl implements PatientService{
     {
         Sort sort = Sort.by(Sort.Direction.ASC, "name");
         return patrepo.findAll(sort);
+    }
+
+    @Override
+    public Optional<Patient> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Patient> findFirstById(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Patient> findFirstByAmka(String AMKA) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Patient> findByNameAndAge(String name, int age) {
+        return null;
+    }
+
+    @Override
+    public List<Patient> findByNameOrAge(String name, int age) {
+        return null;
+    }
+
+    @Override
+    public List<Patient> findByNameIsLike(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Patient> findByNameStartsWith(String name) {
+        return null;
+    }
+
+    @Override
+    public Boolean existsByAmka(String amka) {
+        return null;
     }
 }
