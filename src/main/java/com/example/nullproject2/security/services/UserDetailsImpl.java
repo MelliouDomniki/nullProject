@@ -36,6 +36,8 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
+    private String transactionStatus;
+
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl (String id,String name, String address, String phone_number, String city, String country, int availableDoses, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){

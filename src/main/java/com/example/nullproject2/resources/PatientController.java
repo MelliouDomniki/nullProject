@@ -1,7 +1,6 @@
 package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.forms.PatientForm;
 import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.repositories.PatientRepository;
@@ -50,8 +49,8 @@ public class PatientController {
     }
 
     @PostMapping("update")
-    public String updatePatient(@RequestBody PatientForm newPatient) {
-        patservice.updatePatient(newPatient);
+    public String updatePatient(@RequestBody Patient newPatient) {
+        patrepo.save(newPatient);
         return "Updated patient with id: " + newPatient.getId();
     }
 
