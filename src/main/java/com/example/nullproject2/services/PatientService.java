@@ -2,7 +2,7 @@ package com.example.nullproject2.services;
 
 
 import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.enumerations.PatientStatus;
+import com.example.nullproject2.enumerations.UserStatus;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
 import com.example.nullproject2.models.PatientModel;
@@ -22,7 +22,7 @@ public interface PatientService {
 
     Optional<PatientModel> updatePatient (PatientForm toBeUpdatedPatient);
 
-    List<PatientModel> getPatientByStatus (PatientStatus patientStatus);
+    List<PatientModel> getPatientByStatus (UserStatus patientStatus);
 
     List<PatientModel> getPatientBySex (Sex sex);
 

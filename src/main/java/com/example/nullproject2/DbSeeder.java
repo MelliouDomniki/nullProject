@@ -1,28 +1,13 @@
 package com.example.nullproject2;
 
 
-import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.entity.User;
-import com.example.nullproject2.entity.Vaccine;
-import com.example.nullproject2.enumerations.Brand;
-import com.example.nullproject2.enumerations.PatientStatus;
-import com.example.nullproject2.enumerations.Sex;
-import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.resources.PatientController;
 import com.example.nullproject2.resources.UserController;
 import com.example.nullproject2.resources.VaccineController;
-import com.example.nullproject2.roles.Erole;
-import com.example.nullproject2.roles.Role;
-import net.i2p.crypto.eddsa.EdDSAPublicKey;
-import org.apache.http.util.EncodingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
-
-import java.security.KeyPair;
-import java.util.Date;
-import java.util.List;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
