@@ -1,7 +1,6 @@
 package com.example.nullproject2.models;
 
 
-import com.example.nullproject2.enumerations.PatientStatus;
 import com.example.nullproject2.enumerations.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Data;

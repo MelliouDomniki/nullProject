@@ -24,7 +24,7 @@ public class PatientController {
     @PostMapping("addPatient")
     public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
         if (patrepo.existsByAmka(patient.getAmka())){
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already in use!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already used!"));
         }
         patrepo.save(patient);
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
@@ -36,8 +36,8 @@ public class PatientController {
     }
 
     @GetMapping("findId/{id}")
-    public Patient getPatient(@PathVariable String id) {
-        return patrepo.findFirstById(id);
+    public Optional<Patient> getPatient(@PathVariable String id) {
+        return patrepo.findById(id);
     }
 
     @DeleteMapping("delete/{id}")

@@ -31,6 +31,9 @@ public class User {
     @Field(name = "phone_number")
     private String phone_number;
 
+    @Field(name = "TransactionStatus")
+    private String transactionStatus;
+
     @Field(name = "city")
     private String city;
 

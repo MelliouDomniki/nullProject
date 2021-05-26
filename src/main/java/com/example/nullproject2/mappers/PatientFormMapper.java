@@ -4,7 +4,6 @@ package com.example.nullproject2.mappers;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
-import com.example.nullproject2.enumerations.PatientStatus;
 import org.springframework.stereotype.Component;
 
 @Component
