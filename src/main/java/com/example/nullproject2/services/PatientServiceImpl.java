@@ -1,15 +1,13 @@
 package com.example.nullproject2.services;
 
 import com.example.nullproject2.entity.Patient;
-import com.example.nullproject2.enumerations.UserStatus;
-import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
+import com.example.nullproject2.mappers.PatientFormMapper;
 import com.example.nullproject2.mappers.PatientMapper;
 import com.example.nullproject2.models.PatientModel;
 import com.example.nullproject2.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +33,18 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public Optional<PatientModel> findFirstByAmka(String amka) {
         return PatientMapper.mapToPatientModelOptional(patrepo.findFirstByAmka(amka));
+    }
+
+    @Override
+    public Optional<PatientModel> updateVaccine(PatientForm toBeUpdatedPatient) {
+        Patient patient = PatientFormMapper.mapToPatient(toBeUpdatedPatient);
+        Patient originalPatient = patrepo.findFirstByAmka(toBeUpdatedPatient.getAmka());
+
+        if (patient.equals(originalPatient)) {
+            // if no changes made dont update
+            return PatientMapper.mapToPatientModelOptional(patient);
+        }
+        return PatientMapper.mapToPatientModelOptional(patrepo.save(patient));
     }
 
     @Override

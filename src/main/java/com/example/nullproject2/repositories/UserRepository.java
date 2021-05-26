@@ -12,11 +12,13 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> findByUsername(String username);
 
-    Boolean existsByUsername(String username);
+    boolean existsByUsername(String username);
 
-    Boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 
     List<User> findByName(String name);
+
+    boolean deleteByUsername(String username);
 
     @Query("{ 'username' : ?0 }")
     User getHospital(String username);

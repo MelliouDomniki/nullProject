@@ -1,6 +1,9 @@
 package com.example.nullproject2.services;
 
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.forms.UserForm;
+import com.example.nullproject2.mappers.UserFormMapper;
+import com.example.nullproject2.mappers.UserMapper;
 import com.example.nullproject2.models.UserModel;
 import com.example.nullproject2.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +18,29 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserModel> getAllUsers() {
-        return null;
+
+        return UserMapper.mapToUserModelList(userRepository.findAll());
     }
 
     @Override
-    public Optional<UserModel> addUser(UserForm user) throws Exception {
-        return Optional.empty();
+    public Optional<UserModel> updateUser(UserForm toBeUpdatedUser) {
+        User user = UserFormMapper.mapToUser(toBeUpdatedUser);
+        User originaluser = userRepository.getHospital(user.getUsername());
+
+        if (user.equals(originaluser)){
+            // if no changes made dont update
+            return UserMapper.mapToUserModelOptional(user);
+        }
+        return UserMapper.mapToUserModelOptional(userRepository.save(user));
     }
 
     @Override
-    public Optional<UserModel> updateUser(UserForm toBeUpdatedUser) {return Optional.empty();
-    }
-
-    @Override
-    public boolean deleteUserById(String user_id) {
-        return false;
+    public boolean deleteUserById(String username) {
+        if (username == null || (username).isEmpty()){
+            System.out.println("Patient not found");
+            return false;
+        }
+        userRepository.deleteByUsername(username);
+        return true;
     }
 }

@@ -4,7 +4,9 @@ package com.example.nullproject2.services;
 import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.forms.PatientForm;
+import com.example.nullproject2.forms.VaccineForm;
 import com.example.nullproject2.models.PatientModel;
+import com.example.nullproject2.models.VaccineModel;
 import org.springframework.data.domain.Page;
 
 
@@ -19,6 +21,8 @@ public interface PatientService {
     Optional<PatientModel> findFirstById (String id);
 
     Optional<PatientModel> findFirstByAmka(String amka);
+
+    Optional<PatientModel> updateVaccine(PatientForm toBeUpdatedPatient);
 
     List<PatientModel> findAll();
 

@@ -12,8 +12,6 @@ public interface UserService {
 
     List<UserModel> getAllUsers();
 
-    Optional<UserModel> addUser(UserForm user) throws Exception;
-
     Optional<UserModel> updateUser(UserForm toBeUpdatedUser);
 
     boolean deleteUserById(String user_id);
