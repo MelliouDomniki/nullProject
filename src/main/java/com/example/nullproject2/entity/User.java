@@ -2,6 +2,7 @@ package com.example.nullproject2.entity;
 
 import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
+import com.example.nullproject2.enumerations.UserStatus;
 import com.example.nullproject2.roles.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -31,9 +32,6 @@ public class User {
     @Field(name = "phone_number")
     private String phone_number;
 
-    @Field(name = "TransactionStatus")
-    private String transactionStatus;
-
     @Field(name = "city")
     private String city;
 
@@ -51,6 +49,9 @@ public class User {
 
     @Field(name = "password")
     private String password;
+
+    @Field(name = "TransactionStatus")
+    private UserStatus transactionStatus;
 
     @Field(name = "keys")
     private String keys;

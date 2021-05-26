@@ -1,5 +1,6 @@
 package com.example.nullproject2.models;
 
+import com.example.nullproject2.enumerations.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class UserModel {
     private String username;
     private String email;
     private String password;
+    private UserStatus transactionStatus;
 }

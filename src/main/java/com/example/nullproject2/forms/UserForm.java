@@ -57,4 +57,5 @@ public class UserForm {
     @NotEmpty(message = "Password can't be empty")
     private String password;
 
+    private String transactionStatus;
 }

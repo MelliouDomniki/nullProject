@@ -1,6 +1,7 @@
 package com.example.nullproject2.mappers;
 
 import com.example.nullproject2.entity.User;
+import com.example.nullproject2.enumerations.UserStatus;
 import com.example.nullproject2.models.UserModel;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class UserMapper {
         userModel.setUsername(user.getUsername());
         userModel.setEmail(user.getEmail());
         userModel.setPassword(user.getPassword());
+        userModel.setTransactionStatus(user.getTransactionStatus());
         return userModel;
     }
 

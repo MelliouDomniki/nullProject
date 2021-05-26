@@ -40,6 +40,7 @@ public class UserFormMapper {
         userForm.setUsername(user.getUsername());
         userForm.setEmail(user.getEmail());
         userForm.setPassword(user.getPassword());
+        userForm.setTransactionStatus(userForm.getTransactionStatus());
         return userForm;
     }
 }
