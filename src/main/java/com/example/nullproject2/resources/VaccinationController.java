@@ -90,11 +90,12 @@ public class VaccinationController {
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
-        ArrayList<Object[]> l = new ArrayList<>();
+
 
 
         for (User h : usrepo.findAll())
         {
+            ArrayList<Object[]> l = new ArrayList<>();
             List<Output> out = OutputsApi.getUnspentOutputs(h.getPublicKey()).getOutput();
             for (Output o : out)
             {
@@ -106,11 +107,10 @@ public class VaccinationController {
                     pin[1] = t.getMetaData();
                     l.add(pin);
                 }
-              }
-
+            }
             lista.add(l);
-
         }
+
         return lista;
     }
 
