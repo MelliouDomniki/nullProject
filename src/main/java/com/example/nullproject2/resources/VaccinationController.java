@@ -16,14 +16,11 @@ import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.PatientRepository;
-import com.example.nullproject2.repositories.VaccineRepository;
-import okhttp3.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.nullproject2.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,6 +36,9 @@ public class VaccinationController {
 
     @Autowired
     private PatientRepository pat;
+
+    @Autowired
+    private UserRepository usrepo;
 
     @Autowired
     private UserController us;
@@ -76,6 +76,41 @@ public class VaccinationController {
             }
 
         }
+        return lista;
+    }
+
+    @GetMapping("/allHospitals")
+    public ArrayList<ArrayList<Object[]>> getAllVaccinations(@PathVariable String username) throws IOException {
+
+
+
+        ArrayList<ArrayList<Object[]>> lista = new ArrayList<>();
+
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/")
+                .addToken("app_id", "")
+                .addToken("app_key", "").setup();
+
+
+
+        for (User h : usrepo.findAll())
+        {
+            ArrayList<Object[]> l = new ArrayList<>();
+            List<Output> out = OutputsApi.getUnspentOutputs(h.getPublicKey()).getOutput();
+            for (Output o : out)
+            {
+                Object[] pin = new Object[2];
+                Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
+                if (t.getAsset().getData()!= null)
+                {
+                    pin[0] = t.getAsset().getData() ;
+                    pin[1] = t.getMetaData();
+                    l.add(pin);
+                }
+            }
+            lista.add(l);
+        }
+
         return lista;
     }
 
