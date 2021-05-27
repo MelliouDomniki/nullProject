@@ -59,10 +59,11 @@ public class VaccineController {
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
-    @GetMapping("countByBrand/{brand}")
-    public int countVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
-        return (vacrepo.findByHospitalNameAndBrand(username, brand)).size();
+    @GetMapping("countAvailable}")
+    public int countAvailableVaccines(@PathVariable String username) {
+        return vacrepo.countByStatusAndHospitalName(VaccineStatus.AVAILABLE, username);
     }
+
 
     @GetMapping("findAllByBrand/{brand}")
     public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
@@ -114,4 +115,17 @@ public class VaccineController {
         }
         return "all good";
     }
+
+    public void decreaseAvailable(Vaccine v, User h)
+    {
+        Update update = new Update();
+        User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(h.getUsername())), User.class);
+        int c = user.getAvailableDoses()+1;
+        v.setStatus(VaccineStatus.UNAVAILABLE);
+        vacrepo.save(v);
+        update.set("available_Doses", c--);
+        Criteria criteria = Criteria.where("username").is(h.getUsername());
+        mongoTemplate.updateFirst(Query.query(criteria), update, "users");
+    }
+
 }

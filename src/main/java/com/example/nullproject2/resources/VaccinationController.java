@@ -43,6 +43,8 @@ public class VaccinationController {
     @Autowired
     private UserController us;
 
+    private BigchainCall bigchain = new BigchainCall();
+
 
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
@@ -50,7 +52,8 @@ public class VaccinationController {
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-      BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+      bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
+      vac.decreaseAvailable(vaccine,hospital);
       return "Vaccination created";
     }
 
@@ -82,8 +85,6 @@ public class VaccinationController {
     @GetMapping("/allHospitals")
     public ArrayList<ArrayList<Object[]>> getAllVaccinations(@PathVariable String username) throws IOException {
 
-
-
         ArrayList<ArrayList<Object[]>> lista = new ArrayList<>();
 
         BigchainDbConfigBuilder
@@ -113,7 +114,6 @@ public class VaccinationController {
 
         return lista;
     }
-
 
 
 }

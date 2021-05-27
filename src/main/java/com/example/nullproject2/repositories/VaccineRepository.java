@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface VaccineRepository extends MongoRepository<Vaccine, String> {
 
+    int countByStatusAndHospitalName(VaccineStatus s, String username);
 
     Vaccine findFirstById(String id);
 
