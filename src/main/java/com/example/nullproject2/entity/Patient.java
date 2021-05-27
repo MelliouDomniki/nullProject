@@ -36,7 +36,7 @@ public class Patient {
     private String status;
 
     @Field(name = "symptoms")
-    private String symptoms;
+    private List<String> symptoms;
 
     @Field(name = "amka")
     private String amka;
@@ -47,13 +47,12 @@ public class Patient {
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
 
-    public Patient(String name,int age, String address, String status, String symptoms, String amka, Sex sex)
+    public Patient(String name,int age, String address, String status, String amka, Sex sex)
     {
         this.name =name;
         this.age=age;
         this.address=address;
         this.status=status;
-        this.symptoms = symptoms;
         this.amka = amka;
         this.sex = sex;
     }
