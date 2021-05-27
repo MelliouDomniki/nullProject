@@ -137,10 +137,13 @@ public class VaccineController {
     {
         Update update = new Update();
         User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(h.getUsername())), User.class);
-        int c = user.getAvailableDoses()+1;
+        int c = user.getAvailableDoses()-1;
         v.setStatus(VaccineStatus.UNAVAILABLE);
         vacrepo.save(v);
         update.set("available_Doses", c--);
+        update.addToSet("vaccines,v");
+        //mesa sto user sto vaccines den to kanei unavailable
+        //den mas peirazei koitame vaccine repository
         Criteria criteria = Criteria.where("username").is(h.getUsername());
         mongoTemplate.updateFirst(Query.query(criteria), update, "users");
     }
