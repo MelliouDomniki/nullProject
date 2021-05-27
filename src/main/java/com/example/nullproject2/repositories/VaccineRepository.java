@@ -28,11 +28,4 @@ public interface VaccineRepository extends MongoRepository<Vaccine, String> {
     Vaccine findFirstByHospitalNameAndBrandAndStatus(String username, Brand brand, VaccineStatus vaccineStatus);
 
     int countByHospitalNameAndAndBrandAndStatus(String username,Brand brand, VaccineStatus vaccineStatus);
-
-    //checkers
-//    boolean existsVaccineByHospitalNameAndStatusAndBrand(String username);
-//    boolean existsVaccineByHospitalNameAndStatusAndBrand(String username, VaccineStatus status);
-//    boolean existsVaccineByHospitalNameAndStatusAndBrand(String username, VaccineStatus status);
-//    boolean existsVaccineByHospitalNameAndStatusAndBrand(String username, VaccineStatus status);
-//    boolean existsVaccineByHospitalNameAndStatusAndBrand(String username, VaccineStatus status);
 }

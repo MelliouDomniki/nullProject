@@ -11,7 +11,11 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import static com.example.nullproject2.utils.RandomnessProvider.getDateWithoutTimeUsingFormat;
@@ -88,6 +92,19 @@ public class VaccineController {
     @GetMapping("countBy/{brand}/{status}")
     public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,status);
+    }
+
+    @GetMapping("countAllVaccines")
+    public String getAllVaccinesOfEachBrand(@PathVariable String username){
+        List<String> brands = Arrays.asList("PFIZER","ASTRAZENECA","NOVAVAX","MODERNA","JOHNSON");
+        List<String> vaccines = new ArrayList<>();
+        String theBrandAndNumber = "";
+
+        for (String brand : brands) {
+            theBrandAndNumber = "" + brand + " : " + "" + vacrepo.countByHospitalNameAndAndBrandAndStatus(username, Brand.valueOf(brand), VaccineStatus.AVAILABLE);
+            vaccines.add(theBrandAndNumber);
+        }
+         return vaccines+"";
     }
 
     @PostMapping("add/{brand}/{number}")
