@@ -1,5 +1,8 @@
 package com.example.nullproject2.enumerations;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Brand {
 
     PFIZER("Pfizer"),
@@ -13,5 +16,4 @@ public enum Brand {
     Brand(String brand) { this.brand = brand; }
 
     public String getBrand() {return brand;}
-
 }

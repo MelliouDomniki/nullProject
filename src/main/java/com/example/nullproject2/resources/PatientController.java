@@ -4,6 +4,10 @@ import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +16,14 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/patient/")
+@RequestMapping("{username}/patient/")
 public class PatientController {
 
     @Autowired
     private PatientRepository patrepo;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @PostMapping("addPatient")
     public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
@@ -28,8 +35,8 @@ public class PatientController {
     }
 
     @GetMapping("findAll")
-    public List<Patient> getPatients() {
-        return patrepo.findAll();
+    public List<Patient> getPatients(@PathVariable String username) {
+        return patrepo.findByHospitalNameIsNullAndHospitalName(username);
     }
 
     @GetMapping("findId/{id}")
