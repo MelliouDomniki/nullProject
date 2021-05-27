@@ -85,6 +85,11 @@ public class VaccineController {
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
+    @GetMapping("countBy/{brand}/{status}")
+    public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
+        return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,status);
+    }
+
     @PostMapping("add/{brand}/{number}")
     public String addVaccinesByBrand (@PathVariable String username,@PathVariable String brand,@PathVariable int number) throws ParseException {
 
