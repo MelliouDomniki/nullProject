@@ -63,7 +63,7 @@ public class VaccineController {
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
-    @GetMapping("countAvailable}")
+    @GetMapping("countAvailable")
     public int countAvailableVaccines(@PathVariable String username) {
         return vacrepo.countByStatusAndHospitalName(VaccineStatus.AVAILABLE, username);
     }
