@@ -31,6 +31,7 @@ import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/{username}/vaccination")
 public class VaccinationController {
 
     @Autowired
@@ -42,7 +43,8 @@ public class VaccinationController {
     @Autowired
     private UserController us;
 
-  @PostMapping("{username}/vaccination/")
+
+  @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
       System.out.print("hi");
@@ -53,7 +55,7 @@ public class VaccinationController {
       return "Vaccination created";
     }
 
-    @GetMapping("{username}/getVaccinations")
+    @GetMapping("/all")
     public ArrayList<Object[]> getVaccinations(@PathVariable String username) throws IOException {
 
         BigchainDbConfigBuilder
