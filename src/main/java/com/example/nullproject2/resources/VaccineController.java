@@ -89,9 +89,9 @@ public class VaccineController {
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
-    @GetMapping("countBy/{brand}/{status}")
-    public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
-        return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,status);
+    @GetMapping("countBy/{brand}/")
+    public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand){
+        return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,VaccineStatus.AVAILABLE);
     }
 
     @GetMapping("countAllVaccines")

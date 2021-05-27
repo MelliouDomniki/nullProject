@@ -44,6 +44,9 @@ public class Patient {
     @Field(name = "sex")
     private Sex sex;
 
+    @Field(name = "hospital")
+    private String hospitalName;
+
     @DBRef
     private List<Vaccine> vaccines = new ArrayList<>();
 
@@ -55,6 +58,7 @@ public class Patient {
         this.status=status;
         this.amka = amka;
         this.sex = sex;
+        this.hospitalName = "";
     }
 
 }

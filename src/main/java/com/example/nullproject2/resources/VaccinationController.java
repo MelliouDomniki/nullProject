@@ -18,6 +18,10 @@ import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 
 import javax.print.Doc;
@@ -43,6 +47,9 @@ public class VaccinationController {
     @Autowired
     private UserController us;
 
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
 
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
@@ -50,7 +57,23 @@ public class VaccinationController {
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-      BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+
+      if (!patient.getHospitalName().equals(hospital.getUsername())){
+          if (patient.getStatus().equals("0/2") || patient.getStatus().equals("1/2")){
+              BigchainCall.doCreate(hospital, patient, input.getDate(), vaccine);
+
+              //updates Patient
+              Update update = new Update();
+              update.set("hospital",username);
+              if (patient.getStatus().equals("0/2")) {
+                  update.set("status", "1/2");
+              } else update.set("status", "2/2");
+
+              Criteria criteria = Criteria.where("amka").is(patient.getAmka());
+              mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
+          }else return "Vaccination cannot creat";
+      }else return "Vaccination cannot  creat";
+
       return "Vaccination created";
     }
 
