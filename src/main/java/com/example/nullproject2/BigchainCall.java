@@ -38,18 +38,18 @@ public class BigchainCall {
 
         Map<String, String> assetData = new TreeMap<String, String>() {{
             put("AMKA", p.getAmka());
-            //put("age", String.valueOf(p.getAge()));
+            put("age", String.valueOf(p.getAge()));
+            put("name",p.getName());
         }};
         System.out.println("(*) Assets Prepared..");
 
         MetaData metaData = new MetaData();
         metaData.setMetaData("date", d.toString());
-        metaData.setMetaData("age",  String.valueOf(p.getAge()) );
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
         metaData.setMetaData("vaccine-id", v.getId());
-        metaData.setMetaData("vaccination-status", VaccinationStatus.PENDING.toString());
+        metaData.setMetaData("status", VaccinationStatus.PENDING.toString());
         System.out.println("(*) Metadata Prepared..");
 
         try {
@@ -74,48 +74,51 @@ public class BigchainCall {
 
     }
 
-    public static void doUpdate(String transId, String assetId, Date d, Vaccine v, User next) throws Exception {
-
-
-        BigchainDbConfigBuilder
-                .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
-                .addToken("app_id", "")
-                .addToken("app_key", "").setup();
-
-        MetaData transferMetadata = new MetaData();
-        transferMetadata.setMetaData("where is he now?", "Japan");
-        System.out.println("(*) Transfer Metadata Prepared..");
-        Thread.sleep(5000);
-
-        Map<String, String> assetData = new TreeMap<String, String>();
-        assetData.put("id", assetId);
-
-        try {
-            //which transaction you want to fulfill?
-            FulFill fulfill = new FulFill();
-            fulfill.setOutputIndex(0);
-            fulfill.setTransactionId(transId);
-
-            //build and send TRANSFER transaction
-            Transaction transaction = BigchainDbTransactionBuilder
-                    .init()
-                    .addInput(null, fulfill, (EdDSAPublicKey) next.getKeyPairs().getPublic())
-                    .addOutput("1", (EdDSAPublicKey) next.getKeyPairs().getPublic())
-                    .addAssets(assetId, String.class)
-                    .addMetaData(transferMetadata)
-                    .operation(Operations.TRANSFER)
-                    .buildAndSign((EdDSAPublicKey) next.getKeyPairs().getPublic(), (EdDSAPrivateKey) next.getKeyPairs().getPrivate())
-                    .sendTransaction(handleServerResponse("t"));
-
-            System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
-
-
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    public static void doUpdate(String transId, String assetId, Date d, Vaccine v, User next) throws Exception {
+//
+//
+//        BigchainDbConfigBuilder
+//                .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
+//                .addToken("app_id", "")
+//                .addToken("app_key", "").setup();
+//
+//        MetaData transferMetadata = new MetaData();
+//        transferMetadata.setMetaData("where is he now?", "Japan");
+//        System.out.println("(*) Transfer Metadata Prepared..");
+//        Thread.sleep(5000);
+//
+//        Map<String, String> assetData = new TreeMap<String, String>();
+//        assetData.put("id", assetId);
+//        assetData.put("AMKA", p.getAmka());
+//        assetData.put("age", String.valueOf(p.getAge()));
+//        assetData.put("name",p.getName());
+//
+//        try {
+//            //which transaction you want to fulfill?
+//            FulFill fulfill = new FulFill();
+//            fulfill.setOutputIndex(0);
+//            fulfill.setTransactionId(transId);
+//
+//            //build and send TRANSFER transaction
+//            Transaction transaction = BigchainDbTransactionBuilder
+//                    .init()
+//                    .addInput(null, fulfill, (EdDSAPublicKey) next.getKeyPairs().getPublic())
+//                    .addOutput("1", (EdDSAPublicKey) next.getKeyPairs().getPublic())
+//                    .addAssets(assetId, String.class)
+//                    .addMetaData(transferMetadata)
+//                    .operation(Operations.TRANSFER)
+//                    .buildAndSign((EdDSAPublicKey) next.getKeyPairs().getPublic(), (EdDSAPrivateKey) next.getKeyPairs().getPrivate())
+//                    .sendTransaction(handleServerResponse("t"));
+//
+//            System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
+//
+//
+//
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void doTransfer(String transId, KeyPair previous, String assetId, Date d, Vaccine v, User next) throws Exception {
 

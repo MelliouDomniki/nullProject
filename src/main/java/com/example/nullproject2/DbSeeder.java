@@ -1,6 +1,9 @@
 package com.example.nullproject2;
 
 
+import com.example.nullproject2.entity.Vaccine;
+import com.example.nullproject2.enumerations.Brand;
+import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.resources.PatientController;
 import com.example.nullproject2.resources.UserController;
@@ -8,6 +11,8 @@ import com.example.nullproject2.resources.VaccineController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
@@ -38,7 +43,7 @@ public class DbSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         //VACCINES
-//        Date d1 = new Date( 2021, 06, 21);
+       // Date d1 = new Date( 2021, 06, 21);
 
 //        Vaccine v1 = new Vaccine(Brand.ASTRAZENECA, VaccineStatus.AVAILABLE, d1);
 //        Vaccine v2 = new Vaccine( Brand.PFIZER, VaccineStatus.AVAILABLE, d1);
@@ -81,14 +86,13 @@ public class DbSeeder implements CommandLineRunner {
 //        roleRepository.save(role1);
 //        roleRepository.save(role2);
 
-//        Date date1 = new Date(2021, 07, 21);
+      // Date date1 = new Date(2021, 07, 21);
 ////
 //        User hospital = us.getHospital("te");
 //        Patient patient = pat.patientsByAMKA("874756356");
 //        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf("PFIZER"), VaccineStatus.AVAILABLE);
 ////
 //        BigchainCall.doCreate(hospital, patient, date1, vaccine);
-
 //        KeyPair keys2 = BigchainCall.getKeys();
 //        System.out.println(keys2.getPublic());
 //        KeyPair keys3 = BigchainCall.getKeys();
