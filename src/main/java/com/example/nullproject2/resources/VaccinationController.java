@@ -47,7 +47,6 @@ public class VaccinationController {
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
-      System.out.print("hi");
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);

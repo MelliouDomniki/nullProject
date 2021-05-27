@@ -77,6 +77,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.transactionStatus = UserStatus.UNAVAILABLE;
+        this.availableDoses = 0;
         KeyPair keys = BigchainCall.getKeys();
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
         this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
@@ -85,6 +86,8 @@ public class User {
         //vac.addVaccines(this.username, this.availableDoses);
 
     }
+
+
 
     @JsonIgnore
     public KeyPair getKeyPairs()
