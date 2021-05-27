@@ -60,20 +60,23 @@ public class VaccinationController {
       Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
       bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
-//      if (!patient.getHospitalName().equals(hospital.getUsername())){
-//          if (patient.getStatus().equals("0/2") || patient.getStatus().equals("1/2")){
+//      if (patient.getStatus().equals("0/2") || patient.getStatus().equals("1/2")){
+//          if (patient.getHospitalName() == null || patient.getHospitalName().equals(username)){
+//
+//              bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
 //
 //              //updates Patient
 //              Update update = new Update();
-//              update.set("hospital",username);                                //GIA UPDATE
-//              if (patient.getStatus().equals("0/2")) {
+//              update.set("hospital",username);
+//              if (patient.getStatus().equals("0/2")) {       //GIA UPDATE
 //                  update.set("status", "1/2");
-//              } else update.set("status", "2/2");
-//
+//              } else {
+//                  update.set("status", "2/2");
+//              }
 //              Criteria criteria = Criteria.where("amka").is(patient.getAmka());
 //              mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
-//          }else return "Vaccination cannot creat";
-//      }else return "Vaccination cannot  creat";
+//          }else return "Vaccination cannot create";
+//      }else return "Vaccination cannot  create";
 
       vac.decreaseAvailable(vaccine,hospital);
       return "Vaccination created";
