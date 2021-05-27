@@ -31,6 +31,12 @@ public class PatientController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already used!"));
         }
         patrepo.save(patient);
+        Update update = new Update();
+        update.set("hospital","");
+        update.set("status","0/2");
+        Criteria criteria = Criteria.where("amka").is(patient.getAmka());
+        mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
+
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
     }
 
