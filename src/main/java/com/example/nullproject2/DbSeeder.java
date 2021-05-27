@@ -42,6 +42,9 @@ public class DbSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+
+
+
         //VACCINES
        // Date d1 = new Date( 2021, 06, 21);
 

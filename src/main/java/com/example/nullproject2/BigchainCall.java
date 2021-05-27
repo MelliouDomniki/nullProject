@@ -15,20 +15,35 @@ import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.VaccinationStatus;
+import com.example.nullproject2.enumerations.VaccineStatus;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 import net.i2p.crypto.eddsa.EdDSAPublicKey;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 
 public class BigchainCall {
+
+    @Autowired
+    private  MongoTemplate mongoTemplate;
+
 
     //public   BigchainDBJavaDriverUsageExample(String args[]) throws Exception {
     public   BigchainCall() throws Exception {
 
     }
 
+
     public static void doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
+
+
+
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
@@ -71,7 +86,13 @@ public class BigchainCall {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        v.setStatus(VaccineStatus.UNAVAILABLE);
+        Update update = new Update();
+        //User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(h.getUsername())), User.class);
+       // int c = user.getAvailableDoses()+1;
+        //update.set("available_Doses", c--);
+        Criteria criteria = Criteria.where("username").is(h.getUsername());
+        //mongoTemplate.updateFirst(Query.query(criteria), update, "users");
     }
 
 //    public static void doUpdate(String transId, String assetId, Date d, Vaccine v, User next) throws Exception {
