@@ -54,18 +54,26 @@ public class VaccinationController {
     }
 
     @GetMapping("{username}/getVaccinations")
-    public ArrayList<Transaction> getVaccinations(@PathVariable String username) throws IOException {
+    public ArrayList<Object[]> getVaccinations(@PathVariable String username) throws IOException {
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
-        ArrayList<Transaction> lista = new ArrayList<>();
+        ArrayList<Object[]> lista = new ArrayList<>();
         User hospital = us.getHospital(username);
         List<Output> out = OutputsApi.getUnspentOutputs(hospital.getPublicKey()).getOutput();
         for (Output o : out)
         {
-            lista.add( TransactionsApi.getTransactionById(o.getTransactionId()));
+            Object[] pin = new Object[2];
+            Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
+            if (t.getAsset().getData()!= null)
+            {
+                pin[0] = t.getAsset().getData() ;
+                pin[1] = t.getMetaData();
+                lista.add(pin);
+            }
+
         }
         return lista;
     }
