@@ -1,9 +1,6 @@
 package com.example.nullproject2;
 
 
-import com.example.nullproject2.entity.Vaccine;
-import com.example.nullproject2.enumerations.Brand;
-import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.resources.PatientController;
 import com.example.nullproject2.resources.UserController;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 @Component
 public class DbSeeder implements CommandLineRunner {
