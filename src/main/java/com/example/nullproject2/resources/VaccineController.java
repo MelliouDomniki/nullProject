@@ -97,7 +97,6 @@ public class VaccineController {
 
         for (int i = 0 ; i < number ; i++){
 
-
             b = Brand.valueOf(brand);
 
             Vaccine v = new Vaccine(b,s,getDateWithoutTimeUsingFormat(),username);
