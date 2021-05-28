@@ -47,18 +47,16 @@ public class Patient {
     @Field(name = "hospital")
     private String hospitalName;
 
-    @DBRef
-    private List<Vaccine> vaccines = new ArrayList<>();
 
-    public Patient(String name,int age, String address, String status, String amka, Sex sex)
+    public Patient(String name,int age, String address, String amka, Sex sex)
     {
         this.name =name;
         this.age=age;
         this.address=address;
-        this.status=status;
+        this.status="0/2";
         this.amka = amka;
         this.sex = sex;
-        this.hospitalName = "";
+        this.hospitalName = null;
     }
 
 }

@@ -78,7 +78,6 @@ public class VaccinationController {
 //          }else return "Vaccination cannot create";
 //      }else return "Vaccination cannot  create";
 
-      vac.decreaseAvailable(vaccine,hospital);
       return "Vaccination created";
     }
 
@@ -94,13 +93,14 @@ public class VaccinationController {
         List<Output> out = OutputsApi.getUnspentOutputs(hospital.getPublicKey()).getOutput();
         for (Output o : out)
         {
-            Object[] pin = new Object[2];
+            Object[] pin = new Object[3];
             Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
             if (t.getAsset().getData()!= null)
             {
                 pin[0] = t.getAsset().getData() ;
                 pin[1] = t.getMetaData();
-                lista.add(pin);
+                pin[2] = t.getId();
+            lista.add(pin);
             }
 
         }

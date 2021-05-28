@@ -27,23 +27,19 @@ public class PatientController {
     private MongoTemplate mongoTemplate;
 
     @PostMapping("addPatient")
-    public ResponseEntity<?> savePatient(@RequestBody Patient patient) {
-        if (patrepo.existsByAmka(patient.getAmka())){
+    public ResponseEntity<?> savePatient(@RequestBody Patient pat) {
+        if (patrepo.existsByAmka(pat.getAmka())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: this amka is already used!"));
         }
-        patrepo.save(patient);
-        Update update = new Update();
-        update.set("hospital","");
-        update.set("status","0/2");
-        Criteria criteria = Criteria.where("amka").is(patient.getAmka());
-        mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
+        Patient p = new Patient(pat.getName(),pat.getAge(),pat.getAddress(),pat.getAmka(),pat.getSex());
+        patrepo.save(p);
 
-        return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+patient.getId()));
+        return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+p.getId()));
     }
 
     @GetMapping("findAll")
     public List<Patient> getPatients(@PathVariable String username) {
-        return patrepo.findAll();
+        return patrepo.findPatientsByHospitalNameOrHospitalNameIsNull(username);
     }
 
     @GetMapping("findId/{id}")
@@ -59,13 +55,11 @@ public class PatientController {
 
     @PostMapping("update")
     public String updatePatient(@PathVariable String username,@RequestBody Patient newPatient) {
-        Patient patient = mongoTemplate.findOne(Query.query(Criteria.where("hospital").is(username)), Patient.class);
+        //Patient patient = mongoTemplate.findOne(Query.query(Criteria.where("hospital").is(username)), Patient.class);
         patrepo.save(newPatient);
         Update update = new Update();
-        update.set("hospital",patient.getHospitalName());
-        update.set("status",patient.getStatus());
-        Criteria criteria = Criteria.where("amka").is(newPatient.getAmka());
-        mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
+
+
         return "Updated patient with id: " + newPatient.getId();
     }
 

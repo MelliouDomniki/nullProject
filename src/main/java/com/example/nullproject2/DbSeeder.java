@@ -1,6 +1,8 @@
 package com.example.nullproject2;
 
 
+import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.resources.PatientController;
 import com.example.nullproject2.resources.UserController;
@@ -67,15 +69,15 @@ public class DbSeeder implements CommandLineRunner {
 
 //        //PATIENS
 //
-//        Patient p1 = new Patient("Marika", 98, "Marikas 7", PatientStatus.AVAILABLE, "", "42565767", Sex.FEMALE);
-//        Patient p2 = new Patient("Sofoula", 94, "Sofoulas 54", PatientStatus.COMPLETED, "Piretos, ponos sto xeri", "86957464", Sex.FEMALE);
-//        Patient p3 = new Patient("Dina", 97, "Dinas 23", PatientStatus.PENDING, "", "874756356", Sex.FEMALE);
-//
-//        this.patientRepository.deleteAll();
-//
-//        patientRepository.save(p1);
-//        patientRepository.save(p2);
-//        patientRepository.save(p3);
+        Patient p1 = new Patient("Marika", 98, "Marikas 7","42565767", Sex.FEMALE);
+        Patient p2 = new Patient("Sofoula", 94, "Sofoulas 54", "86957464", Sex.FEMALE);
+        Patient p3 = new Patient("Dina", 97, "Dinas 23",  "874756356", Sex.FEMALE);
+
+        this.patientRepository.deleteAll();
+
+        patientRepository.save(p1);
+        patientRepository.save(p2);
+        patientRepository.save(p3);
 //        //Roles
 //
 //        Role role1 = new Role(Erole.ROLE_USER);
