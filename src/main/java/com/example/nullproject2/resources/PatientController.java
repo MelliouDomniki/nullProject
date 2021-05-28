@@ -1,6 +1,7 @@
 package com.example.nullproject2.resources;
 
 import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.payload.MessageResponse;
 import com.example.nullproject2.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class PatientController {
 
     @GetMapping("findAll")
     public List<Patient> getPatients(@PathVariable String username) {
-        return patrepo.findByHospitalNameIsNullAndHospitalName(username);
+        return patrepo.findPatientsByHospitalNameOrHospitalNameIsNull(username);
     }
 
     @GetMapping("findId/{id}")
@@ -57,8 +58,14 @@ public class PatientController {
     }
 
     @PostMapping("update")
-    public String updatePatient(@RequestBody Patient newPatient) {
+    public String updatePatient(@PathVariable String username,@RequestBody Patient newPatient) {
+        Patient patient = mongoTemplate.findOne(Query.query(Criteria.where("hospital").is(username)), Patient.class);
         patrepo.save(newPatient);
+        Update update = new Update();
+        update.set("hospital",patient.getHospitalName());
+        update.set("status",patient.getStatus());
+        Criteria criteria = Criteria.where("amka").is(newPatient.getAmka());
+        mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
         return "Updated patient with id: " + newPatient.getId();
     }
 
