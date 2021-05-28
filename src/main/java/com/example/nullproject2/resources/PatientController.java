@@ -43,7 +43,7 @@ public class PatientController {
 
     @GetMapping("findAll")
     public List<Patient> getPatients(@PathVariable String username) {
-        return patrepo.findPatientsByHospitalNameOrHospitalNameIsNull(username);
+        return patrepo.findAll();
     }
 
     @GetMapping("findId/{id}")
