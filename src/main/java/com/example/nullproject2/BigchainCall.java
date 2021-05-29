@@ -2,6 +2,7 @@ package com.example.nullproject2;
 
 import java.io.IOException;
 import java.security.KeyPair;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -141,7 +142,8 @@ public class BigchainCall {
 
 
         MetaData transferMetadata = new MetaData();
-        transferMetadata.setMetaData("date", d.toString());
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        transferMetadata.setMetaData("date", form.format(d));
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());

@@ -46,6 +46,11 @@ public class VaccineController {
         return vacrepo.findByHospitalName(username);
     }
 
+    @GetMapping("findBrands/{patId}")
+    public Optional<Vaccine> getVaccine(@PathVariable String id, @PathVariable String id) {
+        return vacrepo.findById(id);
+    }
+
     @GetMapping("findId/{id}")
     public Optional<Vaccine> getVaccine(@PathVariable String id) {
         return vacrepo.findById(id);
