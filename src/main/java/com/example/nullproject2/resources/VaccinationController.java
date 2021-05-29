@@ -60,8 +60,6 @@ public class VaccinationController {
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
-      //peritto to vaccine na to do mipos vgei
-      //an kano gia deyteri dosi vazo sigkekrimeno brand
 
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
@@ -85,15 +83,12 @@ public class VaccinationController {
     public String updateVaccination(@PathVariable String username,@PathVariable String transid, @RequestBody BigChain input) throws Exception {
 
 
-      //an einai rantevoy gia deyteri dosi den mporo na allakso brand
-        //den allazei o asthenis
-
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
         User hospital = us.getHospital(username);
-        Patient patient = pat.findFirstById(input.getId());
+        Patient patient = pat.findFirstByAmka(input.getAMKA());
         Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
         System.out.println(transid);
@@ -117,7 +112,7 @@ public class VaccinationController {
                    patient.setStatus("1/2");
                else if (patient.getStatus().equals("1/2"))
                    patient.setStatus("2/2");
-               patient.setSymptoms(input.getSymptoms());
+              // patient.setSymptoms(input.getSymptoms());
                pat.save(patient);
                vac.decreaseAvailable(vaccine,hospital);
            }
@@ -131,16 +126,13 @@ public class VaccinationController {
     public String transferVaccination(@PathVariable String username,@PathVariable String transid, @RequestBody BigChain input) throws Exception {
 
 
-        //an einai rantevoy gia deyteri dosi den mporo na allakso brand
-        //den allazei o asthenis
-
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
         User hospital = us.getHospital(username);
         User next = us.getHospital(input.getNext());
-        Patient patient = pat.findFirstById(input.getId());
+        Patient patient = pat.findFirstByAmka(input.getAMKA());
         Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
