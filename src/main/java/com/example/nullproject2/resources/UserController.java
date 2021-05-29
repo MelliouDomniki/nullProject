@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -73,11 +74,35 @@ public class UserController {
         return "You are now available";
     }
 
-    @GetMapping("findAllAvailable/{brand}")
-    public Map findAllByIAmAvailableEquals(@PathVariable String username, @PathVariable Brand brand){
-        Map<String, Object> hospitals = new HashMap<>();
-        hospitals.put("hospitalName",userRepository.findByTransactionStatus(1));
-        hospitals.put("Brand", vaccineRepository.findByHospitalNameAndBrand(username, brand));
+    @GetMapping("findAllAvailable")
+    public Map findAllByIAmAvailableEquals() {
+        Map<String, HashSet<String>> hospitals = new HashMap<>();
+
+
+        List<User> avaliableUsers = userRepository.findByTransactionStatus(1);
+        for (User availbleUser : avaliableUsers) {
+
+            for (Vaccine vaccine : availbleUser.getVaccines()) {
+
+                if (hospitals.containsKey(vaccine.getHospitalName())) {
+                    if (hospitals.get(vaccine.getHospitalName()) != null) {
+                        HashSet<String> brands = hospitals.get(vaccine.getHospitalName());
+                        brands.add(vaccine.getBrand().getBrand());
+                    } else {
+
+                        HashSet<String> brands = new HashSet<>();
+                        brands.add(vaccine.getBrand().getBrand());
+                        hospitals.put(vaccine.getHospitalName(), brands);
+                    }
+                } else {
+
+                    HashSet<String> brands = new HashSet<>();
+                    brands.add(vaccine.getBrand().getBrand());
+                    hospitals.put(vaccine.getHospitalName(), brands);
+                }
+            }
+        }
+
         return hospitals;
     }
 }
