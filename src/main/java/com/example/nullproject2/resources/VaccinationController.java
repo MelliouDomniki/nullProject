@@ -1,5 +1,6 @@
 package com.example.nullproject2.resources;
 
+import com.bigchaindb.api.AssetsApi;
 import com.bigchaindb.api.OutputsApi;
 import com.bigchaindb.api.TransactionsApi;
 import com.bigchaindb.builders.BigchainDbConfigBuilder;
@@ -14,13 +15,13 @@ import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
+import com.example.nullproject2.enumerations.VaccinationStatus;
 import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.UserRepository;
+import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,9 @@ public class VaccinationController {
 
     @Autowired
     private VaccineController vac;
+
+    @Autowired
+    private VaccineRepository vacrepo;
 
     @Autowired
     private PatientRepository pat;
@@ -56,33 +60,106 @@ public class VaccinationController {
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
+      //peritto to vaccine na to do mipos vgei
+      //an kano gia deyteri dosi vazo sigkekrimeno brand
+
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
-      bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
-//      if (patient.getStatus().equals("0/2") || patient.getStatus().equals("1/2")){
-//          if (patient.getHospitalName() == null || patient.getHospitalName().equals(username)){
-//
-//              bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
-//
-//              //updates Patient
-//              Update update = new Update();
-//              update.set("hospital",username);
-//              if (patient.getStatus().equals("0/2")) {       //GIA UPDATE
-//                  update.set("status", "1/2");
-//              } else {
-//                  update.set("status", "2/2");
-//              }
-//              Criteria criteria = Criteria.where("amka").is(patient.getAmka());
-//              mongoTemplate.updateFirst(Query.query(criteria),update,"Patients");
-//          }else return "Vaccination cannot create";
-//      }else return "Vaccination cannot  create";
 
-      return "Vaccination created";
+      if (patient.getStatus()=="2/2")
+          return "Patient is fully vaccinated";
+      else
+      {
+          bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
+          patient.setAppoint(1);
+          patient.setHospitalName(username);
+          pat.save(patient);
+          return "Vaccination created";
+      }
+
+    }
+
+    @PostMapping("/update/{transid}")
+    public String updateVaccination(@PathVariable String username,@PathVariable String transid, @RequestBody BigChain input) throws Exception {
+
+
+      //an einai rantevoy gia deyteri dosi den mporo na allakso brand
+        //den allazei o asthenis
+
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/")
+                .addToken("app_id", "")
+                .addToken("app_key", "").setup();
+        User hospital = us.getHospital(username);
+        Patient patient = pat.findFirstById(input.getId());
+        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+        String assetid = "";
+        System.out.println(transid);
+        System.out.println(TransactionsApi.getTransactionById(transid).getOperation());
+        assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
+        if (assetid==null)  assetid=transid;
+       System.out.println(assetid);
+        bigchain.doUpdate(transid,assetid, input.getStatus(), hospital, patient, input.getDate(), vaccine);
+
+           if (input.getStatus().equals("CANCELLED"))
+           {
+               patient.setAppoint(0);
+               patient.setHospitalName(null);
+               pat.save(patient);
+           }
+           else if (input.getStatus().equals("DONE"))
+           {
+               patient.setAppoint(0);
+               patient.setHospitalName(null);
+               patient.setBrand(vaccine.getBrand());
+               if (patient.getStatus().equals("0/2"))
+                   patient.setStatus("1/2");
+               else if (patient.getStatus().equals("1/2"))
+                   patient.setStatus("2/2");
+              // patient.setSymptoms(input.getSymptoms());
+               pat.save(patient);
+               vac.decreaseAvailable(vaccine,hospital);
+           }
+
+            return "Vaccination created";
+
+
+    }
+
+    @PostMapping("/transfer/{transid}")
+    public String transferVaccination(@PathVariable String username,@PathVariable String transid, @RequestBody BigChain input) throws Exception {
+
+
+        //an einai rantevoy gia deyteri dosi den mporo na allakso brand
+        //den allazei o asthenis
+
+        BigchainDbConfigBuilder
+                .baseUrl("http://localhost:9984/")
+                .addToken("app_id", "")
+                .addToken("app_key", "").setup();
+        User hospital = us.getHospital(username);
+        User next = us.getHospital(input.getNext());
+        Patient patient = pat.findFirstById(input.getId());
+        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+        String assetid = "";
+        assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
+        if (assetid==null)  assetid=transid;
+        bigchain.doTransfer(transid,assetid, input.getStatus(), hospital, next, patient, input.getDate(), vaccine);
+
+       patient.setHospitalName(input.getNext());
+       pat.save(patient);
+
+        return "Vaccination was transfered";
+
     }
 
     @GetMapping("/all")
     public ArrayList<Object[]> getVaccinations(@PathVariable String username) throws IOException {
+
+
+        //na elegxei an exo available se kathe ena kai an oxi na vgazei simbolo ston emvoliasmo oti prepei
+        // na ginei transfer
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
@@ -95,14 +172,23 @@ public class VaccinationController {
         {
             Object[] pin = new Object[3];
             Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
+
             if (t.getAsset().getData()!= null)
             {
                 pin[0] = t.getAsset().getData() ;
                 pin[1] = t.getMetaData();
                 pin[2] = t.getId();
-            lista.add(pin);
-            }
 
+            }
+            else
+            {
+                Assets assets = AssetsApi.getAssets(t.getAsset().getId());
+                for (Asset a : assets.getAssets())
+                    pin[0]= a.getData();
+                pin[1] = t.getMetaData();
+                pin[2] = t.getId();
+            }
+            lista.add(pin);
         }
         return lista;
     }

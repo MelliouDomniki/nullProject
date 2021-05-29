@@ -142,8 +142,6 @@ public class VaccineController {
         vacrepo.save(v);
         update.set("available_Doses", c--);
         update.addToSet("vaccines,v");
-        //mesa sto user sto vaccines den to kanei unavailable
-        //den mas peirazei koitame vaccine repository
         Criteria criteria = Criteria.where("username").is(h.getUsername());
         mongoTemplate.updateFirst(Query.query(criteria), update, "users");
     }

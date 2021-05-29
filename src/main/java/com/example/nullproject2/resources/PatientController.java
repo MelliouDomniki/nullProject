@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +38,21 @@ public class PatientController {
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+p.getId()));
     }
 
+    @GetMapping("All")
+    public List<Patient> getGlobalPatients(@PathVariable String username) {
+        return patrepo.findAll();
+    }
+
     @GetMapping("findAll")
     public List<Patient> getPatients(@PathVariable String username) {
-        return patrepo.findPatientsByHospitalNameOrHospitalNameIsNull(username);
+
+        List<Patient> lista = new ArrayList<>();
+        for (Patient p : patrepo.findPatientsByHospitalNameOrHospitalNameIsNull(username))
+        {
+            if (p.getAppoint()==0 && !p.getStatus().equals("2/2"))
+                lista.add(p);
+        }
+        return lista ;
     }
 
     @GetMapping("findId/{id}")

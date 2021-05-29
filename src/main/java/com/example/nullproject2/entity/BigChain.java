@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class BigChain {
 
     private String hosp;
 
+    private String next;
 
     private String AMKA;
 
@@ -27,6 +30,8 @@ public class BigChain {
 
 
     private String status;
+
+    private List<String> symptoms;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
