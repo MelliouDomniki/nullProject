@@ -2,7 +2,6 @@ package com.example.nullproject2.entity;
 
 import com.bigchaindb.util.KeyPairUtils;
 import com.example.nullproject2.BigchainCall;
-import com.example.nullproject2.enumerations.UserStatus;
 import com.example.nullproject2.roles.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -51,7 +50,7 @@ public class User {
     private String password;
 
     @Field(name = "TransactionStatus")
-    private UserStatus transactionStatus;
+    private int transactionStatus;
 
     @Field(name = "keys")
     private String keys;
@@ -76,7 +75,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.transactionStatus = UserStatus.UNAVAILABLE;
+        this.transactionStatus = 0;
         this.availableDoses = 0;
         KeyPair keys = BigchainCall.getKeys();
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();

@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @GetMapping("all")
-    public List<Patient> getGlobalPatients(@PathVariable String username) {
+    public List<Patient> getGlobalPatients() {
         return patrepo.findAll();
     }
 
