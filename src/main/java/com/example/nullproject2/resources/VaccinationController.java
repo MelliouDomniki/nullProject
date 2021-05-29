@@ -73,6 +73,7 @@ public class VaccinationController {
       {
           bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
           patient.setAppoint(1);
+          patient.setBrand(vaccine.getBrand());
           patient.setHospitalName(username);
           pat.save(patient);
           return "Vaccination created";
@@ -112,12 +113,11 @@ public class VaccinationController {
            {
                patient.setAppoint(0);
                patient.setHospitalName(null);
-               patient.setBrand(vaccine.getBrand());
                if (patient.getStatus().equals("0/2"))
                    patient.setStatus("1/2");
                else if (patient.getStatus().equals("1/2"))
                    patient.setStatus("2/2");
-              // patient.setSymptoms(input.getSymptoms());
+               patient.setSymptoms(input.getSymptoms());
                pat.save(patient);
                vac.decreaseAvailable(vaccine,hospital);
            }
