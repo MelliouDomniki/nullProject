@@ -1,9 +1,11 @@
 package com.example.nullproject2.resources;
 
+import com.example.nullproject2.entity.Patient;
 import com.example.nullproject2.entity.User;
 import com.example.nullproject2.entity.Vaccine;
 import com.example.nullproject2.enumerations.Brand;
 import com.example.nullproject2.enumerations.VaccineStatus;
+import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -29,6 +31,9 @@ public class VaccineController {
     private VaccineRepository vacrepo;
 
     @Autowired
+    private PatientRepository patrepo;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     @PostMapping("add")
@@ -47,8 +52,15 @@ public class VaccineController {
     }
 
     @GetMapping("findBrands/{patId}")
-    public Optional<Vaccine> getVaccine(@PathVariable String id, @PathVariable String id) {
-        return vacrepo.findById(id);
+    public Brand[] getBrands(@PathVariable String username, @PathVariable String patId) {
+
+        Brand[] brands = new Brand[5];
+        Patient patient = patrepo.findFirstById(patId);
+        if (patient.getAppoint()==0 && patient.getStatus().equals("0/2"))
+            brands = Brand.values();
+        else
+            brands[0]= patient.getBrand();
+        return brands;
     }
 
     @GetMapping("findId/{id}")

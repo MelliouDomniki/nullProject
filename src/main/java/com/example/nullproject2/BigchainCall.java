@@ -49,7 +49,8 @@ public class BigchainCall {
         System.out.println("(*) Assets Prepared..");
 
         MetaData metaData = new MetaData();
-        metaData.setMetaData("date", d.toString());
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        metaData.setMetaData("date", form.format(d));
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
@@ -89,7 +90,8 @@ public class BigchainCall {
 
 
         MetaData transferMetadata = new MetaData();
-        transferMetadata.setMetaData("date", d.toString());
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        transferMetadata.setMetaData("date", form.format(d));
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());
