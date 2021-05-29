@@ -38,12 +38,12 @@ public class PatientController {
         return  ResponseEntity.ok(new MessageResponse("Patient register successfully with id: "+p.getId()));
     }
 
-    @GetMapping("All")
+    @GetMapping("all")
     public List<Patient> getGlobalPatients(@PathVariable String username) {
         return patrepo.findAll();
     }
 
-    @GetMapping("findAll")
+    @GetMapping("unvaccinated")
     public List<Patient> getPatients(@PathVariable String username) {
 
         List<Patient> lista = new ArrayList<>();
