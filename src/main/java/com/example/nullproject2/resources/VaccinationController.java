@@ -173,11 +173,15 @@ public class VaccinationController {
                 pin[0] = t.getAsset().getData() ;
                 pin[1] = t.getMetaData();
                 pin[2] = t.getId();
+                System.out.println(t.getMetaData());
                 Gson gson = new Gson();
                 LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
                 JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
                 myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-                pin[3]= vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0;
+                if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
+                pin[3]= true;
+                else
+                pin[3]=false;
 
             }
             else
@@ -187,11 +191,15 @@ public class VaccinationController {
                     pin[0]= a.getData();
                 pin[1] = t.getMetaData();
                 pin[2] = t.getId();
+                System.out.println(t.getMetaData());
                 Gson gson = new Gson();
                 LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
                 JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
                 myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-                pin[3]= vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0;
+                if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
+                    pin[3]= true;
+                else
+                    pin[3]=false;
             }
             lista.add(pin);
         }
