@@ -33,7 +33,7 @@ public class BigchainCall {
     }
 
 
-    public  void doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
+    public  void doCreate(User h, Patient p, Date d, String brand ) throws Exception {
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
@@ -54,7 +54,7 @@ public class BigchainCall {
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
-        metaData.setMetaData("vaccine-brand", v.getBrand().toString());
+        metaData.setMetaData("vaccine-brand", brand);
         metaData.setMetaData("status", VaccinationStatus.PENDING.toString());
         System.out.println("(*) Metadata Prepared..");
 

@@ -49,8 +49,8 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    @Field(name = "TransactionStatus")
-    private int transactionStatus;
+    @Field(name = "iAmAvailable")
+    private boolean iAmAvailable;
 
     @Field(name = "keys")
     private String keys;
@@ -75,7 +75,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.transactionStatus = 0;
+        this.iAmAvailable = true;
         this.availableDoses = 0;
         KeyPair keys = BigchainCall.getKeys();
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
@@ -86,6 +86,10 @@ public class User {
 
     }
 
+    public boolean getAvailability()
+    {
+        return this.iAmAvailable;
+    }
 
 
     @JsonIgnore

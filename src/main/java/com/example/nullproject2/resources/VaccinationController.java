@@ -63,15 +63,15 @@ public class VaccinationController {
 
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
-      Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+      //Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
 
       if (patient.getStatus()=="2/2")
           return "Patient is fully vaccinated";
       else
       {
-          bigchain.doCreate(hospital, patient, input.getDate(), vaccine);
+          bigchain.doCreate(hospital, patient, input.getDate(), input.getBrand());
           patient.setAppoint(1);
-          patient.setBrand(vaccine.getBrand());
+          patient.setBrand(Brand.valueOf(input.getBrand()));
           patient.setHospitalName(username);
           pat.save(patient);
           return "Vaccination created";
@@ -146,6 +146,7 @@ public class VaccinationController {
 
     }
 
+    //gia pinaka vaccinations
     @GetMapping("/all")
     public ArrayList<Object[]> getVaccinations(@PathVariable String username) throws IOException {
 
@@ -185,6 +186,7 @@ public class VaccinationController {
         return lista;
     }
 
+    //gia statistics
     @GetMapping("/allHospitals")
     public ArrayList<ArrayList<Object[]>> getAllVaccinations(@PathVariable String username) throws IOException {
 

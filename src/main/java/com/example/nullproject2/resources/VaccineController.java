@@ -80,12 +80,13 @@ public class VaccineController {
         return "Added vaccine with id: " + newVaccine.getId();
     }
 
+    //metraei ta available anexartita to brand , gia karta available
     @GetMapping("countAvailable")
     public int countAvailableVaccines(@PathVariable String username) {
         return vacrepo.countByStatusAndHospitalName(VaccineStatus.AVAILABLE, username);
     }
 
-
+    //den koitaei status
     @GetMapping("findAllByBrand/{brand}")
     public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
         return vacrepo.findByHospitalNameAndBrand(username, brand);
@@ -97,23 +98,27 @@ public class VaccineController {
         return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
     }
 
+
     @GetMapping("findAllByBrandAndStatus/{brand}/{status}")
     public List<Vaccine> getVaccinesByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findByHospitalNameAndBrandAndStatus(username,brand,status);
     }
+
 
     @GetMapping("findOneByBrandAndStatus/{brand}/{status}")
     public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
     }
 
+    //metraei ta available toy nosokomeioy gia to brand poy dino
     @GetMapping("countBy/{brand}/")
     public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand){
         return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,VaccineStatus.AVAILABLE);
     }
 
+    //gia vaccine page poy thelo posa available exo apo kathe brand me mia klisi
     @GetMapping("countAllVaccines")
-    public String getAllVaccinesOfEachBrand(@PathVariable String username){
+    public List<String> getAllVaccinesOfEachBrand(@PathVariable String username){
         List<String> brands = Arrays.asList("PFIZER","ASTRAZENECA","NOVAVAX","MODERNA","JOHNSON");
         List<String> vaccines = new ArrayList<>();
         String theBrandAndNumber = "";
@@ -122,7 +127,7 @@ public class VaccineController {
             theBrandAndNumber = "" + brand + " : " + "" + vacrepo.countByHospitalNameAndAndBrandAndStatus(username, Brand.valueOf(brand), VaccineStatus.AVAILABLE);
             vaccines.add(theBrandAndNumber);
         }
-         return vaccines+"";
+         return vaccines;
     }
 
     @PostMapping("add/{brand}/{number}")
