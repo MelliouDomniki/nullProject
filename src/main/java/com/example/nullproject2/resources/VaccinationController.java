@@ -20,6 +20,12 @@ import com.example.nullproject2.enumerations.VaccineStatus;
 import com.example.nullproject2.repositories.PatientRepository;
 import com.example.nullproject2.repositories.UserRepository;
 import com.example.nullproject2.repositories.VaccineRepository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
@@ -149,10 +155,7 @@ public class VaccinationController {
     @GetMapping("/all")
     public ArrayList<Object[]> getVaccinations(@PathVariable String username) throws IOException {
 
-
-        //na elegxei an exo available se kathe ena kai an oxi na vgazei simbolo ston emvoliasmo oti prepei
-        // na ginei transfer
-
+        ObjectMapper mapper = new ObjectMapper();
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
@@ -162,7 +165,7 @@ public class VaccinationController {
         List<Output> out = OutputsApi.getUnspentOutputs(hospital.getPublicKey()).getOutput();
         for (Output o : out)
         {
-            Object[] pin = new Object[3];
+            Object[] pin = new Object[4];
             Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
 
             if (t.getAsset().getData()!= null)
@@ -170,6 +173,11 @@ public class VaccinationController {
                 pin[0] = t.getAsset().getData() ;
                 pin[1] = t.getMetaData();
                 pin[2] = t.getId();
+                Gson gson = new Gson();
+                LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
+                JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
+                myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
+                pin[3]= vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0;
 
             }
             else
@@ -179,6 +187,11 @@ public class VaccinationController {
                     pin[0]= a.getData();
                 pin[1] = t.getMetaData();
                 pin[2] = t.getId();
+                Gson gson = new Gson();
+                LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
+                JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
+                myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
+                pin[3]= vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0;
             }
             lista.add(pin);
         }
@@ -195,7 +208,6 @@ public class VaccinationController {
                 .baseUrl("http://localhost:9984/")
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
-
 
 
         for (User h : usrepo.findAll())
@@ -219,5 +231,14 @@ public class VaccinationController {
         return lista;
     }
 
+    @Data
+    public class myMetadata {
+      private String date;
+      private String name;
+      private String city;
+       private String country;
+       private String brand;
+      private String status;
+    }
 
 }

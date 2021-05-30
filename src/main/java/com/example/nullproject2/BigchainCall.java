@@ -54,7 +54,7 @@ public class BigchainCall {
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
-        metaData.setMetaData("vaccine-brand", brand);
+        metaData.setMetaData("brand", brand);
         metaData.setMetaData("status", VaccinationStatus.PENDING.toString());
         System.out.println("(*) Metadata Prepared..");
 
@@ -95,7 +95,7 @@ public class BigchainCall {
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());
-        transferMetadata.setMetaData("vaccine-brand", v.getBrand().toString());
+        transferMetadata.setMetaData("brand", v.getBrand().toString());
         transferMetadata.setMetaData("status", status);
 
         System.out.println("(*) Transfer Metadata Prepared..");
@@ -149,7 +149,7 @@ public class BigchainCall {
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());
-        transferMetadata.setMetaData("vaccine-brand", v.getBrand().toString());
+        transferMetadata.setMetaData("brand", v.getBrand().toString());
         transferMetadata.setMetaData("status", status);
 
         System.out.println("(*) Transfer Metadata Prepared..");
