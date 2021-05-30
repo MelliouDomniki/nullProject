@@ -60,7 +60,6 @@ public class VaccinationController {
   @PostMapping("/")
   public String createVaccination(@PathVariable String username,@RequestBody BigChain input) throws Exception {
 
-
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       //Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
@@ -133,7 +132,7 @@ public class VaccinationController {
         User hospital = us.getHospital(username);
         User next = us.getHospital(input.getNext());
         Patient patient = pat.findFirstByAmka(input.getAMKA());
-        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+        Vaccine vaccine = vac.getVaccineByBrandAndStatus(next.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
         if (assetid==null)  assetid=transid;
