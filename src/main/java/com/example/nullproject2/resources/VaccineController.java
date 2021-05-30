@@ -52,15 +52,29 @@ public class VaccineController {
     }
 
     @GetMapping("findBrands/{patId}")
-    public Brand[] getBrands(@PathVariable String username, @PathVariable String patId) {
+    public List<String> getBrands(@PathVariable String username, @PathVariable String patId) {
 
-        Brand[] brands = new Brand[5];
+        List<String> brands = new ArrayList<>();
+        List<String> lista = new ArrayList<>();
         Patient patient = patrepo.findFirstById(patId);
         if (patient.getAppoint()==0 && patient.getStatus().equals("0/2"))
-            brands = Brand.values();
+        {
+            brands.add("PFIZER");
+            brands.add("MODERNA");
+            brands.add("NOVAVAX");
+            brands.add("JOHNSON");
+            brands.add("ASTRAZENECA");
+        }
+
         else
-            brands[0]= patient.getBrand();
-        return brands;
+            brands.add(patient.getBrand().toString());
+
+        for (String s: brands)
+        {
+            if (countGlobalByBrand(s)>0)
+                lista.add(s);
+        }
+        return lista;
     }
 
     @GetMapping("findId/{id}")
@@ -88,7 +102,7 @@ public class VaccineController {
 
     //den koitaei status
     @GetMapping("findAllByBrand/{brand}")
-    public List<Vaccine> getVaccinesByBrand(@PathVariable String username, @PathVariable Brand brand) {
+    public List<Vaccine> getVaccinesByBrand( @PathVariable String username, @PathVariable Brand brand) {
         return vacrepo.findByHospitalNameAndBrand(username, brand);
     }
 
@@ -108,6 +122,11 @@ public class VaccineController {
     @GetMapping("findOneByBrandAndStatus/{brand}/{status}")
     public Vaccine getVaccineByBrandAndStatus(@PathVariable String username, @PathVariable Brand brand, @PathVariable VaccineStatus status){
         return vacrepo.findFirstByHospitalNameAndBrandAndStatus(username,brand,status);
+    }
+
+    @GetMapping("countGlobalBy/{brand}/")
+    public int countGlobalByBrand( @PathVariable String brand){
+        return vacrepo.countByBrandAndStatus(Brand.valueOf(brand),VaccineStatus.AVAILABLE);
     }
 
     //metraei ta available toy nosokomeioy gia to brand poy dino
