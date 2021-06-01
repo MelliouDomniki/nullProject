@@ -114,7 +114,11 @@ public class VaccinationController {
                    patient.setStatus("1/2");
                else if (patient.getStatus().equals("1/2"))
                    patient.setStatus("2/2");
-               patient.setSymptoms(input.getSymptoms());
+               if (input.getSymptoms()!=null)
+               {
+                   for (String g: input.getSymptoms())
+                       patient.getSymptoms().add(g);
+               }
                pat.save(patient);
                vac.decreaseAvailable(vaccine,hospital);
            }
@@ -179,7 +183,7 @@ public class VaccinationController {
             LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
             JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
             myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-            if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
+            if (vacrepo.countByHospitalNameAndAndBrandAndStatus(username,Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0 || meta.getStatus().equals("DONE"))
                 pin[3]= true;
             else
                 pin[3]=false;

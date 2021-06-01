@@ -69,10 +69,15 @@ public class UserController {
     //gia koympi poy allazo to an dexomai transfers
     @PostMapping("makeMeAvailable")
     public String makeMeAvailable(@PathVariable String username){
+        String response = "";
         User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(username)), User.class);
+        if (user.getAvailability())
+            response= "you are now unavailable";
+        else
+            response = "you are now available";
         user.setIAmAvailable(!user.getAvailability());
         userRepository.save(user);
-        return "You are now available";
+        return response;
     }
 
     //gia drop down diathesima gia transfer

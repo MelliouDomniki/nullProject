@@ -33,7 +33,7 @@ public class BigchainCall {
     }
 
 
-    public  void doCreate(User h, Patient p, Date d, String brand ) throws Exception {
+    public  static void doCreate(User h, Patient p, Date d, String brand ) throws Exception {
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
@@ -81,7 +81,6 @@ public class BigchainCall {
     }
 
     public static void doUpdate(String transId, String assetId,String status, User cur, Patient p,Date d, Vaccine v) throws Exception {
-
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
@@ -135,7 +134,6 @@ public class BigchainCall {
     }
 
     public static void doTransfer(String transId, String assetId,String status, User cur, User next, Patient p,Date d, Vaccine v) throws Exception {
-
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
