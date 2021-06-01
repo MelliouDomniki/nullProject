@@ -96,11 +96,8 @@ public class VaccinationController {
         Patient patient = pat.findFirstByAmka(input.getAMKA());
         Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
-        System.out.println(transid);
-        System.out.println(TransactionsApi.getTransactionById(transid).getOperation());
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
         if (assetid==null)  assetid=transid;
-       System.out.println(assetid);
         bigchain.doUpdate(transid,assetid, input.getStatus(), hospital, patient, input.getDate(), vaccine);
 
            if (input.getStatus().equals("CANCELLED"))
@@ -117,7 +114,7 @@ public class VaccinationController {
                    patient.setStatus("1/2");
                else if (patient.getStatus().equals("1/2"))
                    patient.setStatus("2/2");
-              // patient.setSymptoms(input.getSymptoms());
+               patient.setSymptoms(input.getSymptoms());
                pat.save(patient);
                vac.decreaseAvailable(vaccine,hospital);
            }
@@ -169,38 +166,24 @@ public class VaccinationController {
             Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
 
             if (t.getAsset().getData()!= null)
-            {
                 pin[0] = t.getAsset().getData() ;
-                pin[1] = t.getMetaData();
-                pin[2] = t.getId();
-                System.out.println(t.getMetaData());
-                Gson gson = new Gson();
-                LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
-                JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
-                myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-                if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
-                pin[3]= true;
-                else
-                pin[3]=false;
-
-            }
             else
             {
                 Assets assets = AssetsApi.getAssets(t.getAsset().getId());
                 for (Asset a : assets.getAssets())
                     pin[0]= a.getData();
-                pin[1] = t.getMetaData();
-                pin[2] = t.getId();
-                System.out.println(t.getMetaData());
-                Gson gson = new Gson();
-                LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
-                JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
-                myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-                if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
-                    pin[3]= true;
-                else
-                    pin[3]=false;
             }
+            pin[1] = t.getMetaData();
+            pin[2] = t.getId();
+            Gson gson = new Gson();
+            LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
+            JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
+            myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
+            if (vacrepo.countByBrandAndStatus(Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0)
+                pin[3]= true;
+            else
+                pin[3]=false;
+
             lista.add(pin);
         }
         return lista;
@@ -217,23 +200,10 @@ public class VaccinationController {
                 .addToken("app_id", "")
                 .addToken("app_key", "").setup();
 
-
         for (User h : usrepo.findAll())
         {
-            ArrayList<Object[]> l = new ArrayList<>();
-            List<Output> out = OutputsApi.getUnspentOutputs(h.getPublicKey()).getOutput();
-            for (Output o : out)
-            {
-                Object[] pin = new Object[2];
-                Transaction t = TransactionsApi.getTransactionById(o.getTransactionId());
-                if (t.getAsset().getData()!= null)
-                {
-                    pin[0] = t.getAsset().getData() ;
-                    pin[1] = t.getMetaData();
-                    l.add(pin);
-                }
-            }
-            lista.add(l);
+            lista.add(getVaccinations(h.getUsername()));
+
         }
 
         return lista;
