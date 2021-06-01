@@ -2,6 +2,7 @@ package com.example.nullproject2;
 
 
 import com.example.nullproject2.entity.Patient;
+import com.example.nullproject2.entity.User;
 import com.example.nullproject2.enumerations.Sex;
 import com.example.nullproject2.repositories.*;
 import com.example.nullproject2.resources.PatientController;
@@ -10,6 +11,10 @@ import com.example.nullproject2.resources.VaccineController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 
 @Component
@@ -24,6 +29,7 @@ public class DbSeeder implements CommandLineRunner {
     @Autowired
     private UserController us;
 
+    private User user = new User();
     private VaccineRepository vaccineRepository;
     private PatientRepository patientRepository;
     private UserRepository userRepository;
@@ -41,43 +47,18 @@ public class DbSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
+//        Date d1 = new Date( 2021, 06, 21);
+//        Date d2 = new Date( 2021, 04, 04);
+//        Date d3 = new Date( 2021, 8, 8);
+//        user.getDates().put("1", d1 );
+//        user.getDates().put("2", d2);
+//        user.getDates().put("2", d3);
+//        user.setDates(user.sortByValue(user.getDates()));
+//        for (Map.Entry<String, Date> en : user.getDates().entrySet()) {
+//            System.out.println("Key = " + en.getKey() +
+//                    ", Value = " + en.getValue());
+//        }
 
-
-        //VACCINES
-       // Date d1 = new Date( 2021, 06, 21);
-
-//        Vaccine v1 = new Vaccine(Brand.ASTRAZENECA, VaccineStatus.AVAILABLE, d1);
-//        Vaccine v2 = new Vaccine( Brand.PFIZER, VaccineStatus.AVAILABLE, d1);
-//        Vaccine v3 = new Vaccine( Brand.PFIZER, VaccineStatus.AVAILABLE,  d1);
-//
-//
-//        this.vaccineRepository.deleteAll();
-//
-//        vaccineRepository.save(v1);
-//        vaccineRepository.save(v2);
-//        vaccineRepository.save(v3);
-
-
-//        //HOSPITALS
-//        User h1 = new User( "AXEPA", "Mpotsari 23", "2310874534", "Thess", "GR", 32, "axepa@gmail.com", "axepa", "axepa@");
-//        User h2 = new User( "IPPOKRATIO", "Mpotsari 24", "2310654534", "Thess", "GR", 67, "ippokratio@gmail.com", "ippokratio","ippokratio@" );
-//
-//       // this.userRepository.deleteAll();
-//        userRepository.save(h1);
-//        userRepository.save(h2);
-
-
-//        //PATIENS
-//
-//        Patient p1 = new Patient("Marika", 98, "Marikas 7","42565767", Sex.FEMALE);
-//        Patient p2 = new Patient("Sofoula", 94, "Sofoulas 54", "86957464", Sex.FEMALE);
-//        Patient p3 = new Patient("Dina", 97, "Dinas 23",  "874756356", Sex.FEMALE);
-//
-//        this.patientRepository.deleteAll();
-//
-//        patientRepository.save(p1);
-//        patientRepository.save(p2);
-//        patientRepository.save(p3);
 //        //Roles
 //
 //        Role role1 = new Role(Erole.ROLE_USER);
@@ -86,30 +67,6 @@ public class DbSeeder implements CommandLineRunner {
 //        this.roleRepository.deleteAll();
 //        roleRepository.save(role1);
 //        roleRepository.save(role2);
-
-      // Date date1 = new Date(2021, 07, 21);
-////
-//        User hospital = us.getHospital("te");
-//        Patient patient = pat.patientsByAMKA("874756356");
-//        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf("PFIZER"), VaccineStatus.AVAILABLE);
-////
-//        BigchainCall.doCreate(hospital, patient, date1, vaccine);
-//        KeyPair keys2 = BigchainCall.getKeys();
-//        System.out.println(keys2.getPublic());
-//        KeyPair keys3 = BigchainCall.getKeys();
-//        System.out.println(keys3.getPublic());
-       // String id = BigchainCall.doCreate(h1.getKeys());
-//        MetaData trmetadata = new MetaData();
-//        trmetadata.setMetaData("date", date1.toString());
-      //  String id2 = BigchainCall.doTransfer(id,h1.getKeys(), h1.getKeys());
-       // System.out.println(userRepository.getHospital("axepa@gmail.com").get().getPublicKey());
-       // BigchainCall.doTransfer2( "c123429183d70bee8974c7c7914bc92dfb656c8e384f5391632fca5712b4159e",userRepository.getHospital("axepa@gmail.com").get().getKeyPairs(), userRepository.getHospital("axepa@gmail.com").get().getKeyPairs());
-        //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED);
-        //BigchainCall.doTransfer(id, date1, h2, v2.getVaccine_id(), PatientStatus.COMPLETED, keys2);
-//        Transactions t = TransactionsApi.getTransactionsByAssetId(id, Operations.CREATE);
-//        for (Transaction tr: t.getTransactions())
-//            System.out.println(t.getTransactions().toString());
-
 
 
     }

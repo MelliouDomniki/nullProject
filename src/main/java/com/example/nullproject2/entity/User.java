@@ -58,6 +58,8 @@ public class User {
     @Field(name = "publicKey")
     private String publicKey;
 
+    private HashMap<String,Date> dates = new HashMap<>();
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
@@ -82,7 +84,6 @@ public class User {
         this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
         this.keys = KeyPairUtils.encodePrivateKeyBase64(keys);
 
-        //vac.addVaccines(this.username, this.availableDoses);
 
     }
 
@@ -96,5 +97,28 @@ public class User {
     public KeyPair getKeyPairs()
     {
         return KeyPairUtils.decodeKeyPair(this.keys);
+    }
+
+    public HashMap<String, Date> sortByValue(HashMap<String, Date> dates)
+    {
+        // Create a list from elements of HashMap
+        List<Map.Entry<String, Date> > list =
+                new LinkedList<Map.Entry<String, Date> >(dates.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<String, Date> >() {
+            public int compare(Map.Entry<String, Date> o1,
+                               Map.Entry<String, Date> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<String, Date> temp = new LinkedHashMap<String, Date>();
+        for (Map.Entry<String, Date> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 }
