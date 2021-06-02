@@ -94,11 +94,10 @@ public class VaccinationController {
                 .addToken("app_key", "").setup();
         User hospital = us.getHospital(username);
         Patient patient = pat.findFirstByAmka(input.getAMKA());
-        Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
         if (assetid==null)  assetid=transid;
-        bigchain.doUpdate(transid,assetid, input.getStatus(), hospital, patient, input.getDate(), vaccine);
+        bigchain.doUpdate(transid,assetid, input.getStatus(), hospital, patient, input.getDate(), input.getBrand());
 
            if (input.getStatus().equals("CANCELLED"))
            {
@@ -120,6 +119,7 @@ public class VaccinationController {
                        patient.getSymptoms().add(g);
                }
                pat.save(patient);
+               Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
                vac.decreaseAvailable(vaccine,hospital);
            }
 
@@ -139,11 +139,10 @@ public class VaccinationController {
         User hospital = us.getHospital(username);
         User next = us.getHospital(input.getNext());
         Patient patient = pat.findFirstByAmka(input.getAMKA());
-        Vaccine vaccine = vac.getVaccineByBrandAndStatus(next.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
         String assetid = "";
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
         if (assetid==null)  assetid=transid;
-        bigchain.doTransfer(transid,assetid, input.getStatus(), hospital, next, patient, input.getDate(), vaccine);
+        bigchain.doTransfer(transid,assetid, input.getStatus(), hospital, next, patient, input.getDate(), input.getBrand());
 
        patient.setHospitalName(input.getNext());
        pat.save(patient);
@@ -183,7 +182,8 @@ public class VaccinationController {
             LinkedTreeMap<String,String> yourMap = (LinkedTreeMap)t.getMetaData();
             JsonObject jsonObject = gson.toJsonTree(yourMap).getAsJsonObject();
             myMetadata meta =  gson.fromJson(jsonObject.toString(), myMetadata.class);
-            if (vacrepo.countByHospitalNameAndAndBrandAndStatus(username,Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0 || meta.getStatus().equals("DONE"))
+            if (vacrepo.countByHospitalNameAndAndBrandAndStatus(username,Brand.valueOf(meta.getBrand()),VaccineStatus.AVAILABLE)>0 || meta.getStatus().equals("DONE") ||
+                    meta.getStatus().equals("CANCELLED"))
                 pin[3]= true;
             else
                 pin[3]=false;
@@ -218,8 +218,8 @@ public class VaccinationController {
       private String date;
       private String name;
       private String city;
-       private String country;
-       private String brand;
+      private String country;
+      private String brand;
       private String status;
     }
 

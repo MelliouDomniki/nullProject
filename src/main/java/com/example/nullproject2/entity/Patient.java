@@ -64,6 +64,7 @@ public class Patient {
         this.amka = amka;
         this.sex = sex;
         this.appoint = 0;
+        this.symptoms = new ArrayList<>();
         this.hospitalName = null;
     }
 

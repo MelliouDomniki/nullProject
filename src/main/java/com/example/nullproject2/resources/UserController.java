@@ -86,7 +86,7 @@ public class UserController {
 
         List<String> lista = new ArrayList<>();
         for (User u :userRepository.findAll())
-            if (u.getAvailability() && (vac.getTheTotalOfABrand(u.getUsername(),Brand.valueOf(brand))>0))
+            if (u.getAvailability() && (vac.getTheTotalOfABrand(u.getUsername(),Brand.valueOf(brand))>0 && !(u.getUsername().equals(username))))
                 lista.add(u.getUsername());
 
         return lista;
