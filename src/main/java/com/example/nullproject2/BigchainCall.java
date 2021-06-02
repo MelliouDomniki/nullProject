@@ -33,9 +33,8 @@ public class BigchainCall {
     }
 
 
-    public  static String doCreate(User h, Patient p, Date d, String brand ) throws Exception {
+    public  static void doCreate(User h, Patient p, Date d, String brand ) throws Exception {
 
-        String response="";
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
@@ -72,14 +71,11 @@ public class BigchainCall {
                     .sendTransaction(handleServerResponse("c"));
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());
-            response = transaction.getId();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        return response;
     }
 
     public static void doUpdate(String transId, String assetId,String status, User cur, Patient p,Date d,String brand) throws Exception {

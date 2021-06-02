@@ -97,7 +97,7 @@ public class VaccineController {
     //metraei ta available anexartita to brand , gia karta available
     @GetMapping("countAvailable")
     public int countAvailableVaccines(@PathVariable String username) {
-        return vacrepo.countByStatusAndHospitalName(VaccineStatus.AVAILABLE, username);
+        return vacrepo.countByStatusAndHospitalName(VaccineStatus.AVAILABLE, username) +vacrepo.countByStatusAndHospitalName(VaccineStatus.RESERVED, username);
     }
 
     //den koitaei status
@@ -106,10 +106,19 @@ public class VaccineController {
         return vacrepo.findByHospitalNameAndBrand(username, brand);
     }
 
-    //to allaxa
     @GetMapping("findAllByStatus/{vaccineStatus}")
     public List<Vaccine> getVaccinesByStatus(@PathVariable String username, @PathVariable VaccineStatus vaccineStatus) {
         return vacrepo.findByHospitalNameAndStatus(username, vaccineStatus);
+    }
+
+    @GetMapping("findAllByDoubleStatus")
+    public List<Vaccine> getVaccinesByDoubleStatus(@PathVariable String username) {
+
+        List<Vaccine> vac= new ArrayList<>();
+        vac.addAll(vacrepo.findByHospitalNameAndStatus(username, VaccineStatus.RESERVED));
+        vac.addAll(vacrepo.findByHospitalNameAndStatus(username, VaccineStatus.AVAILABLE));
+
+        return vac;
     }
 
 
@@ -126,13 +135,18 @@ public class VaccineController {
 
     @GetMapping("countGlobalBy/{brand}/")
     public int countGlobalByBrand( @PathVariable String brand){
-        return vacrepo.countByBrandAndStatus(Brand.valueOf(brand),VaccineStatus.AVAILABLE);
+        return vacrepo.countByBrandAndStatus(Brand.valueOf(brand),VaccineStatus.AVAILABLE)-vacrepo.countByBrandAndStatus(Brand.valueOf(brand),VaccineStatus.RESERVED);
     }
 
     //metraei ta available toy nosokomeioy gia to brand poy dino
     @GetMapping("countBy/{brand}/")
     public int getTheTotalOfABrand(@PathVariable String username, @PathVariable Brand brand){
         return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,VaccineStatus.AVAILABLE);
+    }
+
+    @GetMapping("countReservedBy/{brand}/")
+    public int getTheTotalOfABrandReserv(@PathVariable String username, @PathVariable Brand brand){
+        return vacrepo.countByHospitalNameAndAndBrandAndStatus(username,brand,VaccineStatus.RESERVED);
     }
 
     //gia vaccine page poy thelo posa available exo apo kathe brand me mia klisi
