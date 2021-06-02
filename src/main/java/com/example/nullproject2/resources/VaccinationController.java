@@ -69,15 +69,18 @@ public class VaccinationController {
       User hospital = us.getHospital(username);
       Patient patient = pat.findFirstById(input.getId());
       //Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+      String assetId;
 
       if (patient.getStatus()=="2/2")
           return "Patient is fully vaccinated";
       else
       {
-          bigchain.doCreate(hospital, patient, input.getDate(), input.getBrand());
+          assetId = bigchain.doCreate(hospital, patient, input.getDate(), input.getBrand());
           patient.setAppoint(1);
           patient.setBrand(Brand.valueOf(input.getBrand()));
           patient.setHospitalName(username);
+//          hospital.getDates().put(assetId, input.getDate());
+//          usrepo.save(hospital);
           pat.save(patient);
           return "Vaccination created";
       }
@@ -104,6 +107,8 @@ public class VaccinationController {
                patient.setAppoint(0);
                patient.setHospitalName(null);
                pat.save(patient);
+//               hospital.getDates().remove(assetid);
+//               usrepo.save(hospital);
            }
            else if (input.getStatus().equals("DONE"))
            {
@@ -118,10 +123,17 @@ public class VaccinationController {
                    for (String g: input.getSymptoms())
                        patient.getSymptoms().add(g);
                }
+//               hospital.getDates().put(assetid, input.getDate());
+//               usrepo.save(hospital);
                pat.save(patient);
                Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
                vac.decreaseAvailable(vaccine,hospital);
            }
+//           else
+//           {
+//               hospital.getDates().put(assetid, input.getDate());
+//               usrepo.save(hospital);
+//           }
 
             return "Vaccination created";
 
@@ -143,9 +155,10 @@ public class VaccinationController {
         assetid = TransactionsApi.getTransactionById(transid).getAsset().getId();
         if (assetid==null)  assetid=transid;
         bigchain.doTransfer(transid,assetid, input.getStatus(), hospital, next, patient, input.getDate(), input.getBrand());
-
-       patient.setHospitalName(input.getNext());
-       pat.save(patient);
+//        hospital.getDates().put(assetid, input.getDate());
+//        usrepo.save(hospital);
+        patient.setHospitalName(input.getNext());
+        pat.save(patient);
 
         return "Vaccination was transfered";
 

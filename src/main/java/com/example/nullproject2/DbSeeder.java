@@ -47,18 +47,6 @@ public class DbSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-//        Date d1 = new Date( 2021, 06, 21);
-//        Date d2 = new Date( 2021, 04, 04);
-//        Date d3 = new Date( 2021, 8, 8);
-//        user.getDates().put("1", d1 );
-//        user.getDates().put("2", d2);
-//        user.getDates().put("2", d3);
-//        user.setDates(user.sortByValue(user.getDates()));
-//        for (Map.Entry<String, Date> en : user.getDates().entrySet()) {
-//            System.out.println("Key = " + en.getKey() +
-//                    ", Value = " + en.getValue());
-//        }
-
 //        //Roles
 //
 //        Role role1 = new Role(Erole.ROLE_USER);

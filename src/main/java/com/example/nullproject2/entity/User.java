@@ -58,7 +58,7 @@ public class User {
     @Field(name = "publicKey")
     private String publicKey;
 
-    private HashMap<String,Date> dates = new HashMap<>();
+//    private HashMap<String,Date> dates = new HashMap<>();
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
