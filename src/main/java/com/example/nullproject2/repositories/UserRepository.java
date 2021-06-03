@@ -18,7 +18,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     boolean existsByEmail(String email);
 
-    List<User> findByTransactionStatus (int equals);
+    //List<User> findBytransactionStatus (int equals);
 
     @Query("{ 'username' : ?0 }")
     User getHospital(String username);

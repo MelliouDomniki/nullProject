@@ -14,8 +14,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +33,9 @@ public class UserController {
     @Autowired
     private VaccineRepository vaccineRepository;
 
+    @Autowired
+    private VaccineController vac;
+
     @GetMapping("getHospital")
     public User getHospital(@PathVariable String username) {
         return userRepository.getHospital(username);
@@ -46,15 +49,16 @@ public class UserController {
 
         int c = user.getAvailableDoses();
         List<Vaccine> vac = user.getVaccines();
+        boolean s = user.getAvailability();
         String keys = user.getKeys();
         String key = user.getPublicKey();
         userRepository.save(newUser);
 
         update.set("available_Doses", c);
         update.set("vaccines", vac);
+        update.set("TransactionStatus", s);
         update.set("keys", keys);
         update.set("publicKey", key);
-
 
         Criteria criteria = Criteria.where("username").is(newUser.getUsername());
         mongoTemplate.updateFirst(Query.query(criteria), update, "users");
@@ -62,47 +66,31 @@ public class UserController {
         return "Updated user with id: " + newUser.getId();
     }
 
+    //gia koympi poy allazo to an dexomai transfers
     @PostMapping("makeMeAvailable")
     public String makeMeAvailable(@PathVariable String username){
+        String response = "";
         User user = mongoTemplate.findOne(Query.query(Criteria.where("username").is(username)), User.class);
-        if (user.getTransactionStatus() == 0) {
-            user.setTransactionStatus(1);
-        }else if (user.getTransactionStatus() == 1){
-            user.setTransactionStatus(0);
-        }
+        if (user.getAvailability())
+            response= "you are now unavailable";
+        else
+            response = "you are now available";
+        user.setIAmAvailable(!user.getAvailability());
         userRepository.save(user);
-        return "You are now available";
+        return response;
     }
 
-    @GetMapping("findAllAvailable")
-    public Map findAllByIAmAvailableEquals() {
-        Map<String, HashSet<String>> hospitals = new HashMap<>();
+    //gia drop down diathesima gia transfer
+    @GetMapping("getTransferableHospitals/{brand}")
+    public List<String> getTransferableHospitals(@PathVariable String username, @PathVariable String brand) {
 
+        List<String> lista = new ArrayList<>();
+        for (User u :userRepository.findAll())
+            if (u.getAvailability() && (vac.getTheTotalOfABrand(u.getUsername(),Brand.valueOf(brand))>vac.getTheTotalOfABrandReserv(u.getUsername(),Brand.valueOf(brand))) && !(u.getUsername().equals(username)))
+                lista.add(u.getUsername());
 
-        List<User> avaliableUsers = userRepository.findByTransactionStatus(1);
-        for (User availbleUser : avaliableUsers) {
-
-            for (Vaccine vaccine : availbleUser.getVaccines()) {
-
-                if (hospitals.containsKey(vaccine.getHospitalName())) {
-                    if (hospitals.get(vaccine.getHospitalName()) != null) {
-                        HashSet<String> brands = hospitals.get(vaccine.getHospitalName());
-                        brands.add(vaccine.getBrand().getBrand());
-                    } else {
-
-                        HashSet<String> brands = new HashSet<>();
-                        brands.add(vaccine.getBrand().getBrand());
-                        hospitals.put(vaccine.getHospitalName(), brands);
-                    }
-                } else {
-
-                    HashSet<String> brands = new HashSet<>();
-                    brands.add(vaccine.getBrand().getBrand());
-                    hospitals.put(vaccine.getHospitalName(), brands);
-                }
-            }
-        }
-
-        return hospitals;
+        return lista;
     }
+
+
 }

@@ -49,8 +49,8 @@ public class User {
     @Field(name = "password")
     private String password;
 
-    @Field(name = "TransactionStatus")
-    private int transactionStatus;
+    @Field(name = "iAmAvailable")
+    private boolean iAmAvailable;
 
     @Field(name = "keys")
     private String keys;
@@ -75,22 +75,48 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.transactionStatus = 0;
+        this.iAmAvailable = true;
         this.availableDoses = 0;
         KeyPair keys = BigchainCall.getKeys();
         EdDSAPublicKey pubkey = (EdDSAPublicKey) keys.getPublic();
         this.publicKey = KeyPairUtils.encodePublicKeyInBase58(pubkey).toString();  //sosto
         this.keys = KeyPairUtils.encodePrivateKeyBase64(keys);
 
-        //vac.addVaccines(this.username, this.availableDoses);
 
     }
 
+    public boolean getAvailability()
+    {
+        return this.iAmAvailable;
+    }
 
 
     @JsonIgnore
     public KeyPair getKeyPairs()
     {
         return KeyPairUtils.decodeKeyPair(this.keys);
+    }
+
+    public HashMap<String, Date> sortByValue(HashMap<String, Date> dates)
+    {
+        // Create a list from elements of HashMap
+        List<Map.Entry<String, Date> > list =
+                new LinkedList<Map.Entry<String, Date> >(dates.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<Map.Entry<String, Date> >() {
+            public int compare(Map.Entry<String, Date> o1,
+                               Map.Entry<String, Date> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        // put data from sorted list to hashmap
+        HashMap<String, Date> temp = new LinkedHashMap<String, Date>();
+        for (Map.Entry<String, Date> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
     }
 }

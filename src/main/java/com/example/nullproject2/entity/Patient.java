@@ -37,7 +37,7 @@ public class Patient {
     private String status;
 
     @Field(name = "symptoms")
-    private List<String> symptoms;
+    private ArrayList<String> symptoms;
 
     @Field(name = "amka")
     private String amka;
@@ -63,6 +63,7 @@ public class Patient {
         this.status="0/2";
         this.amka = amka;
         this.sex = sex;
+        this.symptoms= new ArrayList<>();
         this.appoint = 0;
         this.hospitalName = null;
     }

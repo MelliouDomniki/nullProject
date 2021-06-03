@@ -33,7 +33,7 @@ public class BigchainCall {
     }
 
 
-    public  void doCreate(User h, Patient p, Date d, Vaccine v) throws Exception {
+    public  static void doCreate(User h, Patient p, Date d, String brand ) throws Exception {
 
         KeyPair keys = h.getKeyPairs();
         BigchainDbConfigBuilder
@@ -54,7 +54,7 @@ public class BigchainCall {
         metaData.setMetaData("hospital-name", h.getName());
         metaData.setMetaData("hospital-city", h.getCity());
         metaData.setMetaData("hospital-country", h.getCountry());
-        metaData.setMetaData("vaccine-brand", v.getBrand().toString());
+        metaData.setMetaData("brand", brand);
         metaData.setMetaData("status", VaccinationStatus.PENDING.toString());
         System.out.println("(*) Metadata Prepared..");
 
@@ -72,16 +72,13 @@ public class BigchainCall {
 
             System.out.println("(*) CREATE Transaction sent.. - " + transaction.getId());
 
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
-    public static void doUpdate(String transId, String assetId,String status, User cur, Patient p,Date d, Vaccine v) throws Exception {
-
+    public static void doUpdate(String transId, String assetId,String status, User cur, Patient p,Date d,String brand) throws Exception {
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
@@ -95,11 +92,11 @@ public class BigchainCall {
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());
-        transferMetadata.setMetaData("vaccine-brand", v.getBrand().toString());
+        transferMetadata.setMetaData("brand", brand);
         transferMetadata.setMetaData("status", status);
 
         System.out.println("(*) Transfer Metadata Prepared..");
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
 
         Map<String, String> assetData = new TreeMap<String, String>();
         assetData.put("id", assetId);
@@ -134,8 +131,7 @@ public class BigchainCall {
         }
     }
 
-    public static void doTransfer(String transId, String assetId,String status, User cur, User next, Patient p,Date d, Vaccine v) throws Exception {
-
+    public static void doTransfer(String transId, String assetId,String status, User cur, User next, Patient p,Date d, String brand) throws Exception {
 
         BigchainDbConfigBuilder
                 .baseUrl("http://localhost:9984/") //or use http://testnet.bigchaindb.com
@@ -149,11 +145,11 @@ public class BigchainCall {
         transferMetadata.setMetaData("hospital-name", cur.getName());
         transferMetadata.setMetaData("hospital-city", cur.getCity());
         transferMetadata.setMetaData("hospital-country", cur.getCountry());
-        transferMetadata.setMetaData("vaccine-brand", v.getBrand().toString());
+        transferMetadata.setMetaData("brand",brand);
         transferMetadata.setMetaData("status", status);
 
         System.out.println("(*) Transfer Metadata Prepared..");
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
 
         Map<String, String> assetData = new TreeMap<String, String>();
         assetData.put("id", assetId);
@@ -181,11 +177,12 @@ public class BigchainCall {
             System.out.println("(*) TRANSFER Transaction sent.. - " + transaction.getId());
 
 
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
     }
 
     private static GenericCallback handleServerResponse(String type) {

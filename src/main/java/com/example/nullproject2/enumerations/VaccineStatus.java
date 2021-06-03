@@ -2,7 +2,8 @@ package com.example.nullproject2.enumerations;
 
 public enum VaccineStatus {
     UNAVAILABLE("UNAVAILABLE"),
-    AVAILABLE("AVAILABLE");
+    AVAILABLE("AVAILABLE"),
+    RESERVED("RESERVED");
 
     private String vaccineStatus;
 
