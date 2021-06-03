@@ -86,6 +86,12 @@ public class VaccinationController {
               vaccine.setStatus(VaccineStatus.RESERVED);
               vacrepo.save(vaccine);
           }
+          else
+          {
+              Vaccine vaccine2 = vacrepo.findFirstByBrandAndStatus(Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
+              vaccine2.setStatus(VaccineStatus.RESERVED);
+              vacrepo.save(vaccine2);
+          }
           return "Vaccination created";
       }
 
