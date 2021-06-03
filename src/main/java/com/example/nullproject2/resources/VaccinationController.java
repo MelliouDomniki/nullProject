@@ -124,7 +124,7 @@ public class VaccinationController {
                    vacrepo.save(vaccine);
                }
            }
-           else if (input.getStatus().equals("DONE"))
+           else if (input.getStatus().equals("DONE") && patient.getAppoint()==1)
            {
                patient.setAppoint(0);
                patient.setHospitalName(null);
@@ -132,16 +132,25 @@ public class VaccinationController {
                    patient.setStatus("1/2");
                else if (patient.getStatus().equals("1/2"))
                    patient.setStatus("2/2");
-//               if (input.getSymptoms()!=null)
-//               {
-//                   for (String g: input.getSymptoms())
-//                       patient.getSymptoms().add(g);
-//               }
+               if (input.getSymptoms()!=null)
+               {
+                   for (String g: input.getSymptoms())
+                       patient.getSymptoms().add(g);
+               }
                pat.save(patient);
                Vaccine vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.RESERVED);
                if(vaccine==null)
                    vaccine = vac.getVaccineByBrandAndStatus(hospital.getUsername(),Brand.valueOf(input.getBrand()), VaccineStatus.AVAILABLE);
                vac.decreaseAvailable(vaccine,hospital);
+           }
+           else if (input.getStatus().equals("DONE") && patient.getAppoint()!=1)
+           {
+               if (input.getSymptoms()!=null)
+               {
+                   for (String g: input.getSymptoms())
+                       patient.getSymptoms().add(g);
+               }
+               pat.save(patient);
            }
 
             return "Vaccination created";

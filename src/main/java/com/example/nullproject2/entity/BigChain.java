@@ -32,7 +32,7 @@ public class BigChain {
 
     private String status;
 
-    //private ArrayList<String> symptoms;
+    private ArrayList<String> symptoms;
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
